@@ -1,21 +1,23 @@
 <script lang="ts">
-	import type { ComponentType } from 'svelte'
+	import Renderer from './renderer.svelte';
+	//import type { ComponentType } from 'svelte'
 	import Callout from './components/callout.svelte'
 	import Counter from './components/counter.svelte'
 
 	let { children }: any = $props()
 
-	const components: Record<string, ComponentType> = { Callout, Counter }
+	const components = { Callout, Counter }
 </script>
 
 {#each children as child}
 	{#if components[child.name]}
-		<svelte:component this={components[child.name]} {...child.attributes}>
-			<svelte:self children={child.children} />
-		</svelte:component>
+		{@const SvelteComponent = components[child.name]}
+		<SvelteComponent {...child.attributes}>
+			<Renderer children={child.children} />
+		</SvelteComponent>
 	{:else}
 		<svelte:element this={child.name} {...child.attributes}>
-			<svelte:self children={child.children} />
+			<Renderer children={child.children} />
 		</svelte:element>
 	{/if}
 
