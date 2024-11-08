@@ -1,9 +1,9 @@
 <script lang="ts">
+  import "../app.css";
   import '@fontsource-variable/manrope';
-	import { page } from '$app/stores';
-
+  import { page } from '$app/stores';
+  
   let { children } = $props()
-
 </script>
 
 <svelte:head>
