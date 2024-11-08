@@ -12,8 +12,10 @@
 		"@sveltejs/adapter-auto": "^3.2.0",
 		"@sveltejs/kit": "^2.5.27",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/bcrypt": "^5.0.2",
 		"@types/js-yaml": "^4.0.9",
 		"@types/node": "^20.12.7",
+		"prisma": "^5.22.0",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"tslib": "^2.6.2",
@@ -23,6 +25,8 @@
 	"dependencies": {
 		"@fontsource-variable/manrope": "^5.0.19",
 		"@markdoc/markdoc": "^0.4.0",
+		"@prisma/client": "^5.22.0",
+		"bcrypt": "^5.1.1",
 		"js-yaml": "^4.1.0"
 	},
 	"packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
