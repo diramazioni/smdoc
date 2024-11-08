@@ -3,8 +3,6 @@ import yaml from 'js-yaml'
 import * as fs from 'node:fs/promises'
 import path from 'node:path'
 
-
-
 async function getPost(slug: string) {
 	const file = path.resolve(`posts/${slug}.md`)
 	return await fs.readFile(file, 'utf-8')
@@ -43,4 +41,3 @@ async function markdoc(slug: string) {
 export async function load({ params }) {
 	return { children: await markdoc(params.slug) }
 }
-
