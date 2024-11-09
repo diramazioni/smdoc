@@ -5,13 +5,13 @@
 <div class="callout {type}">
 	{@render children()}
 </div>
-
-<style>
+ <style>
 	.callout {
-		margin-block: 2rem;
+		/* margin-block: 2rem;
 		padding: 1rem;
 		color: oklch(100% 0 0);
-		border-radius: 8px;
+		border-radius: 8px; */
+		@apply text-lg font-semibold  text-muted-foreground p-4 m-3 rounded-lg;
 	}
 
 	.check {
