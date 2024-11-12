@@ -38,7 +38,8 @@
 		"@toast-ui/editor": "^3.2.2",
 		"bcrypt": "^5.1.1",
 		"js-yaml": "^4.1.0",
-		"svelte-ux": "^0.75.4"
+		"svelte-ux": "file:./packages/svelte-ux/packages/svelte-ux",
+		"tui-editor-svelte": "file:./packages/tui-editor-svelte"	
 	},
 	"packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }

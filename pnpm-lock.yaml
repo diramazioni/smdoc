@@ -27,8 +27,11 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       svelte-ux:
-        specifier: ^0.75.4
-        version: 0.75.4(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@5.1.12)
+        specifier: file:./packages/svelte-ux/packages/svelte-ux
+        version: file:packages/svelte-ux/packages/svelte-ux(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@5.1.12)
+      tui-editor-svelte:
+        specifier: file:./packages/tui-editor-svelte
+        version: '@diramazioni/tui-editor-svelte@file:packages/tui-editor-svelte(@toast-ui/editor@3.2.2)(svelte@5.1.12)'
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.2.0
@@ -103,6 +106,12 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@diramazioni/tui-editor-svelte@file:packages/tui-editor-svelte':
+    resolution: {directory: packages/tui-editor-svelte, type: directory}
+    peerDependencies:
+      '@toast-ui/editor': ^3.2.2
+      svelte: ^5.0.0
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -495,6 +504,24 @@ packages:
     resolution: {integrity: sha512-AqhlCXl+8grUz8uqExv5OTtgpjuVIwFTSXTrh8y9/pw6q2ek7fJ+Y8ZEVw7EB2DCcuCOtEjf9w3+J3rzts01uA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
+
+  '@toast-ui/chart@4.6.1':
+    resolution: {integrity: sha512-F35IkHS0U9zqN6xIV1Yj3/wh8KGlZyzT3bwVGBJh/82DMDMn8rD2Us8X7xBMBGcZ3E15qkfnKjrATxU5ZoGAnA==}
+
+  '@toast-ui/editor-plugin-chart@3.0.1':
+    resolution: {integrity: sha512-mdqJerDo836kxKZEa3B6NZOJLrb+acRMkPIanYo//9GFPJcllG7KFdZU+K0bSMapEED7W7OJCsOzM0VNThndHg==}
+
+  '@toast-ui/editor-plugin-code-syntax-highlight@3.1.0':
+    resolution: {integrity: sha512-OgX5pZiTnHREoTTXDAFu1k6RzEspGOxeJNRlt/Lnoi1GvLbIpUTTbBcls9becpXT/Qdls++8G3r5C60cVdellA==}
+
+  '@toast-ui/editor-plugin-color-syntax@3.1.0':
+    resolution: {integrity: sha512-UVKfMBPV+3snSaJn9RUKGbxJbgi92D2t68ow8wAjGezvMp1ht4UVETrvomdTGr+RYhXSeH3JvSwN9nmQqw0qzA==}
+
+  '@toast-ui/editor-plugin-table-merged-cell@3.1.0':
+    resolution: {integrity: sha512-9ch9h1heTs0Kkmhwpb1ef9psQSM77wvUO3J75BsHv3RO5nAug42W3HC4Y+qbX5n1z1VhOGGjuOb4GPIr8s5dRA==}
+
+  '@toast-ui/editor-plugin-uml@3.0.1':
+    resolution: {integrity: sha512-KKvTB++lJkogOSBgtgJqli5nW76/fgxh0CvsHqKh5WQu2r6O+BTGPBG6oRy9PBfJvwN1g8YZ4ZLQGXSXDrtm1w==}
 
   '@toast-ui/editor@3.2.2':
     resolution: {integrity: sha512-ASX7LFjN2ZYQJrwmkUajPs7DRr9FsM1+RQ82CfTO0Y5ZXorBk1VZS4C2Dpxinx9kl55V4F8/A2h2QF4QMDtRbA==}
@@ -1160,6 +1187,9 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
 
+  plantuml-encoder@1.4.0:
+    resolution: {integrity: sha512-sxMwpDw/ySY1WB2CE3+IdMuEcWibJ72DDOsXLkSmEaSzwEUaYBT6DWgOfBiHGCux4q433X6+OEFWjlVqp7gL6g==}
+
   postcss-import@15.1.0:
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
     engines: {node: '>=14.0.0'}
@@ -1443,8 +1473,8 @@ packages:
     peerDependencies:
       svelte: ^5.0.0-next.126
 
-  svelte-ux@0.75.4:
-    resolution: {integrity: sha512-i4E+G2lGQ4mdS/zBQuQHIjKbYgrJ7lGVurZBqwvfcuyMX9EZHggCfYhx+TmD7Awra4h7TctvuQhKGCuElsdHcw==}
+  svelte-ux@file:packages/svelte-ux/packages/svelte-ux:
+    resolution: {directory: packages/svelte-ux/packages/svelte-ux, type: directory}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0 || ^5.0.0
 
@@ -1504,6 +1534,9 @@ packages:
 
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+
+  tui-color-picker@2.2.8:
+    resolution: {integrity: sha512-q5sE9NQ5NR9lYpilYjcI7Sdv0KCogo+W8fZY+AYTj/HYg+9fscYy3UuJ6UQiV1bF+ARCLwFRWC8UcOt9kuUctQ==}
 
   typescript@5.6.3:
     resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
@@ -1611,6 +1644,19 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+
+  '@diramazioni/tui-editor-svelte@file:packages/tui-editor-svelte(@toast-ui/editor@3.2.2)(svelte@5.1.12)':
+    dependencies:
+      '@toast-ui/chart': 4.6.1
+      '@toast-ui/editor': 3.2.2
+      '@toast-ui/editor-plugin-chart': 3.0.1
+      '@toast-ui/editor-plugin-code-syntax-highlight': 3.1.0
+      '@toast-ui/editor-plugin-color-syntax': 3.1.0
+      '@toast-ui/editor-plugin-table-merged-cell': 3.1.0
+      '@toast-ui/editor-plugin-uml': 3.0.1
+      prismjs: 1.29.0
+      svelte: 5.1.12
+      tui-color-picker: 2.2.8
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
@@ -1928,6 +1974,26 @@ snapshots:
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.14
+
+  '@toast-ui/chart@4.6.1': {}
+
+  '@toast-ui/editor-plugin-chart@3.0.1':
+    dependencies:
+      '@toast-ui/chart': 4.6.1
+
+  '@toast-ui/editor-plugin-code-syntax-highlight@3.1.0':
+    dependencies:
+      prismjs: 1.29.0
+
+  '@toast-ui/editor-plugin-color-syntax@3.1.0':
+    dependencies:
+      tui-color-picker: 2.2.8
+
+  '@toast-ui/editor-plugin-table-merged-cell@3.1.0': {}
+
+  '@toast-ui/editor-plugin-uml@3.0.1':
+    dependencies:
+      plantuml-encoder: 1.4.0
 
   '@toast-ui/editor@3.2.2':
     dependencies:
@@ -2540,6 +2606,8 @@ snapshots:
 
   pirates@4.0.6: {}
 
+  plantuml-encoder@1.4.0: {}
+
   postcss-import@15.1.0(postcss@8.4.47):
     dependencies:
       postcss: 8.4.47
@@ -2838,7 +2906,7 @@ snapshots:
       style-to-object: 1.0.8
       svelte: 5.1.12
 
-  svelte-ux@0.75.4(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@5.1.12):
+  svelte-ux@file:packages/svelte-ux/packages/svelte-ux(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@5.1.12):
     dependencies:
       '@floating-ui/dom': 1.6.12
       '@fortawesome/fontawesome-common-types': 6.6.0
@@ -2974,6 +3042,8 @@ snapshots:
   ts-interface-checker@0.1.13: {}
 
   tslib@2.6.2: {}
+
+  tui-color-picker@2.2.8: {}
 
   typescript@5.6.3: {}
 
