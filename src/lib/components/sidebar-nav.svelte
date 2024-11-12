@@ -25,7 +25,7 @@
       variant="ghost"
       class={cn(
         !isActive && "hover:underline",
-        "relative justify-start hover:bg-transparent",
+        "relative justify-start hover:bg-accent",
       )}
       data-sveltekit-noscroll>
       {#if isActive}

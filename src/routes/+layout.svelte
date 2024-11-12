@@ -4,8 +4,9 @@
   import { page } from '$app/stores';
   import { Button } from "$lib/components/ui/button";
   import { Separator } from "$lib/components/ui/separator/index.js";
-  
-  import { Pencil } from 'lucide-svelte';
+  import { Label } from "$lib/components/ui/label/index.js";
+  import { Switch } from "$lib/components/ui/switch/index.js";
+  import { Pencil, Save } from 'lucide-svelte';
 
   import SidebarNav from "$lib/components/sidebar-nav.svelte";
   import UserNav from "$lib/components/user-nav.svelte";
@@ -19,16 +20,16 @@
 			href: "/",
 		},
 		{
-			title: "Appearance",
-			href: "/examples/forms/appearance",
+			title: "Page 1",
+			href: "/page1",
 		},
 		{
-			title: "Notifications",
-			href: "/examples/forms/notifications",
+			title: "Page 2",
+			href: "/paeg2",
 		},
 		{
-			title: "Display",
-			href: "/examples/forms/display",
+			title: "Page 3",
+			href: "/page3",
 		},
 	];
   const loginUrL = "/login?/login&redirectTo=/edit" + $page.url.pathname;
@@ -47,31 +48,27 @@
 
   </div>
   
-  <nav class="m-4 hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-
-    {#if !$page.data.user}
-    <form action={loginUrL} method="POST">
-      <Button type="submit">Login</Button>
-    </form>  
-    {/if}
-  
+  <nav class=" m-4 hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
     {#if $page.data.user}
       {#if !$page.url.pathname.startsWith('/edit')}
         <a href="/edit{$page.url.pathname}" class="menu">
-        <Pencil />
-        </a>
-        <Separator orientation="vertical" />
+            <Pencil />
+        
+        </a>  
+
       {:else}
         <form action="/save?/save&redirectTo={$page.url.pathname}" method="POST">
-          <Button type="submit">Save</Button>
+          <div class="flex-col items-center text-center">
+            <a href="/edit{$page.url.pathname}" class="menu">
+              <Save />
+            </a>
+            <div class="">Save</div>
+          </div>
         </form>      
-        <Separator orientation="vertical" />
       {/if}
   
-      <form action="/login?/logout&redirectTo={$page.url.pathname}" method="POST">
-        <Button type="submit">Log out</Button>
-      </form>
-    {/if}
+    {/if} 
+  
   </nav>
   
   <div class="space-y-1 m-4">
@@ -89,7 +86,7 @@
 
 <style>
   .menu {
-    @apply text-foreground hover:text-accent-foreground transition-colors;
+    @apply text-foreground hover:text-accent-foreground transition-colors ;
   }
   
   /* :global(body) {

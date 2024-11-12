@@ -2,14 +2,14 @@
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import { Button } from "$lib/components/ui/button/index.js";
-  import { CircleUserRound, UserRoundCheck, User } from 'lucide-svelte';
+  import { KeyRound, LogOut, CircleUserRound, UserRoundCheck, User } from 'lucide-svelte';
   import { page } from '$app/stores';
 
     // let { user } = $props()
     let user = $page.data.user;
     console.log(user)
     const loginUrL = "/login?/login&redirectTo=/edit" + $page.url.pathname;
-    const logoutUrL = "/login?/logout&redirectTo=/edit" + $page.url.pathname;
+    const logoutUrL = "/logout?/logout&redirectTo=/edit" + $page.url.pathname;
 
     // const response = await fetch(logoutUrL, {
     //   method: 'POST',
@@ -38,11 +38,11 @@
 
     <!-- </div> -->
     {#if user.role === 'ADMIN'}
-    <CircleUserRound size={32} />
+      <CircleUserRound class="h-8 w-8 rounded-full"  />
     {:else if user.role === 'USER'}
-      <UserRoundCheck size={32} />  
+      <UserRoundCheck class="h-8 w-8 rounded-full" />  
     {/if}
-    <Button variant="ghost"  class="absolute  h-8 w-8 rounded-full">
+    <Button variant="ghost"  class="absolute hover:bg-green-500 hover:bg-opacity-25 -mx-4 -my-8  h-8 w-8 rounded-full">
     </Button>
 
       <!-- 
@@ -60,26 +60,21 @@
       </div>
     </DropdownMenu.Label>
 
-		<DropdownMenu.Separator />
 		<DropdownMenu.Group>
-			<DropdownMenu.Item>
-				Profile
-				<DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>
-				Billing
-				<DropdownMenu.Shortcut>⌘B</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>
-				Settings
-				<DropdownMenu.Shortcut>⌘S</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>New Team</DropdownMenu.Item>
-		</DropdownMenu.Group>
+
+    </DropdownMenu.Group>
 		<DropdownMenu.Separator />
+    {#if user.role === 'ADMIN'}
       <DropdownMenu.Item>
-        <Button type="submit">Log out</Button>
-        <DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
+        <KeyRound class="mr-2 h-4 w-4" />
+        <a href='/register' >Register</a>
+        <DropdownMenu.Shortcut>⇧⌘R</DropdownMenu.Shortcut>
+      </DropdownMenu.Item>
+    {/if}
+      <DropdownMenu.Item>
+        <LogOut class="mr-2 h-4 w-4" />
+        <a href={logoutUrL} >Log out</a>
+        <DropdownMenu.Shortcut>⇧⌘O</DropdownMenu.Shortcut>
       </DropdownMenu.Item>
     </DropdownMenu.Content>
   </DropdownMenu.Root>

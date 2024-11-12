@@ -10,7 +10,7 @@
 
 
 <form action="?/register" method="POST">
-	<Card.Root class="w-full max-w-sm">
+	<Card.Root class="w-full max-w-sm mx-auto ">
 		<Card.Header>
 		  <Card.Title class="text-2xl">Register</Card.Title>
 		  <Card.Description>Register your creditials.</Card.Description>

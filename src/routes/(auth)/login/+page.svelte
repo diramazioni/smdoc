@@ -12,7 +12,7 @@
 </script>
 
 <form action="/login?/login&redirectTo={$page.url.searchParams.get('redirectTo') ?? '/'}" method="POST">
-<Card.Root class="w-full max-w-sm">
+<Card.Root class="w-full max-w-sm mx-auto ">
   <Card.Header>
     <Card.Title class="text-2xl">Login</Card.Title>
     <Card.Description>Enter your creditials.</Card.Description>
