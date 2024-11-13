@@ -25,14 +25,6 @@ function getContent(mdContent: string): { frontmatter: string, content: string }
 	const content = match ? match[2] : mdContent; // if no frontmatter, use the whole content
 	return { frontmatter, content };
 }
-function splitFrontmatter(md: string) {
-	const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
-	const match = md.match(frontmatterRegex);
-	if (match) {
-		return  md.slice(match[0].length)
-	}
-
-}
 
 async function markdoc(ast: Node) {
 	const content = Markdoc.transform(ast, {
@@ -60,18 +52,15 @@ async function markdoc(ast: Node) {
 
 export async function load({ params }) {
 	const md = await getMD(params.slug)
-	const md_only = splitFrontmatter(md)
+	const { content: md_only } = getContent(md);
 	const ast = Markdoc.parse(md)
 	const children = await markdoc(ast)
 	const frontmatter = getFrontmatter(ast.attributes.frontmatter)
-	const raw = Markdoc.renderers.html(children);
-
 	return { 
 		children,
 		md_only,
 		frontmatter,
-		slug: params.slug,
-		raw
+		slug: params.slug
 	}
 }
 
@@ -86,17 +75,17 @@ export const actions = {
 			updatedAt: new Date(),
 		};
 		const md = await getMD(params.slug)
-		const { content: currentContent } = getContent(md);
+		const { content } = getContent(md);
 		const newYaml = yaml.dump(updatedFrontmatter);
-		const updatedMd = `---\n${newYaml}---\n${currentContent}`;
+		const updatedMd = `---\n${newYaml}\n---\n${content}`;
 		await setMD(params.slug, updatedMd)
 	},
-	content: async ({ params, request }) => {
+	save: async ({ params, request }) => {
 		const data = await request.formData();
-		const updatedContent = data.get('content');
+		const updatedContent = data.get('updatedContent')
 		const md = await getMD(params.slug)
-		const { frontmatter: currentFrontmatter } = getContent(md);
-		const updatedMd = `---\n${currentFrontmatter}---\n${updatedContent}`;
+		const { frontmatter } = getContent(md);
+		const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
 		await setMD(params.slug, updatedMd)
 	},
 };

@@ -19,16 +19,27 @@
   let editorRef = $state(); // Reference to store the component instance
   //
 
-	function handleSave() {
+	async function saveMarkdown() {
+    const editor = editorRef.getEditor();
+    const markdownContent = editor.getMarkdown();
+    const formData = new FormData();
+    formData.append('updatedContent', markdownContent);
+
+    const response = await fetch('?/save', {
+					method: 'POST',
+					body: formData
+				});
+
+    const result = await response.json();
+
+    console.log(result)
 		console.log('save')
     toast.success('Document saved')
 	}
 	onMount(() => {
-		let editor = editorRef.getEditor();
+
 	});
-  // $effect(() => {
-  //   console.log(accordionState)
-  // })
+
 </script>
 
 <Accordion.Root value={accordionState} type="multiple" class="w-full bg-muted p-2">
@@ -51,7 +62,7 @@
 	onValueChange={(v) => {
 		tabState = v;
 		if (v === 'view') {
-			handleSave()
+			saveMarkdown()
 		}
 		// additional logic here.
 	}}>
