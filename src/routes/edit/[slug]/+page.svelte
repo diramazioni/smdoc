@@ -13,7 +13,6 @@
   import { toast } from "svelte-sonner";
 
 	let { data } = $props()
-	console.log(data.user)
 	let tabState = $state('edit')
   let accordionState = $state<string[]>(["meta"]);
 
@@ -27,9 +26,9 @@
 	onMount(() => {
 		let editor = editorRef.getEditor();
 	});
-  $effect(() => {
-    console.log(accordionState)
-  })
+  // $effect(() => {
+  //   console.log(accordionState)
+  // })
 </script>
 
 <Accordion.Root value={accordionState} type="multiple" class="w-full bg-muted p-2">
@@ -38,10 +37,10 @@
     <form method="POST" action="?/frontmatter">
       <div class="flex max-w-full items-center m-4 space-x-3">
           <Label for="title">Title</Label>
-          <Input type="text" id="title" placeholder="Title" 
+          <Input type="text" name="title" placeholder="Title" 
             value={data.frontmatter.title} />
           <Label for="description">Description</Label>
-          <Input type="text" id="description" placeholder="Description" 
+          <Input type="text" name="description" placeholder="Description" 
             value={data.frontmatter.description} />
           <Button type="submit">Save META</Button>
         </div>
@@ -65,7 +64,7 @@
     bind:this={editorRef}
     initialValue={data.md_only}
     pluginsOn={['colorSyntax', 'tableMergedCell','codeSyntaxHighlight', 'chart', 'uml']} 
-    onload={() => console.log("Editor loaded")}
+    
   />
 
 	</Tabs.Content>

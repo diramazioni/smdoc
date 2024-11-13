@@ -7,7 +7,7 @@
 
     // let { user } = $props()
     let user = $page.data.user;
-    console.log(user)
+    
     const loginUrL = "/login?/login&redirectTo=/edit" + $page.url.pathname;
     const logoutUrL = "/logout?/logout&redirectTo=/edit" + $page.url.pathname;
 
