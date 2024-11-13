@@ -2,16 +2,17 @@
   import "../app.css";
   import '@fontsource-variable/manrope';
   import { page } from '$app/stores';
-  import { Button } from "$lib/components/ui/button";
+  import { Button } from "$lib/components/ui/button/index.js";
   import { Separator } from "$lib/components/ui/separator/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
   import { Switch } from "$lib/components/ui/switch/index.js";
-  import { Pencil, Save } from 'lucide-svelte';
+  import { Pencil, Save, FilePlus, FolderPlus, FileUp } from 'lucide-svelte';
 
   import SidebarNav from "$lib/components/sidebar-nav.svelte";
   import UserNav from "$lib/components/user-nav.svelte";
-  
-  let { children } = $props()
+  import { Toaster } from "$lib/components/ui/sonner/index.js";
+
+  let { children, data } = $props()
 
   
   const sidebarNavItems = [
@@ -40,6 +41,7 @@
 </svelte:head>
 
 <main>
+  <Toaster position="top-center"/>
   <div class="flex justify-between items-center ">
     <SidebarNav items={sidebarNavItems} />  
     <div class="m-3">
@@ -51,32 +53,41 @@
   <nav class=" m-4 hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
     {#if $page.data.user}
       {#if !$page.url.pathname.startsWith('/edit')}
-        <a href="/edit{$page.url.pathname}" class="menu">
+        <div class="flex-col items-center text-center">
+          <a href="/edit{$page.url.pathname}" class="menu">
             <Pencil />
-        
-        </a>  
+          </a>  
+          <div class="">Edit</div>
+        </div>
 
       {:else}
         <form action="/save?/save&redirectTo={$page.url.pathname}" method="POST">
-          <div class="flex-col items-center text-center">
-            <a href="/edit{$page.url.pathname}" class="menu">
-              <Save />
-            </a>
-            <div class="">Save</div>
-          </div>
-        </form>      
+            <Button class="menu" type="submit" variant="secondary">
+              <Save />              
+            </Button>
+        </form>
+        <form action="?/new&redirectTo={$page.url.pathname}" method="POST">
+          <Button class="menu" type="submit" variant="secondary">
+            <FilePlus />              
+          </Button>
+        </form>
+        <form action="?/newFolder&redirectTo={$page.url.pathname}" method="POST">
+          <Button class="menu" type="submit" variant="secondary">
+            <FolderPlus />              
+          </Button>
+        </form>   
+        <form action="?/newFolder&redirectTo={$page.url.pathname}" method="POST">
+          <Button class="menu" type="submit" variant="secondary">
+            <FileUp />              
+          </Button>
+        </form>                  
       {/if}
   
     {/if} 
   
   </nav>
   
-  <div class="space-y-1 m-4">
-    <h4 class="text-sm font-medium leading-none">Markdoc title</h4>
-    <p class="text-muted-foreground text-sm">
-      This is a subtile description of the Markdoc title.
-    </p>
-  </div>
+
   <Separator class="my-4" /> 
   <div class="m-4">
 
@@ -86,8 +97,9 @@
 
 <style>
   .menu {
-    @apply text-foreground hover:text-accent-foreground transition-colors ;
+    @apply bg-slate-100 text-foreground hover:text-accent-foreground transition-colors ;
   }
+
   
   /* :global(body) {
     height: 100svh;

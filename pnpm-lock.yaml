@@ -27,8 +27,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       svelte-ux:
-        specifier: file:./packages/svelte-ux/packages/svelte-ux
-        version: file:packages/svelte-ux/packages/svelte-ux(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@5.1.12)
+        specifier: ^0.75.4
+        version: 0.75.4(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@5.1.12)
       tui-editor-svelte:
         specifier: file:./packages/tui-editor-svelte
         version: '@diramazioni/tui-editor-svelte@file:packages/tui-editor-svelte(@toast-ui/editor@3.2.2)(svelte@5.1.12)'
@@ -61,14 +61,17 @@ importers:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.47)
       bits-ui:
-        specifier: 1.0.0-next.49
-        version: 1.0.0-next.49(svelte@5.1.12)
+        specifier: 1.0.0-next.52
+        version: 1.0.0-next.52(svelte@5.1.12)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-svelte:
         specifier: ^0.456.0
         version: 0.456.0(svelte@5.1.12)
+      mode-watcher:
+        specifier: ^0.4.1
+        version: 0.4.1(svelte@5.1.12)
       prisma:
         specifier: ^5.22.0
         version: 5.22.0
@@ -78,6 +81,9 @@ importers:
       svelte-check:
         specifier: ^4.0.0
         version: 4.0.5(picomatch@4.0.2)(svelte@5.1.12)(typescript@5.6.3)
+      svelte-sonner:
+        specifier: ^0.3.28
+        version: 0.3.28(svelte@5.1.12)
       tailwind-merge:
         specifier: ^2.5.4
         version: 2.5.4
@@ -639,8 +645,8 @@ packages:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
 
-  bits-ui@1.0.0-next.49:
-    resolution: {integrity: sha512-7EoNj7pu9+RVv6MM1kGVvDzH2aA38v07Q+BDSq8yiLIHxZ5dTkDHwoikhtT/+jMU25c0uYvHq44GEQX+027IFw==}
+  bits-ui@1.0.0-next.52:
+    resolution: {integrity: sha512-4ydcpDrYOglrBwVBPKke1xFxCd3g1RcuGdNaw0BybEOTjsQFoKNzoMzLhNxPM97Ew8n7sZoekz2yq3W4SscUIg==}
     engines: {node: '>=18', pnpm: '>=8.7.0'}
     peerDependencies:
       svelte: ^5.0.0-next.1
@@ -1079,6 +1085,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  mode-watcher@0.4.1:
+    resolution: {integrity: sha512-bNC+1NXmwEFZtziCdZSgP7HFQTpqJPcQn9GwwJQGSf6SBF3neEPYV1uRwkYuAQwbsvsXIYtzaqgedDzJ7D1mhg==}
+    peerDependencies:
+      svelte: ^4.0.0 || ^5.0.0-next.1
+
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -1467,14 +1478,19 @@ packages:
       typescript:
         optional: true
 
+  svelte-sonner@0.3.28:
+    resolution: {integrity: sha512-K3AmlySeFifF/cKgsYNv5uXqMVNln0NBAacOYgmkQStLa/UoU0LhfAACU6Gr+YYC8bOCHdVmFNoKuDbMEsppJg==}
+    peerDependencies:
+      svelte: ^3.0.0 || ^4.0.0 || ^5.0.0-next.1
+
   svelte-toolbelt@0.4.6:
     resolution: {integrity: sha512-k8OUvXBUifHZcAlWeY/HLg/4J0v5m2iOfOhn8fDmjt4AP8ZluaDh9eBFus9lFiLX6O5l6vKqI1dKL5wy7090NQ==}
     engines: {node: '>=18', pnpm: '>=8.7.0'}
     peerDependencies:
       svelte: ^5.0.0-next.126
 
-  svelte-ux@file:packages/svelte-ux/packages/svelte-ux:
-    resolution: {directory: packages/svelte-ux/packages/svelte-ux, type: directory}
+  svelte-ux@0.75.4:
+    resolution: {integrity: sha512-i4E+G2lGQ4mdS/zBQuQHIjKbYgrJ7lGVurZBqwvfcuyMX9EZHggCfYhx+TmD7Awra4h7TctvuQhKGCuElsdHcw==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0 || ^5.0.0
 
@@ -2108,7 +2124,7 @@ snapshots:
 
   binary-extensions@2.3.0: {}
 
-  bits-ui@1.0.0-next.49(svelte@5.1.12):
+  bits-ui@1.0.0-next.52(svelte@5.1.12):
     dependencies:
       '@floating-ui/core': 1.6.8
       '@floating-ui/dom': 1.6.12
@@ -2528,6 +2544,10 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
+  mode-watcher@0.4.1(svelte@5.1.12):
+    dependencies:
+      svelte: 5.1.12
+
   mri@1.2.0: {}
 
   mrmime@2.0.0: {}
@@ -2900,13 +2920,17 @@ snapshots:
       postcss-load-config: 4.0.2(postcss@8.4.47)
       typescript: 5.6.3
 
+  svelte-sonner@0.3.28(svelte@5.1.12):
+    dependencies:
+      svelte: 5.1.12
+
   svelte-toolbelt@0.4.6(svelte@5.1.12):
     dependencies:
       clsx: 2.1.1
       style-to-object: 1.0.8
       svelte: 5.1.12
 
-  svelte-ux@file:packages/svelte-ux/packages/svelte-ux(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@5.1.12):
+  svelte-ux@0.75.4(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@5.1.12):
     dependencies:
       '@floating-ui/dom': 1.6.12
       '@fortawesome/fontawesome-common-types': 6.6.0
