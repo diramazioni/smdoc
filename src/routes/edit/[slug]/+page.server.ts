@@ -6,14 +6,29 @@ import * as fs from 'node:fs/promises'
 import path from 'node:path'
 
 async function getMD(slug: string) {
-	const file = path.resolve(`posts/${slug}.md`)
-	return await fs.readFile(file, 'utf-8')
+	const filePath = path.resolve(`mdocs/${slug}.md`);
+	const templatePath = path.resolve('_templates/new.md');
+
+	try {
+		return await fs.readFile(filePath, 'utf-8');
+	} catch (error: any) {
+		if (error.code === 'ENOENT') {
+			// File not found, copy from template
+			await fs.copyFile(templatePath, filePath);
+			return await fs.readFile(filePath, 'utf-8');
+		} else {
+			throw error;
+		}
+	}
 }
 async function setMD(slug: string, content: string) {
-	const file = path.resolve(`posts/${slug}.md`)
-	await fs.writeFile(file, content, 'utf-8');
+	try {
+		const file = path.resolve(`mdocs/${slug}.md`)
+		await fs.writeFile(file, content, 'utf-8');
+	} catch (error: any) {
+		throw error;
+	}
 }
-
 
 function getFrontmatter(frontmatter: string) {
 	return yaml.load(frontmatter)

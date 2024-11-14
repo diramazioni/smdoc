@@ -6,7 +6,7 @@ import path from 'node:path'
 
 
 async function getPost(slug: string) {
-	const file = path.resolve(`posts/${slug}.md`)
+	const file = path.resolve(`mdocs/${slug}.md`)
 	return await fs.readFile(file, 'utf-8')
 }
 
