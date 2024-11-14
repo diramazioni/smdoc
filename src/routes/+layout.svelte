@@ -6,7 +6,7 @@
   import { Separator } from "$lib/components/ui/separator/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
   import { Switch } from "$lib/components/ui/switch/index.js";
-  import { Pencil, Save, FilePlus, FolderPlus, FileUp } from 'lucide-svelte';
+  import { Pencil} from 'lucide-svelte';
 
   import SidebarNav from "$lib/components/sidebar-nav.svelte";
   import UserNav from "$lib/components/user-nav.svelte";
@@ -59,28 +59,7 @@
           </a>  
           <div class="">Edit</div>
         </div>
-
-      {:else}
-        <form action="/save?/save&redirectTo={$page.url.pathname}" method="POST">
-            <Button class="menu" type="submit" variant="secondary">
-              <Save />              
-            </Button>
-        </form>
-        <form action="?/new&redirectTo={$page.url.pathname}" method="POST">
-          <Button class="menu" type="submit" variant="secondary">
-            <FilePlus />              
-          </Button>
-        </form>
-        <form action="?/newFolder&redirectTo={$page.url.pathname}" method="POST">
-          <Button class="menu" type="submit" variant="secondary">
-            <FolderPlus />              
-          </Button>
-        </form>   
-        <form action="?/newFolder&redirectTo={$page.url.pathname}" method="POST">
-          <Button class="menu" type="submit" variant="secondary">
-            <FileUp />              
-          </Button>
-        </form>                  
+            
       {/if}
   
     {/if} 

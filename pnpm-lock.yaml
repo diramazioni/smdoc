@@ -32,6 +32,9 @@ importers:
       tui-editor-svelte:
         specifier: file:./packages/tui-editor-svelte
         version: '@diramazioni/tui-editor-svelte@file:packages/tui-editor-svelte(@toast-ui/editor@3.2.2)(svelte@5.1.12)'
+      voca:
+        specifier: ^1.4.1
+        version: 1.4.1
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.2.0
@@ -57,6 +60,9 @@ importers:
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
+      '@types/voca':
+        specifier: ^1.4.6
+        version: 1.4.6
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.47)
@@ -81,6 +87,9 @@ importers:
       svelte-check:
         specifier: ^4.0.0
         version: 4.0.5(picomatch@4.0.2)(svelte@5.1.12)(typescript@5.6.3)
+      svelte-copy:
+        specifier: ^2.0.0
+        version: 2.0.0(svelte@5.1.12)
       svelte-sonner:
         specifier: ^0.3.28
         version: 0.3.28(svelte@5.1.12)
@@ -564,6 +573,9 @@ packages:
 
   '@types/resolve@1.17.1':
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
+
+  '@types/voca@1.4.6':
+    resolution: {integrity: sha512-ubfCfFxlTOhBBUP2v8lzD8AQVKKu9erZ2t9/8hLpuYHYib3CM/lOwTII3mi527j5UeRDaVjIiAx+iTIWgVCWKQ==}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -1441,6 +1453,11 @@ packages:
       svelte: ^4.0.0 || ^5.0.0-next.0
       typescript: '>=5.0.0'
 
+  svelte-copy@2.0.0:
+    resolution: {integrity: sha512-wJ784qrc9CF7EtrlT2kwJfHnqae/pp4fkgzYeUxex4iFBm6HosT2904t5cZZ1GAZzg/z9V+lCZVP5rpiYsN6Tw==}
+    peerDependencies:
+      svelte: ^5.0.0
+
   svelte-preprocess@6.0.3:
     resolution: {integrity: sha512-PLG2k05qHdhmRG7zR/dyo5qKvakhm8IJ+hD2eFRQmMLHp7X3eJnjeupUtvuRpbNiF31RjVw45W+abDwHEmP5OA==}
     engines: {node: '>= 18.0.0'}
@@ -1609,6 +1626,9 @@ packages:
     peerDependenciesMeta:
       vite:
         optional: true
+
+  voca@1.4.1:
+    resolution: {integrity: sha512-NJC/BzESaHT1p4B5k4JykxedeltmNbau4cummStd4RjFojgq/kLew5TzYge9N2geeWyI2w8T30wUET5v+F7ZHA==}
 
   w3c-keyname@2.2.8:
     resolution: {integrity: sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ==}
@@ -2055,6 +2075,8 @@ snapshots:
   '@types/resolve@1.17.1':
     dependencies:
       '@types/node': 20.12.7
+
+  '@types/voca@1.4.6': {}
 
   abbrev@1.1.1: {}
 
@@ -2912,6 +2934,10 @@ snapshots:
     transitivePeerDependencies:
       - picomatch
 
+  svelte-copy@2.0.0(svelte@5.1.12):
+    dependencies:
+      svelte: 5.1.12
+
   svelte-preprocess@6.0.3(postcss-load-config@4.0.2(postcss@8.4.47))(postcss@8.4.47)(svelte@4.2.19)(typescript@5.6.3):
     dependencies:
       svelte: 4.2.19
@@ -3093,6 +3119,8 @@ snapshots:
   vitefu@1.0.3(vite@5.4.10(@types/node@20.12.7)):
     optionalDependencies:
       vite: 5.4.10(@types/node@20.12.7)
+
+  voca@1.4.1: {}
 
   w3c-keyname@2.2.8: {}
 

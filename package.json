@@ -17,6 +17,7 @@
 		"@types/bcrypt": "^5.0.2",
 		"@types/js-yaml": "^4.0.9",
 		"@types/node": "^20.12.7",
+		"@types/voca": "^1.4.6",
 		"autoprefixer": "^10.4.20",
 		"bits-ui": "1.0.0-next.52",
 		"clsx": "^2.1.1",
@@ -25,6 +26,7 @@
 		"prisma": "^5.22.0",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
+		"svelte-copy": "^2.0.0",
 		"svelte-sonner": "^0.3.28",
 		"tailwind-merge": "^2.5.4",
 		"tailwind-variants": "^0.2.1",
@@ -41,7 +43,8 @@
 		"bcrypt": "^5.1.1",
 		"js-yaml": "^4.1.0",
 		"svelte-ux": "^0.75.4",
-		"tui-editor-svelte": "file:./packages/tui-editor-svelte"
+		"tui-editor-svelte": "file:./packages/tui-editor-svelte",
+		"voca": "^1.4.1"
 	},
 	"packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }

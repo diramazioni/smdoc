@@ -1,4 +1,5 @@
 import Markdoc from '@markdoc/markdoc'
+import { redirect } from '@sveltejs/kit'
 import yaml from 'js-yaml'
 import { CloudRainWindIcon } from 'lucide-svelte'
 import * as fs from 'node:fs/promises'
@@ -79,6 +80,8 @@ export const actions = {
 		const newYaml = yaml.dump(updatedFrontmatter);
 		const updatedMd = `---\n${newYaml}\n---\n${content}`;
 		await setMD(params.slug, updatedMd)
+		redirect(303, `/${params.slug}`)
+
 	},
 	save: async ({ params, request }) => {
 		const data = await request.formData();
@@ -87,5 +90,6 @@ export const actions = {
 		const { frontmatter } = getContent(md);
 		const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
 		await setMD(params.slug, updatedMd)
+		//redirect(303, `/${params.slug}`)
 	},
 };
