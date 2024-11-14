@@ -21,15 +21,26 @@
         </SvelteComponent>
     {:else}
 
-    {#if child.children}
-    <svelte:element this={child.name} {...child.attributes}>
-        <Renderer children={child.children} />
-    </svelte:element>
-    {/if}
+      {#if child.children}
+      <svelte:element this={child.name} {...child.attributes}>
+          <Renderer children={child.children} />
+      </svelte:element>
+      {/if}
 
     {/if}
 
     {#if typeof child === 'string'}
-        {child}
+      {@const childSplit = child.split('"')}
+      {#each childSplit as str}
+        {#if str.trim().length > 0}
+          {str}
+        {:else}
+          <br />
+        {/if}
+      {/each}
+      
+      <!-- {JSON.stringify(child.split('"'))} -->
+
+        <!-- {child} -->
     {/if}
 {/each}
