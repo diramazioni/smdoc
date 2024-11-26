@@ -13,7 +13,8 @@
   import { toast } from "svelte-sonner";
   // Renderer
 	import MarkdocRenderer from '$lib/markdoc/renderer.svelte'
-  import { Editor, Viewer } from 'tui-editor-svelte';
+  // import { Editor, Viewer } from 'tui-editor-svelte';
+  import Editor from '$lib/components/Editor.svelte';
   // Svelte
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
@@ -26,38 +27,52 @@
   let titleValue = $state(data.frontmatter.title)
   let descriptionValue = $state(data.frontmatter.description)
   let slug = $derived(slugify(titleValue))
-  //let astContent = $state(JSON.parse(data.children))
 
-/*
-	async function saveMarkdown() {
-    if (!editorRef) return; // Check if the editor component is loaded
-    const editor = editorRef.getEditor();
-    const markdownContent = editor.getMarkdown();
-    const formData = new FormData();
-    formData.append('updatedContent', markdownContent);
-
-    const response = await fetch('?/save', {
-					method: 'POST',
-					body: formData
-				});
-
-    const result = await response.json();
-
-    console.log(result)
-    toast.success('Document saved')
-	}
 	onMount(() => {
 
 	});
-*/
-  function handleSave(event) {
+  async function handleSave(event) {
     event.preventDefault(); // Prevent the default form submission
-    const updatedContent = editorRef?.getEditor().getMarkdown();
-    // Set the value for the hidden input
-    event.target.querySelector('input[name="updatedContent"]').value = updatedContent;
-    event.target.submit();
+    // ?/frontmatter
+    const frontmatterData = new FormData();
+    frontmatterData.append('title', titleValue);
+    frontmatterData.append('description', descriptionValue);
+    frontmatterData.append('slug', slug);
+    let response = await fetch('?/frontmatter', {
+        method: 'POST',
+        body: frontmatterData
+    });
+    let result = await response.json();
+    if(result.type === 'success') {
+      toast.success('Frontmatter saved')
+    }
+    const updatedContent = editorRef.getMarkdown();
+    console.log(updatedContent)
+    
+    const formData = new FormData();
+    formData.append('updatedContent', updatedContent);
+    formData.append('slug', slug);
+    
+    response = await fetch('?/save', {
+        method: 'POST',
+        body: formData
+    });
+    if(result.type === 'success') {
+      toast.success('Document saved')
+    }
+  }
+  function invokeTest() {
+    const editorInstance = editorRef.getEditor();
+    editorInstance.changeMode('markdown');
+    // editorInstance.exec('bold');
+    // editorInstance.exec('addLink', { linkText: 'TOAST UI', linkUrl: 'https://ui.toast.com' });
+    console.log(editorInstance.getMarkdown());
+    // editorInstance.changePreviewStyle('tab');
+    //editorInstance.insertText('[example test]("http://example.com")')
   }
 </script>
+<button onclick={invokeTest}>Invoke Method</button>
+ 
 
 <!-- 
 <form action="?/new&redirectTo={$page.url.pathname}" method="POST">

@@ -59,9 +59,7 @@
           </a>  
           <div class="">Edit</div>
         </div>
-            
       {/if}
-  
     {/if} 
   
   </nav>
@@ -69,7 +67,6 @@
 
   <Separator class="my-4" /> 
   <div class="m-4">
-
     {@render children()}
   </div>
 </main>

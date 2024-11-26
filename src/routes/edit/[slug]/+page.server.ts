@@ -7,12 +7,13 @@ import path from 'node:path'
 
 async function getMD(slug: string) {
 	const filePath = path.resolve(`mdocs/${slug}.md`);
-	const templatePath = path.resolve('_templates/new.md');
+	const templatePath = path.resolve('mdocs/_templates/new.md');
 
 	try {
 		return await fs.readFile(filePath, 'utf-8');
 	} catch (error: any) {
 		if (error.code === 'ENOENT') {
+      console.log('File not found, copying from template');
 			// File not found, copy from template
 			await fs.copyFile(templatePath, filePath);
 			return await fs.readFile(filePath, 'utf-8');
@@ -82,29 +83,47 @@ export async function load({ params }) {
 
 export const actions = {
 	frontmatter: async ({ params, request }) => {
-		const data = await request.formData();
-
-		// Extract new frontmatter data from the form
-		const updatedFrontmatter = {
-			title: data.get('title'),
-			description: data.get('description'),
-			updatedAt: new Date(),
-		};
-		const md = await getMD(params.slug)
-		const { content } = getContent(md);
-		const newYaml = yaml.dump(updatedFrontmatter);
-		const updatedMd = `---\n${newYaml}\n---\n${content}`;
-		await setMD(params.slug, updatedMd)
-		redirect(303, `/${params.slug}`)
-
+		try {
+			console.log('frontmatter')
+			const data = await request.formData();
+			// Extract new frontmatter data from the form
+			const updatedFrontmatter = {
+				title: data.get('title'),
+				description: data.get('description'),
+				updatedAt: new Date(),
+			};
+      const slug = data.get('slug')
+			// const md = await getMD(params.slug)
+			const md = await getMD(slug)
+			const { content } = getContent(md);
+			const newYaml = yaml.dump(updatedFrontmatter);
+			const updatedMd = `---\n${newYaml}\n---\n${content}`;
+			await setMD(slug, updatedMd)
+			return { success: true };
+		} catch (error) {
+			return {
+				success: false,
+				error: error instanceof Error ? error.message : 'An unknown error occurred'
+			};
+		}
 	},
 	save: async ({ params, request }) => {
-		const data = await request.formData();
-		const updatedContent = data.get('updatedContent')
-		const md = await getMD(params.slug)
-		const { frontmatter } = getContent(md);
-		const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
-		await setMD(params.slug, updatedMd)
-		//redirect(303, `/${params.slug}`)
+			try {
+				console.log('save')
+				const data = await request.formData();
+				const updatedContent = data.get('updatedContent')
+        const slug = data.get('slug')
+
+				const md = await getMD(slug)
+				const { frontmatter } = getContent(md);
+				const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
+				await setMD(slug, updatedMd)
+				return { success: true };
+			} catch (error) {
+				return {
+					success: false,
+					error: error instanceof Error ? error.message : 'An unknown error occurred'
+				};
+			}
 	},
 };
