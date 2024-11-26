@@ -42,8 +42,7 @@
     {:else if user.role === 'USER'}
       <UserRoundCheck class="h-8 w-8 rounded-full" />  
     {/if}
-    <Button variant="ghost"  class="absolute hover:bg-green-500 hover:bg-opacity-25 -mx-4 -my-8  h-8 w-8 rounded-full">
-    </Button>
+
 
       <!-- 
 			<Avatar.Root class="h-8 w-8">
