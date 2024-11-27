@@ -9,6 +9,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
+		"@milkdown/kit": "^7.5.5",
+		"@milkdown/utils": "^7.5.0",
 		"@sveltejs/adapter-auto": "^3.2.0",
 		"@sveltejs/kit": "^2.5.27",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
@@ -40,6 +42,7 @@
 	"dependencies": {
 		"@fontsource-variable/manrope": "^5.0.19",
 		"@markdoc/markdoc": "^0.4.0",
+		"@milkdown/crepe": "^7.5.7",
 		"@prisma/client": "^5.22.0",
 		"@toast-ui/chart": "^4.6.1",
 		"@toast-ui/editor": "^3.2.2",

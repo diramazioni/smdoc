@@ -31,6 +31,8 @@ async function setMD(slug: string, content: string) {
 	}
 }
 
+
+
 function getFrontmatter(frontmatter: string) {
 	return yaml.load(frontmatter)
 }
@@ -82,7 +84,7 @@ export async function load({ params }) {
 }
 
 export const actions = {
-	frontmatter: async ({ params, request }) => {
+	frontmatter: async ({ url, request }) => {
 		try {
 			console.log('frontmatter')
 			const data = await request.formData();
@@ -90,9 +92,11 @@ export const actions = {
 			const updatedFrontmatter = {
 				title: data.get('title'),
 				description: data.get('description'),
+				slug:  data.get('slug'),
 				updatedAt: new Date(),
 			};
-      const slug = data.get('slug')
+      		const slug = data.get('slug')
+			console.log("slug", slug)
 			// const md = await getMD(params.slug)
 			const md = await getMD(slug)
 			const { content } = getContent(md);
