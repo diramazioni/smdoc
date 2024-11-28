@@ -6,7 +6,7 @@
   import { Button } from "$lib/components/ui/button/index.js";
 	import { AccordionItem } from "$lib/components";
   import * as Accordion from "$lib/components/ui/accordion/index.js";
-  import { Save, Eye, FilePlus, FolderPlus, FileUp, Link, FilePenLine } from 'lucide-svelte';
+  import { Save, Eye, FilePlus, FolderPlus, FileUp, Link, FilePenLine, ArrowUpToLine } from 'lucide-svelte';
   // Utils 
   import slugify from 'voca/slugify';
   import { copy } from 'svelte-copy';
@@ -29,10 +29,23 @@
   let descriptionValue = $state(data.frontmatter.description)
   let slug = $derived(slugify(titleValue))
   let markdown = $state(data.md_only)
+  let files = $state();
 
 	onMount(() => {
 
 	});
+
+  $effect(() => {
+    if (files) {
+      // Note that `files` is of type `FileList`, not an Array:
+      // https://developer.mozilla.org/en-US/docs/Web/API/FileList
+      console.log(files);
+
+      for (const file of files) {
+        console.log(`${file.name}: ${file.size} bytes`);
+      }
+    }
+  });
   async function handleSave(event) {
     event.preventDefault(); // Prevent the default form submission
     // ?/frontmatter
@@ -65,6 +78,7 @@
   }
 
   function clearFields() {
+    tabState = 'edit'
     titleValue = descriptionValue = ""
     editorRef?.setMarkdown('')
   }
@@ -82,6 +96,10 @@
   //   console.log(markdown);
   // }
 </script>
+<!-- {data.list_md} -->
+{data.list_img}
+
+
 <!-- <button onclick={invokeTest}>Invoke Method</button> -->
  
 
@@ -101,15 +119,34 @@
     <FileUp />
   </Button>
 </form>       -->
+{#snippet uploadForm()}
+<form action="?/upload" method="POST" enctype="multipart/form-data">
+  <div class="flex max-w-full items-center m-4 space-x-3">
+    <Label for="title">Upload asset</Label>
+    <Button class="menu" type="submit" variant="secondary">
+      <ArrowUpToLine />
+    </Button>
+    <input bind:files multiple type="file" name="file" placeholder="file" required/>
+    {#if files}
+      <div class="flex-col">
+        {#each Array.from(files) as file}
+        <div>
+          <span class="text-sm">{file.name}</span> <span class="text-sm">({file.size} bytes)</span>
+        </div>
+        {/each}
+      </div>
+    {/if}
+  </div>
+</form>  
+{/snippet}
+
 {#snippet metaForm()}
 <form method="POST" action="/edit/{slug}?/frontmatter" class="w-full bg-muted p-2">
   <div class="flex max-w-full items-center m-4 space-x-3">
     <Label for="title">Title</Label>
-    <Input type="text" name="title" placeholder="Title" 
-      bind:value={titleValue} />
+    <Input type="text" name="title" placeholder="Title" bind:value={titleValue} />
     <Label for="description">Description</Label>
-    <Input type="text" name="description" placeholder="Description" 
-      value={descriptionValue} />
+    <Input type="text" name="description" placeholder="Description" value={descriptionValue} />
       <button type="button" use:copy={`/${slug}`} onclick={() => {toast.success(`/${slug} Link copied to clipboard`)}}> 
         <Link />
       </button>  
@@ -155,38 +192,34 @@
       titleValue = data.frontmatter.title
       descriptionValue = data.frontmatter.description
       editorRef?.setMarkdown(data.md_only)
-		} else if (v === 'newdoc') {
-      console.log('newdoc')
-      titleValue = descriptionValue = ""
-      editorRef?.setMarkdown('')
-    }
-		// additional logic here.
+		} 
 	}}>
-	<Tabs.List class="grid w-full grid-cols-3">
-		<Tabs.Trigger value="edit"><FilePenLine/> Edit</Tabs.Trigger>
-		<Tabs.Trigger value="newdoc"> New</Tabs.Trigger>
-	  <Tabs.Trigger value="view" >View</Tabs.Trigger>
+	<Tabs.List class="grid w-full grid-cols-2">
+		<Tabs.Trigger value="edit">
+      <FilePenLine/>&nbsp; Meta
+    </Tabs.Trigger>
+      
+    <Tabs.Trigger value="upload"> 
+      <ArrowUpToLine />&nbsp; Upload
+    </Tabs.Trigger>
+	  <!-- <Tabs.Trigger value="view" >View</Tabs.Trigger> -->
 	</Tabs.List>
 	<Tabs.Content value="edit">
     {@render metaForm()}
 
 	</Tabs.Content>
-	<Tabs.Content value="newdoc">
-    {@render metaForm()}
-
-
+	<Tabs.Content value="upload">
+    {@render uploadForm()}
 	</Tabs.Content>
-
-	<Tabs.Content value="view">
+	<!-- <Tabs.Content value="view">
 		<MarkdocRenderer children={JSON.parse(data.children)} />
-	</Tabs.Content>
-  </Tabs.Root>    
-  <div>
+	</Tabs.Content> -->
+</Tabs.Root>    
+<div>
 
-    {@render cmdMenu()}
-    {@render editor()}
-  </div>
-
+  {@render cmdMenu()}
+  {@render editor()}
+</div>
 <!-- <Accordion.Root bind:value={accordionState} type="multiple" class="w-full bg-muted p-2">
   <AccordionItem value="meta" title="meta">
 

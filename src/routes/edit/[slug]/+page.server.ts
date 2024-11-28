@@ -2,12 +2,15 @@ import Markdoc from '@markdoc/markdoc'
 import { redirect } from '@sveltejs/kit'
 import yaml from 'js-yaml'
 import { CloudRainWindIcon } from 'lucide-svelte'
-import * as fs from 'node:fs/promises'
+// import * as fs from 'node:fs/promises'
+import fs from 'fs/promises'
 import path from 'node:path'
 
+const assetsDir = "mdocs"
+
 async function getMD(slug: string) {
-	const filePath = path.resolve(`mdocs/${slug}.md`);
-	const templatePath = path.resolve('mdocs/_templates/new.md');
+	const filePath = path.resolve(`${assetsDir}/${slug}.md`);
+	const templatePath = path.resolve(`${assetsDir}/_templates/new.md`);
 
 	try {
 		return await fs.readFile(filePath, 'utf-8');
@@ -24,14 +27,22 @@ async function getMD(slug: string) {
 }
 async function setMD(slug: string, content: string) {
 	try {
-		const file = path.resolve(`mdocs/${slug}.md`)
+		const file = path.resolve(`${assetsDir}/${slug}.md`)
 		await fs.writeFile(file, content, 'utf-8');
 	} catch (error: any) {
 		throw error;
 	}
 }
 
-
+async function getFileList() {
+	const dirPath = path.resolve(assetsDir);
+	try {
+		const files = await fs.readdir(dirPath);
+		return files;
+	} catch (error: any) {
+		throw error;
+	}
+}
 
 function getFrontmatter(frontmatter: string) {
 	return yaml.load(frontmatter)
@@ -71,6 +82,7 @@ async function markdoc(ast: Node) {
 
 export async function load({ params }) {
 	const md = await getMD(params.slug)
+	const files = await getFileList()
 	const { content: md_only } = getContent(md);
 	const ast = Markdoc.parse(md)
 	const children = await markdoc(ast)
@@ -79,7 +91,10 @@ export async function load({ params }) {
 		children,
 		md_only,
 		frontmatter,
-		slug: params.slug
+		slug: params.slug,
+		list_md: files.filter((file) => file.endsWith('.md')),
+		list_img: files.filter((file) => file.endsWith('.png') || file.endsWith('.jpg')),
+		list_pdf: files.filter((file) => file.endsWith('.pdf')),
 	}
 }
 
@@ -112,22 +127,48 @@ export const actions = {
 		}
 	},
 	save: async ({ params, request }) => {
-			try {
-				console.log('save')
-				const data = await request.formData();
-				const updatedContent = data.get('updatedContent')
-        const slug = data.get('slug')
-
-				const md = await getMD(slug)
-				const { frontmatter } = getContent(md);
-				const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
-				await setMD(slug, updatedMd)
-				return { success: true };
-			} catch (error) {
-				return {
-					success: false,
-					error: error instanceof Error ? error.message : 'An unknown error occurred'
-				};
-			}
+		try {
+			console.log('save')
+			const data = await request.formData();
+			const updatedContent = data.get('updatedContent')
+			const slug = data.get('slug')
+			const md = await getMD(slug)
+			const { frontmatter } = getContent(md);
+			const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
+			await setMD(slug, updatedMd)
+			return { success: true };
+		} catch (error) {
+			return {
+				success: false,
+				error: error instanceof Error ? error.message : 'An unknown error occurred'
+			};
+		}
 	},
+	upload: async ({ request }) => {
+		const data = await request.formData();
+		const files = data.getAll('file') as File[];
+		try {
+      for (const file of files) {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const filePath = path.join(assetsDir, file.name);
+        await fs.writeFile(filePath, buffer);
+      }
+			// const arrayBuffer = await file.arrayBuffer();
+      
+			// const buffer = Buffer.from(arrayBuffer);
+			// const filePath = path.join(assetsDir, file.name);
+			// await fs.writeFile(filePath, buffer);
+
+			return {
+			  success: true,
+			};
+		} catch (error) {
+			console.error('Error saving file:', error);
+			return {
+			  status: 500,
+			  errors: { message: 'Failed to save file' },
+			};
+		}
+	}
 };
