@@ -4,9 +4,13 @@
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
+  import * as Resizable from "$lib/components/ui/resizable/index.js";
+  import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
+  import { Separator } from "$lib/components/ui/separator/index.js";
+
 	import { AccordionItem } from "$lib/components";
   import * as Accordion from "$lib/components/ui/accordion/index.js";
-  import { Save, Eye, FilePlus, FolderPlus, FileUp, Link, FilePenLine, ArrowUpToLine } from 'lucide-svelte';
+  import { Save, Eye, Copy, FilePlus, FolderPlus, FileUp, Link, FilePenLine, ArrowUpToLine, FileCode, TypeOutline, ImageUp, Trash2} from 'lucide-svelte';
   // Utils 
   import slugify from 'voca/slugify';
   import { copy } from 'svelte-copy';
@@ -96,8 +100,6 @@
   //   console.log(markdown);
   // }
 </script>
-<!-- {data.list_md} -->
-{data.list_img}
 
 
 <!-- <button onclick={invokeTest}>Invoke Method</button> -->
@@ -141,14 +143,14 @@
 {/snippet}
 
 {#snippet metaForm()}
-<form method="POST" action="/edit/{slug}?/frontmatter" class="w-full bg-muted p-2">
+<form method="POST" action="/edit/{slug}?/frontmatter" class="w-full bg-muted p-2 -mt-2">
   <div class="flex max-w-full items-center m-4 space-x-3">
     <Label for="title">Title</Label>
     <Input type="text" name="title" placeholder="Title" bind:value={titleValue} />
     <Label for="description">Description</Label>
     <Input type="text" name="description" placeholder="Description" value={descriptionValue} />
       <button type="button" use:copy={`/${slug}`} onclick={() => {toast.success(`/${slug} Link copied to clipboard`)}}> 
-        <Link />
+        <Copy />
       </button>  
     <Input type="text" name="slug_view" disabled value={slug} class="w-20"/> 
     <input name="slug" hidden value={slug} class="w-20"/> 
@@ -158,7 +160,7 @@
 {/snippet}
 
 {#snippet cmdMenu()}
-  <div id="cmdMenu" class="flex max-w-full items-center space-x-3">
+  <div id="cmdMenu" class="relative z-10 flex max-w-fit items-center space-x-3 ">
     <form method="POST" action="?/save" onsubmit={handleSave}>
       <input type="hidden" name="updatedContent" value="" />
       <Button class="menu" type="submit" variant="secondary">
@@ -185,6 +187,57 @@
 <Editor bind:this={editorRef} markdown={data.md_only} />
 {/snippet}
 
+{#snippet assets()}
+  {#snippet assetItems(assetList)}
+    <ScrollArea class="h-[400px] w-full rounded-md border p-4">
+      {#each assetList as asset}
+        {@render assetItem(asset)}
+      <!-- <Separator class="my-2" /> -->
+      {/each} 
+    </ScrollArea>
+  {/snippet}
+  
+  {#snippet assetItem(asset)}
+  {@const assetUrl = asset.endsWith('.md') ? `/${asset.slice(0, -3)}` : `/${asset}`}
+    <div class="flex border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
+
+      <button  use:copy={assetUrl}  onclick={() => {toast.success(`${assetUrl} Link copied to clipboard`)}}>
+        <Copy size={15} class="cursor-pointer m-1" />
+      </button>
+      <button  use:copy={assetUrl}  onclick={() => {
+        editorRef.insertMarkdown(`[${assetUrl}](${asset})`)
+        }}>
+        <Link size={15} class="cursor-pointer m-1" />
+      </button>
+      
+      <Trash2 size={15} class="cursor-pointer m-1" onclick={() => {deleteAsset(asset)}}/>
+      <div class="text-sm">
+        <a href={'/edit' + assetUrl} class="hover:underline">{asset}</a>
+      </div>
+    </div>
+  {/snippet}
+
+<Tabs.Root value="md">
+  <Tabs.List class="grid w-full grid-cols-3">
+    <Tabs.Trigger value="md"> <FilePenLine/> </Tabs.Trigger>
+    <Tabs.Trigger value="pdf">  <img src="/pdf-icon.svg" class="h-6 w-8" alt="pdf" /> </Tabs.Trigger>
+    <Tabs.Trigger value="img" ><ImageUp/></Tabs.Trigger>
+  </Tabs.List>
+  <Tabs.Content value="md">
+    {@render assetItems(data.list_md)}
+  </Tabs.Content>
+  <Tabs.Content value="pdf">
+    {@render assetItems(data.list_pdf)}
+  </Tabs.Content>
+  <Tabs.Content value="img">
+    {@render assetItems(data.list_img)}
+  </Tabs.Content>
+</Tabs.Root>        
+
+
+{/snippet}
+
+
 <Tabs.Root bind:value={tabState} 	
 	onValueChange={(v) => {
 		tabState = v;
@@ -196,7 +249,7 @@
 	}}>
 	<Tabs.List class="grid w-full grid-cols-2">
 		<Tabs.Trigger value="edit">
-      <FilePenLine/>&nbsp; Meta
+      <FileCode/>&nbsp; Meta
     </Tabs.Trigger>
       
     <Tabs.Trigger value="upload"> 
@@ -215,17 +268,17 @@
 		<MarkdocRenderer children={JSON.parse(data.children)} />
 	</Tabs.Content> -->
 </Tabs.Root>    
-<div>
 
-  {@render cmdMenu()}
-  {@render editor()}
-</div>
-<!-- <Accordion.Root bind:value={accordionState} type="multiple" class="w-full bg-muted p-2">
-  <AccordionItem value="meta" title="meta">
-
- 
-  </AccordionItem>
-</Accordion.Root> -->
-
-
+{@render cmdMenu()}
+<Resizable.PaneGroup  direction="horizontal"
+  class="h-full w-full rounded-lg border relative -mt-10"
+>
+  <Resizable.Pane defaultSize={80} >  
+    {@render editor()}
+  </Resizable.Pane>
+  <Resizable.Handle withHandle />
+  <Resizable.Pane defaultSize={20}>
+    {@render assets()}
+  </Resizable.Pane>
+</Resizable.PaneGroup>
   <!-- {@html data.html} -->
