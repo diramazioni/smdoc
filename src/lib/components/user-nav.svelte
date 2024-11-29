@@ -21,7 +21,7 @@
 </script>
 
 {#if !user}
-<div class="bg-destructive rounded-sm">
+<div class="bg-slate-200 rounded-sm">
 
   <a href={loginUrL} >
     <User size={32} color="#c52020"/>

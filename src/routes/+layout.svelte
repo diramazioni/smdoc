@@ -43,7 +43,7 @@
 <main>
   <Toaster position="top-center"/>
   <div class="flex justify-between items-center ">
-    <SidebarNav items={sidebarNavItems} />  
+    <SidebarNav items={data.items} />  
     <div class="m-3">
       <UserNav/>
     </div>

@@ -5,9 +5,13 @@
   import { page } from "$app/stores";
   import { Button } from "$lib/components/ui/button";
 
-  let className: string | undefined | null = undefined;
-  export let items: { href: string; title: string }[];
-  export { className as class };
+  interface Props {
+    class?: string | undefined | null;
+    items: { href: string; title: string }[];
+  }
+
+  let { class: className = undefined, items }: Props = $props();
+  
 
   const [send, receive] = crossfade({
     duration: 250,
@@ -19,7 +23,7 @@
   class={cn("flex-col space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 sd:flex sd:flex-row sd:items-center sd:gap-5 sd:text-sm", className)}
 >
   {#each items as item}
-    {@const isActive = item.href.startsWith($page.url.pathname) }
+    {@const isActive = item.href.startsWith($page.url.pathname)}
     <Button
       href={item.href}
       variant="ghost"
