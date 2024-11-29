@@ -15,25 +15,7 @@
   let { children, data } = $props()
 
   
-  const sidebarNavItems = [
-    {
-			title: "Home",
-			href: "/",
-		},
-		{
-			title: "Page 1",
-			href: "/page1",
-		},
-		{
-			title: "Page 2",
-			href: "/paeg2",
-		},
-		{
-			title: "Page 3",
-			href: "/page3",
-		},
-	];
-  const loginUrL = "/login?/login&redirectTo=/edit" + $page.url.pathname;
+ 
 </script>
 
 <svelte:head>

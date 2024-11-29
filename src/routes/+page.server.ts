@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit'
 
 export async function load() {
-	//redirect(301, '/markdoc')
+	redirect(301, '/home')
 }

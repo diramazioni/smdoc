@@ -2,10 +2,11 @@ import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { writeFile, readFile } from 'node:fs/promises';
 import { join } from 'path';
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, params }) => {
 	try {
+        const slug = params.slug;
 		// Path for Markdown file containg the navigation list
-		const navigationPath = join(process.cwd(), 'mdocs', 'menu.md');
+		const navigationPath = join(process.cwd(), 'mdocs', `${slug}.md`);
 		const navListData = await readFile(navigationPath, 'utf8');
         
         // Parse the Markdown file to extract links and return as a JSON response
