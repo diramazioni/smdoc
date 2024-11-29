@@ -6,11 +6,12 @@ import { CloudRainWindIcon } from 'lucide-svelte'
 import fs from 'fs/promises'
 import path from 'node:path'
 
-const assetsDir = "mdocs"
+const docDir = "mdocs"
+const assetsDir = "static/assets"
 
 async function getMD(slug: string) {
-	const filePath = path.resolve(`${assetsDir}/${slug}.md`);
-	const templatePath = path.resolve(`${assetsDir}/_templates/new.md`);
+	const filePath = path.resolve(`${docDir}/${slug}.md`);
+	const templatePath = path.resolve(`${docDir}/_templates/new.md`);
 
 	try {
 		return await fs.readFile(filePath, 'utf-8');
@@ -27,15 +28,15 @@ async function getMD(slug: string) {
 }
 async function setMD(slug: string, content: string) {
 	try {
-		const file = path.resolve(`${assetsDir}/${slug}.md`)
+		const file = path.resolve(`${docDir}/${slug}.md`)
 		await fs.writeFile(file, content, 'utf-8');
 	} catch (error: any) {
 		throw error;
 	}
 }
 
-async function getFileList() {
-	const dirPath = path.resolve(assetsDir);
+async function getFileList(dir: string) {
+	const dirPath = path.resolve(dir);
 	try {
 		const files = await fs.readdir(dirPath);
 		return files;
@@ -82,7 +83,8 @@ async function markdoc(ast: Node) {
 
 export async function load({ params }) {
 	const md = await getMD(params.slug)
-	const files = await getFileList()
+	const docFiles = await getFileList(docDir)
+	const assetFiles = await getFileList(assetsDir)
 	const { content: md_only } = getContent(md);
 	const ast = Markdoc.parse(md)
 	const children = await markdoc(ast)
@@ -92,9 +94,9 @@ export async function load({ params }) {
 		md_only,
 		frontmatter,
 		slug: params.slug,
-		list_md: files.filter((file) => file.endsWith('.md')),
-		list_img: files.filter((file) => file.endsWith('.png') || file.endsWith('.jpg')),
-		list_pdf: files.filter((file) => file.endsWith('.pdf')),
+		list_md: docFiles.filter((file) => file.endsWith('.md')),
+		list_img: assetFiles.filter((file) => file.endsWith('.png') || file.endsWith('.jpg')),
+		list_pdf: assetFiles.filter((file) => file.endsWith('.pdf')),
 	}
 }
 
@@ -151,7 +153,12 @@ export const actions = {
       for (const file of files) {
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
-        const filePath = path.join(assetsDir, file.name);
+        let filePath = ''
+        if(file.name.endsWith('.md')) {
+          filePath = path.join(docDir, file.name);
+        } else {
+          filePath = path.join(assetsDir, file.name);
+        }
         await fs.writeFile(filePath, buffer);
       }
 			// const arrayBuffer = await file.arrayBuffer();
@@ -170,5 +177,29 @@ export const actions = {
 			  errors: { message: 'Failed to save file' },
 			};
 		}
+	},
+
+	delete: async ({ request }) => {
+    const data = await request.formData();
+    const slug:string = data.get('slug')
+    let filePath = ''
+    if(slug.endsWith('.md')) {
+      filePath = path.join(docDir, slug);
+    } else {
+      filePath = path.join(assetsDir, slug);
+    }
+    try {
+      await fs.unlink(filePath);
+      return {
+        success: true,
+      };
+    } catch (error) {
+      console.error('Error deleting file:', error);
+      return {
+        status: 500,
+        errors: { message: 'Failed to delete file' },
+      };
+    }
 	}
+
 };

@@ -31,25 +31,28 @@
   let editorRef = $state(); // Reference to store the editor instance
   let titleValue = $state(data.frontmatter.title)
   let descriptionValue = $state(data.frontmatter.description)
+  let list_md = $state(data.list_md);
+  let list_pdf = $state(data.list_pdf);
+  let list_img = $state(data.list_img);
   let slug = $derived(slugify(titleValue))
-  let markdown = $state(data.md_only)
+  // let markdown = $state(data.md_only)
   let files = $state();
 
 	onMount(() => {
 
 	});
 
-  $effect(() => {
-    if (files) {
-      // Note that `files` is of type `FileList`, not an Array:
-      // https://developer.mozilla.org/en-US/docs/Web/API/FileList
-      console.log(files);
+  // $effect(() => {
+  //   if (files) {
+  //     // Note that `files` is of type `FileList`, not an Array:
+  //     // https://developer.mozilla.org/en-US/docs/Web/API/FileList
+  //     console.log(files);
 
-      for (const file of files) {
-        console.log(`${file.name}: ${file.size} bytes`);
-      }
-    }
-  });
+  //     for (const file of files) {
+  //       console.log(`${file.name}: ${file.size} bytes`);
+  //     }
+  //   }
+  // });
   async function handleSave(event) {
     event.preventDefault(); // Prevent the default form submission
     // ?/frontmatter
@@ -79,6 +82,21 @@
     if(result.type === 'success') {
       toast.success('Document saved')
     }
+  }
+  async function handleDelete(slug) {
+    const formData = new FormData();
+    formData.append('slug', slug);
+    let response = await fetch('?/delete', {
+        method: 'POST',
+        body: formData
+    });
+    let result = await response.json();
+    if(result.type === 'success') {
+      list_md = list_md.filter(item => item !== slug);
+      list_pdf = list_pdf.filter(item => item !== slug);
+      list_img = list_img.filter(item => item !== slug);
+      toast.success(`${slug} deleted`)
+    }    
   }
 
   function clearFields() {
@@ -198,21 +216,33 @@
   {/snippet}
   
   {#snippet assetItem(asset)}
-  {@const assetUrl = asset.endsWith('.md') ? `/${asset.slice(0, -3)}` : `/${asset}`}
+  {@const assetUrl = asset.endsWith('.md') ? `/${asset.slice(0, -3)}` : `/assets/${asset}`}
+  {@const assetFile = asset.endsWith('.md') ? false : true}
+
     <div class="flex border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
 
-      <button  use:copy={assetUrl}  onclick={() => {toast.success(`${assetUrl} Link copied to clipboard`)}}>
+      <button use:copy={assetUrl}  onclick={() => {toast.success(`${assetUrl} Link copied to clipboard`)}}>
         <Copy size={15} class="cursor-pointer m-1" />
       </button>
-      <button  use:copy={assetUrl}  onclick={() => {
-        editorRef.insertMarkdown(`[${assetUrl}](${asset})`)
-        }}>
-        <Link size={15} class="cursor-pointer m-1" />
-      </button>
+      {#if assetFile}
+        <button use:copy={assetUrl}  onclick={() => {
+          editorRef.insertMarkdown(`![${assetUrl.slice(1)}](${assetUrl})`) }}>
+          <Link size={15} class="cursor-pointer m-1" />
+        </button>
+      {:else}
+        <button use:copy={assetUrl}  onclick={() => {
+          editorRef.insertMarkdown(`[${assetUrl.slice(1)}](${assetUrl})`) }}>
+          <Link size={15} class="cursor-pointer m-1" />
+        </button>
+      {/if}
       
-      <Trash2 size={15} class="cursor-pointer m-1" onclick={() => {deleteAsset(asset)}}/>
+      <Trash2 size={15} class="cursor-pointer m-1" onclick={() => {handleDelete(asset)}}/>
       <div class="text-sm">
-        <a href={'/edit' + assetUrl} class="hover:underline">{asset}</a>
+        {#if assetFile}
+          <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
+        {/if}
+          <a href={'/edit' + assetUrl} class="hover:underline" >{asset}</a>
+        <!-- rel="external" -->
       </div>
     </div>
   {/snippet}
@@ -224,13 +254,13 @@
     <Tabs.Trigger value="img" ><ImageUp/></Tabs.Trigger>
   </Tabs.List>
   <Tabs.Content value="md">
-    {@render assetItems(data.list_md)}
+    {@render assetItems(list_md)}
   </Tabs.Content>
   <Tabs.Content value="pdf">
-    {@render assetItems(data.list_pdf)}
+    {@render assetItems(list_pdf)}
   </Tabs.Content>
   <Tabs.Content value="img">
-    {@render assetItems(data.list_img)}
+    {@render assetItems(list_img)}
   </Tabs.Content>
 </Tabs.Root>        
 
