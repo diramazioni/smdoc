@@ -4,8 +4,6 @@ Manage Markdoc easly with Svelte.
 
 ## Remote Development
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/diramazioni/smdoc)
-
 ## Local Development
 
 ### 🧑‍🤝‍🧑 Clone the project
@@ -22,6 +20,7 @@ pnpm i
 
 ### 💾️ Init and seed the db with prisma 
 ```sh
+pnpm prisma generate 
 pnpm prisma db push
 pnpm seed
 ```

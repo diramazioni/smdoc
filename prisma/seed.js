@@ -14,7 +14,7 @@ async function main() {
     data: {
         username: 'admin',
         passwordHash: await bcrypt.hash('demo', 10),
-        userAuthToken: crypto.randomUUID(),
+        userAuthToken: '01010101010101010101',
         role: { connect: { name: 'ADMIN' } },
     },
   })
