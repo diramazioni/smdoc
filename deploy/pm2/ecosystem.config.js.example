@@ -1,0 +1,14 @@
+module.exports = {
+    apps : [{
+      name: 'example.name', 
+      cwd: '/var/www/example.com',
+      script: 'node',
+      args: '-r dotenv/config build',
+      env: {
+            HOST:'127.0.0.1', 
+            PORT:'4000', 
+            ORIGIN:'https://example.com'
+            },
+      },
+    ],
+  };
