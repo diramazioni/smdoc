@@ -29,7 +29,7 @@ pnpm seed
 ```sh
 pnpm run dev
 ```
-### Deploy to the server
+### 💿️ Deploy to the server
 ```sh
 pnpm run build &&\
 mv deploy/pm2/ecosystem.config.cjs.example deploy/pm2/ecosystem.config.cjs
