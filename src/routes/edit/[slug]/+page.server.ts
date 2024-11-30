@@ -6,81 +6,16 @@ import { CloudRainWindIcon } from 'lucide-svelte'
 import fs from 'fs/promises'
 import path from 'node:path'
 import { error } from '@sveltejs/kit';
-
-const docDir = "mdocs"
-const assetsDir = "static/assets"
-
-async function getMD(slug: string) {
-	const filePath = path.resolve(`${docDir}/${slug}.md`);
-	const templatePath = path.resolve(`${docDir}/_templates/new.md`);
-
-	try {
-		return await fs.readFile(filePath, 'utf-8');
-	} catch (error: any) {
-		if (error.code === 'ENOENT') {
-      console.log('File not found, copying from template');
-			// File not found, copy from template
-			await fs.copyFile(templatePath, filePath);
-			return await fs.readFile(filePath, 'utf-8');
-		} else {
-			error(500, error)
-		}
-	}
-}
-async function setMD(slug: string, content: string) {
-	try {
-		const file = path.resolve(`${docDir}/${slug}.md`)
-		await fs.writeFile(file, content, 'utf-8');
-	} catch (error: any) {
-		error(500, error)
-	}
-}
-
-async function getFileList(dir: string) {
-	const dirPath = path.resolve(dir);
-	try {
-		const files = await fs.readdir(dirPath);
-		return files;
-	} catch (error: any) {
-		error(500, error)
-	}
-}
-
-function getFrontmatter(frontmatter: string) {
-	return yaml.load(frontmatter)
-}
-
-function getContent(mdContent: string): { frontmatter: string, content: string } {
-	const frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
-	const match = mdContent.match(frontmatterRegex);
-	const frontmatter = match ? match[1] : ''; // if no frontmatter, use an empty string
-	const content = match ? match[2] : mdContent; // if no frontmatter, use the whole content
-	return { frontmatter, content };
-}
-
-async function markdoc(ast: Node) {
-	const content = Markdoc.transform(ast, {
-		tags: {
-			callout: {
-				render: 'Callout',
-				attributes: {
-					type: {
-						type: String,
-						default: 'note',
-					},
-				},
-			},
-			counter: {
-				render: 'Counter',
-			},
-		},
-		variables: {
-			frontmatter: getFrontmatter(ast.attributes.frontmatter),
-		},
-	})
-	// @ts-ignore
-	return JSON.stringify(content.children)
-}
+import { 
+	getMD, 
+	setMD, 
+	getFileList, 
+	getFrontmatter, 
+	getContent, 
+	markdoc,
+	docDir,
+	assetsDir 
+  } from '$lib/api'
 
 export async function load({ params }) {
 	const md = await getMD(params.slug)
@@ -162,12 +97,6 @@ export const actions = {
         }
         await fs.writeFile(filePath, buffer);
       }
-			// const arrayBuffer = await file.arrayBuffer();
-      
-			// const buffer = Buffer.from(arrayBuffer);
-			// const filePath = path.join(assetsDir, file.name);
-			// await fs.writeFile(filePath, buffer);
-
 			return {
 			  success: true,
 			};

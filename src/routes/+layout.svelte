@@ -13,12 +13,19 @@
   
   let { children, data } = $props()
 
- 
-</script>
+  const title = function() {
+    if($page.data.frontmatter) {
+      return $page.data.frontmatter.title
+    } else {
+      return 'Welcome'
+    }
+  }
 
-<svelte:head>
-  <title>{$page.data.frontmatter.title}</title>
-</svelte:head>
+</script>
+  <svelte:head>
+    <title>{title()}</title>
+  </svelte:head>
+
 
 <main>
   <Toaster position="top-center"/>
