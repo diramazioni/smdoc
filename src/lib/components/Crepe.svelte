@@ -20,14 +20,14 @@
     })
     
     editor.create().then(() => {
-        console.log('Editor created');
+        //console.log('Editor created');
     });
   })
 
   $effect(() => {  
     return () => {
       editor.destroy();
-      console.log('Editor destroy');
+      //console.log('Editor destroy');
     };
   })
 

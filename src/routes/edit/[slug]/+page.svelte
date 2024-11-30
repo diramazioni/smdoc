@@ -43,7 +43,7 @@
   });
   
   $effect.pre(() => {
-    console.log(`effect url ${$page.url.pathname}`);
+    //console.log(`effect url ${$page.url.pathname}`);
 
   });
 
@@ -112,9 +112,9 @@
   //   console.log(markdown);
   // }
 </script>
-<a href="/edit/home" class="hover:underline">go home</a>
+<!-- <a href="/edit/home" class="hover:underline">go home</a>
 <a href="/home" class="hover:underline">go home</a>
-
+ -->
 
 <!-- <button onclick={invokeTest}>Invoke Method</button> -->
  
