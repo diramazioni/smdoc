@@ -1,10 +1,6 @@
-# Svelte Markdoc Renderer
+# Simple MarkDoc 
 
-Learn how to make a custom Markdoc renderer for Svelte.
-
-## Post
-
-✍️ https://joyofcode.xyz/svelte-markdoc-renderer
+Manage Markdoc easly with Svelte.
 
 ## Remote Development
 
@@ -15,7 +11,7 @@ Learn how to make a custom Markdoc renderer for Svelte.
 ### 🧑‍🤝‍🧑 Clone the project
 
 ```sh
-https://github.com/diramazioni/smdoc.git
+git clone https://github.com/diramazioni/smdoc.git
 ```
 
 ### 📦️ Install dependencies
