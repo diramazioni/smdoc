@@ -5,6 +5,7 @@ import { CloudRainWindIcon } from 'lucide-svelte'
 // import * as fs from 'node:fs/promises'
 import fs from 'fs/promises'
 import path from 'node:path'
+import { error } from '@sveltejs/kit';
 
 const docDir = "mdocs"
 const assetsDir = "static/assets"
@@ -22,7 +23,7 @@ async function getMD(slug: string) {
 			await fs.copyFile(templatePath, filePath);
 			return await fs.readFile(filePath, 'utf-8');
 		} else {
-			throw error;
+			error(500, error)
 		}
 	}
 }
@@ -31,7 +32,7 @@ async function setMD(slug: string, content: string) {
 		const file = path.resolve(`${docDir}/${slug}.md`)
 		await fs.writeFile(file, content, 'utf-8');
 	} catch (error: any) {
-		throw error;
+		error(500, error)
 	}
 }
 
@@ -41,7 +42,7 @@ async function getFileList(dir: string) {
 		const files = await fs.readdir(dirPath);
 		return files;
 	} catch (error: any) {
-		throw error;
+		error(500, error)
 	}
 }
 

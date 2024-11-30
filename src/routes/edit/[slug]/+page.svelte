@@ -118,6 +118,7 @@
   //   console.log(markdown);
   // }
 </script>
+<a href='/edit/home' class="hover:underline">to home</a>
 
 
 <!-- <button onclick={invokeTest}>Invoke Method</button> -->
@@ -241,7 +242,7 @@
         {#if assetFile}
           <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
         {/if}
-          <a href={'/edit' + assetUrl} class="hover:underline" >{asset}</a>
+          <a href={'/edit' + assetUrl} class="hover:underline">{asset}</a>
         <!-- rel="external" -->
       </div>
     </div>
@@ -263,8 +264,6 @@
     {@render assetItems(list_img)}
   </Tabs.Content>
 </Tabs.Root>        
-
-
 {/snippet}
 
 

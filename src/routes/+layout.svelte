@@ -6,15 +6,13 @@
   import { Separator } from "$lib/components/ui/separator/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
   import { Switch } from "$lib/components/ui/switch/index.js";
-  import { Pencil} from 'lucide-svelte';
 
-  import SidebarNav from "$lib/components/sidebar-nav.svelte";
-  import UserNav from "$lib/components/user-nav.svelte";
+  import SidebarNav from "$lib/components/Nav.svelte";
+  import UserNav from "$lib/components/User-nav.svelte";
   import { Toaster } from "$lib/components/ui/sonner/index.js";
-
+  
   let { children, data } = $props()
 
-  
  
 </script>
 
@@ -24,39 +22,27 @@
 
 <main>
   <Toaster position="top-center"/>
-  <div class="flex justify-between items-center ">
+  <nav class="ml-3 flex justify-between items-center ">
     <SidebarNav items={data.items} />  
     <div class="m-3">
       <UserNav/>
     </div>
-
-  </div>
-  
-  <nav class=" m-4 hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-    {#if $page.data.user}
-      {#if !$page.url.pathname.startsWith('/edit')}
-        <div class="flex-col items-center text-center">
-          <a href="/edit{$page.url.pathname}" class="menu">
-            <Pencil />
-          </a>  
-          <div class="">Edit</div>
-        </div>
-      {/if}
-    {/if} 
-  
   </nav>
-  
+  <Separator class="" />
+  <!-- <article class="prose prose-slate dark:prose-invert prose-headings:font-display prose-headings:font-normal mx-auto my-12">
+  {@render children()}
 
-  <Separator class="my-4" /> 
-  <div class="m-4">
+  </article> -->
+
     {@render children()}
-  </div>
+
+
 </main>
 
 <style>
-  .menu {
+  /* .menu {
     @apply bg-slate-100 text-foreground hover:text-accent-foreground transition-colors ;
-  }
+  } */
 
   
   /* :global(body) {

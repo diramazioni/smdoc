@@ -8,8 +8,8 @@
     // let { user } = $props()
     let user = $page.data.user;
     
-    const loginUrL = "/login?/login&redirectTo=/edit" + $page.url.pathname;
-    const logoutUrL = "/logout?/logout&redirectTo=/edit" + $page.url.pathname;
+    let loginUrL = $derived("/login?/login&redirectTo=/edit" + $page.url.pathname);
+    let logoutUrL = $derived("/logout?/logout&redirectTo=/edit" + $page.url.pathname);
 
     // const response = await fetch(logoutUrL, {
     //   method: 'POST',
@@ -22,7 +22,6 @@
 
 {#if !user}
 <div class="bg-slate-200 rounded-sm">
-
   <a href={loginUrL} >
     <User size={32} color="#c52020"/>
   </a>
@@ -72,7 +71,8 @@
     {/if}
       <DropdownMenu.Item>
         <LogOut class="mr-2 h-4 w-4" />
-        <a href={logoutUrL} >Log out</a>
+        <a href={logoutUrL}  >Log out</a>
+        <!-- rel="external" -->
         <DropdownMenu.Shortcut>⇧⌘O</DropdownMenu.Shortcut>
       </DropdownMenu.Item>
     </DropdownMenu.Content>

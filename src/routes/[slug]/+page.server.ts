@@ -2,12 +2,17 @@ import Markdoc from '@markdoc/markdoc'
 import yaml from 'js-yaml'
 import * as fs from 'node:fs/promises'
 import path from 'node:path'
+import { error } from '@sveltejs/kit';
 
-
-
-async function getPost(slug: string) {
-	const file = path.resolve(`mdocs/${slug}.md`)
-	return await fs.readFile(file, 'utf-8')
+async function getMD(slug: string) {
+  try {
+    const file = path.resolve(`mdocs/${slug}.md`)
+    return await fs.readFile(file, 'utf-8')
+  } catch (e) {
+		error(404, {
+			message: `Not found ${slug}.md`
+		});
+  }
 }
 
 function getFrontmatter(frontmatter: string) {
@@ -15,8 +20,8 @@ function getFrontmatter(frontmatter: string) {
 }
 
 async function markdoc(slug: string) {
-	const post = await getPost(slug)
-	const ast = Markdoc.parse(post)
+	const md = await getMD(slug)
+	const ast = Markdoc.parse(md)
 	const content = Markdoc.transform(ast, {
 		tags: {
 			callout: {
@@ -41,6 +46,9 @@ async function markdoc(slug: string) {
 }
 
 export async function load({ params }) {
-	return { children: await markdoc(params.slug) }
+	return { 
+		children: await markdoc(params.slug),
+		footer:		await markdoc('footer')
+	}
 }
 

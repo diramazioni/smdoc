@@ -19,9 +19,7 @@
   });
 </script>
 
-<nav
-  class={cn("flex-col space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 sd:flex sd:flex-row sd:items-center sd:gap-5 sd:text-sm", className)}
->
+<nav class={cn("flex-col space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 sd:flex sd:flex-row sd:items-center sd:gap-5 sd:text-sm", className)}>
   {#each items as item}
     {@const isActive = item.href.startsWith($page.url.pathname)}
     <Button
