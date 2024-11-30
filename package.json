@@ -13,6 +13,7 @@
 		"@milkdown/kit": "^7.5.5",
 		"@milkdown/utils": "^7.5.0",
 		"@sveltejs/adapter-auto": "^3.2.0",
+		"@sveltejs/adapter-node": "^5.2.9",
 		"@sveltejs/kit": "^2.5.27",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@tailwindcss/forms": "^0.5.9",
