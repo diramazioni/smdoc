@@ -40,19 +40,13 @@
 
 	onMount(() => {
 
-	});
+  });
+  
+  $effect.pre(() => {
+    console.log(`effect url ${$page.url.pathname}`);
 
-  // $effect(() => {
-  //   if (files) {
-  //     // Note that `files` is of type `FileList`, not an Array:
-  //     // https://developer.mozilla.org/en-US/docs/Web/API/FileList
-  //     console.log(files);
+  });
 
-  //     for (const file of files) {
-  //       console.log(`${file.name}: ${file.size} bytes`);
-  //     }
-  //   }
-  // });
   async function handleSave(event) {
     event.preventDefault(); // Prevent the default form submission
     // ?/frontmatter
@@ -118,7 +112,8 @@
   //   console.log(markdown);
   // }
 </script>
-<a href='/edit/home' class="hover:underline">to home</a>
+<a href="/edit/home" class="hover:underline">go home</a>
+<a href="/home" class="hover:underline">go home</a>
 
 
 <!-- <button onclick={invokeTest}>Invoke Method</button> -->
@@ -242,8 +237,8 @@
         {#if assetFile}
           <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
         {/if}
-          <a href={'/edit' + assetUrl} class="hover:underline">{asset}</a>
-        <!-- rel="external" -->
+          <a href={'/edit' + assetUrl} class="hover:underline" data-sveltekit-reload >{asset} </a>
+        <!-- rel="external" --> 
       </div>
     </div>
   {/snippet}

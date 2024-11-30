@@ -17,7 +17,7 @@
 </script>
 
 <svelte:head>
-  <title>Markdoc</title>
+  <title>{$page.data.frontmatter.title}</title>
 </svelte:head>
 
 <main>
