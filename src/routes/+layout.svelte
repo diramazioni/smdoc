@@ -30,7 +30,7 @@
 <main>
   <Toaster position="top-center"/>
   <nav class="ml-3 flex justify-between items-center ">
-    <h4>Logo</h4>
+    <img src="/logo.png" />
     <SidebarNav items={data.items} />  
     <div class="m-3">
       <UserNav/>
