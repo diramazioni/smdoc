@@ -20,6 +20,12 @@ git clone https://github.com/diramazioni/smdoc.git
 pnpm i
 ```
 
+### 💾️ Init and seed the db with prisma 
+```sh
+pnpm prisma db push
+pnpm seed
+```
+
 ### 💿️ Run the development server
 
 ```sh
