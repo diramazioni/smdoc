@@ -176,8 +176,8 @@ def main():
         'societa-trasparente.md'
     )
     
-    # Rename PDFs based on markdown content
-    rename_pdfs_from_markdown('mdocs/societa-trasparente.md')
 
 if __name__ == "__main__":
-    main()
+    #main()
+    # Rename PDFs based on markdown content
+    rename_pdfs_from_markdown('mdocs/societa-trasparente.md')
