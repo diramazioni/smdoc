@@ -136,14 +136,48 @@ updatedAt: {datetime.now().isoformat()}
         except Exception as e:
             print(f"Error migrating {url}: {e}")
 
+def rename_pdfs_from_markdown(markdown_file):
+    """Rename PDFs based on markdown link descriptions."""
+    with open(markdown_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Find all markdown links that point to PDFs
+    links = re.finditer(r'\[([^\]]+)\]\((/assets/[^)]+\.pdf)\)', content)
+    
+    for match in links:
+        description = match.group(1)
+        old_path = match.group(2)
+        
+        # Remove __ prefix if exists and create slug
+        description = re.sub(r'^__\s*', '', description)
+        slug = re.sub(r'[^\w\s-]', '', description.lower())
+        slug = re.sub(r'[-\s]+', '-', slug).strip('-')
+        
+        # Create new filename
+        new_filename = f"{slug}.pdf"
+        new_path = f"/assets/{new_filename}"
+        
+        # Replace in content
+        content = content.replace(old_path, new_path)
+        
+        # Rename actual file
+        old_file = os.path.join('static', old_path.lstrip('/'))
+        new_file = os.path.join('static', new_path.lstrip('/'))
+        
+        if os.path.exists(old_file):
+            os.rename(old_file, new_file)
+            print(f"Renamed {old_file} to {new_file}")
+
 def main():
-  
     # Migrate specific pages
     migrator = WebsiteMigrator(base_url='https://www.savlmarradi.it', output_dir='mdocs', assets_dir='static/assets')
     migrator.migrate_page(
         'https://www.savlmarradi.it/societa-trasparente',
         'societa-trasparente.md'
     )
+    
+    # Rename PDFs based on markdown content
+    rename_pdfs_from_markdown('mdocs/societa-trasparente.md')
 
 if __name__ == "__main__":
     main()
