@@ -167,6 +167,10 @@ def rename_pdfs_from_markdown(markdown_file):
         if os.path.exists(old_file):
             os.rename(old_file, new_file)
             print(f"Renamed {old_file} to {new_file}")
+    
+    # Write updated content back to file
+    with open(markdown_file, 'w', encoding='utf-8') as f:
+        f.write(content)
 
 def main():
     # Migrate specific pages
