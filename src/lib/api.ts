@@ -15,12 +15,12 @@ export async function getMD(slug: string) {
   try {
     return await fs.readFile(filePath, 'utf-8')
   } catch (error: any) {
-    if (error.code === 'ENOENT') {
+    if (error.code === 'ENOENT' && filePath.includes('/edit')) {
       console.log('File not found, copying from template')
       await fs.copyFile(templatePath, filePath)
       return await fs.readFile(filePath, 'utf-8')
     } else {
-      error(500, error)
+      throw error(404, error)
     }
   }
 }

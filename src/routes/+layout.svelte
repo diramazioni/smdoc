@@ -31,7 +31,7 @@
 <main>
   <Toaster position="top-center"/>
   <nav class="ml-3 flex justify-between items-center ">
-    <img src="/logo.png" />
+    <img src="/logo.png" alt="logo"/>
     <SidebarNav items={data.items} />  
     <div class="m-3">
       <UserNav/>
