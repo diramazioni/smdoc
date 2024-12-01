@@ -2,7 +2,7 @@
 title: Società Trasparente
 description: 'Società Trasparente: documenti amministrativi'
 slug: societa-trasparente
-updatedAt: 2024-12-01T01:11:58.303Z
+updatedAt: 2024-12-01T15:11:26.123Z
 
 ---
 # Società Trasparente
@@ -189,7 +189,7 @@ Data ultimo aggiornamento: 30/05/2024
 * Bandi di concorso
 
   * Selezione pubblica per curriculum e colloquio per la formazione di una graduatoria da utilizzare per l’assunzione con contratto a tempo indeterminato di n. 1 Operaio Comune Polivalente - ANNO 2020
-    * [\_\_Bando](/assets/bando.pdf)
+    * [\_\_Bando](/assets/bando.doc)
     * [\_\_Modello-domanda](/assets/bando.pdf)
     * [\_\_CV formato europeo](/assets/bando.pdf)
     * [\_\_Nomina Commissione Giudicatrice](/assets/nomina-commissione-giudicatrice.pdf)

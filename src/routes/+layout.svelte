@@ -10,6 +10,7 @@
   import SidebarNav from "$lib/components/Nav.svelte";
   import UserNav from "$lib/components/User-nav.svelte";
   import { Toaster } from "$lib/components/ui/sonner/index.js";
+	import MarkdocRenderer from '$lib/markdoc/renderer.svelte'
   
   let { children, data } = $props()
 
@@ -46,7 +47,11 @@
 
 
 </main>
-
+{#if $page.data.footer}
+<div id="footer" class="fixed bottom-0 left-0 right-0 ml-4 mr-4 p-2 w-full justify-center items-center text-center bg-gradient-to-b from-transparent to-white" >
+  <MarkdocRenderer children={JSON.parse($page.data.footer)} />
+</div>
+{/if}	
 <style>
   /* .menu {
     @apply bg-slate-100 text-foreground hover:text-accent-foreground transition-colors ;
