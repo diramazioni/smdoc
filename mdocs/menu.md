@@ -2,7 +2,7 @@
 title: menu
 description: ''
 slug: menu
-updatedAt: 2024-11-30T22:47:58.986Z
+updatedAt: 2024-12-01T17:50:18.751Z
 
 ---
 [Home](/home)
@@ -12,3 +12,5 @@ updatedAt: 2024-11-30T22:47:58.986Z
 [Tracciabilita](/tracciabilita)
 
 [Societa Trasparente](/societa-trasparente)
+
+[Privacy Policy](/privacy-policy)

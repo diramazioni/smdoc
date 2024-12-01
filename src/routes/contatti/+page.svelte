@@ -66,4 +66,5 @@
   :global(.map) {
     height: 500px;
   }
+
   </style>

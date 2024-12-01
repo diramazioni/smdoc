@@ -2,7 +2,7 @@
 title: Home
 description: ''
 slug: home
-updatedAt: 2024-11-30T21:58:45.541Z
+updatedAt: 2024-12-01T17:39:13.682Z
 
 ---
 ![1.00](/assets/slide_1.jpg)

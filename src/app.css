@@ -108,4 +108,21 @@
   }
 
 
+  a[href$=".pdf"] {
+    color: #59645c; 
+    text-decoration: underline;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+  }   
+  a[href$=".pdf"]:before  {
+    content: '';
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    background-image: url('/pdf-icon.svg'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 4px; 
+  } 
 }
