@@ -21,19 +21,20 @@ class WebsiteMigrator:
         os.makedirs(self.output_dir, exist_ok=True)
         os.makedirs(self.assets_dir, exist_ok=True)
 
-    def download_asset(self, url):
+    def download_asset(self, url, link_text=''):
         """Download an asset and return its local path."""
         try:
             response = requests.get(url, stream=True)
             response.raise_for_status()
             
-            # Extract filename from URL or Content-Disposition
-            filename = os.path.basename(urlparse(url).path)
-            if not filename:
-                filename = url.split('/')[-1]
+            # Create slug from link text or use a default
+            if link_text:
+                slug = re.sub(r'[^\w\s-]', '', link_text.lower())
+                slug = re.sub(r'[-\s]+', '-', slug).strip('-')
+                filename = f"{slug}.pdf"
+            else:
+                filename = 'document-' + datetime.now().strftime('%Y%m%d-%H%M%S') + '.pdf'
             
-            # Clean filename
-            filename = re.sub(r'[^\w\-_\.]', '-', filename)
             local_path = os.path.join(self.assets_dir, filename)
             
             # Save file
@@ -55,8 +56,9 @@ class WebsiteMigrator:
             url = tag.get('href') or tag.get('src')
             if url and (url.startswith('http') or url.startswith('//')):
                 full_url = urljoin(self.base_url, url)
-                if 'api/documenti' in url: #any(ext in url.lower() for ext in ['.pdf', '.jpg', '.png', '']):
-                    local_path = self.download_asset(full_url)
+                if 'api/documenti' in url:
+                    link_text = tag.string if tag.name == 'a' else ''
+                    local_path = self.download_asset(full_url, link_text)
                     if tag.name == 'a':
                         tag['href'] = local_path
                     else:
