@@ -119,22 +119,6 @@
 <!-- <button onclick={invokeTest}>Invoke Method</button> -->
  
 
-<!-- 
-<form action="?/new&redirectTo={$page.url.pathname}" method="POST">
-  <Button class="menu" type="submit" variant="secondary">
-    <FilePlus />              
-  </Button>
-</form>
-<form action="?/newFolder&redirectTo={$page.url.pathname}" method="POST">
-  <Button class="menu" type="submit" variant="secondary">
-    <FolderPlus />              
-  </Button>
-</form>   
-<form action="?/newFolder&redirectTo={$page.url.pathname}" method="POST">
-  <Button class="menu" type="submit" variant="secondary">
-    <FileUp />
-  </Button>
-</form>       -->
 {#snippet uploadForm()}
 <form action="?/upload" method="POST" enctype="multipart/form-data">
   <div class="flex max-w-full items-center m-4 space-x-3">
@@ -214,13 +198,14 @@
   {#snippet assetItem(asset)}
   {@const assetUrl = asset.endsWith('.md') ? `/${asset.slice(0, -3)}` : `/assets/${asset}`}
   {@const assetFile = asset.endsWith('.md') ? false : true}
-
-    <div class="flex border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
+  {@const assetPdf = asset.endsWith('.pdf') ? true : false}
+  
+  <div class="flex items-center border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
 
       <button use:copy={assetUrl}  onclick={() => {toast.success(`${assetUrl} Link copied to clipboard`)}}>
         <Copy size={15} class="cursor-pointer m-1" />
       </button>
-      {#if assetFile}
+      {#if assetFile && !assetPdf}
         <button use:copy={assetUrl}  onclick={() => {
           editorRef.insertMarkdown(`![${assetUrl.slice(1)}](${assetUrl})`) }}>
           <Link size={15} class="cursor-pointer m-1" />
@@ -231,12 +216,14 @@
           <Link size={15} class="cursor-pointer m-1" />
         </button>
       {/if}
+      <button use:copy={assetUrl}  onclick={() => {handleDelete(asset)}}>
+        <Trash2 size={15} class="cursor-pointer m-1" />
+      </button>
       
-      <Trash2 size={15} class="cursor-pointer m-1" onclick={() => {handleDelete(asset)}}/>
-      <div class="text-sm">
-        {#if assetFile}
-          <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
-        {/if}
+      {#if assetFile && !assetPdf}
+        <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
+      {/if}
+      <div class="text-sm ml-2">
           <a href={'/edit' + assetUrl} class="hover:underline" data-sveltekit-reload >{asset} </a>
         <!-- rel="external" --> 
       </div>
