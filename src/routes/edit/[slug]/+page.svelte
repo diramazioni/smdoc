@@ -8,7 +8,7 @@
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
   import { Separator } from "$lib/components/ui/separator/index.js";
 
-	import { AccordionItem } from "$lib/components";
+	// import { AccordionItem } from "$lib/components";
   import * as Accordion from "$lib/components/ui/accordion/index.js";
   import { Save, Eye, Copy, FilePlus, FolderPlus, FileUp, Link, FilePenLine, ArrowUpToLine, FileCode, TypeOutline, ImageUp, Trash2} from 'lucide-svelte';
   // Utils 
@@ -26,17 +26,20 @@
 
 
 	let { data } = $props()
-	let tabState = $state('edit')
-
+  
   let editorRef = $state(); // Reference to store the editor instance
   let titleValue = $state(data.frontmatter.title)
   let descriptionValue = $state(data.frontmatter.description)
-  let list_md = $state(data.list_md);
-  let list_pdf = $state(data.list_pdf);
-  let list_img = $state(data.list_img);
   let slug = $derived(slugify(titleValue))
   // let markdown = $state(data.md_only)
   let files = $state();
+  
+  let list_files = $state(data.list_md);
+	let tabState = $state('md')
+	let searchQuery = $state("");
+	let filteredItems = $derived(list_files.filter(item =>
+	  item.toLowerCase().includes(searchQuery.toLowerCase())
+	));
 
 	onMount(() => {
 
@@ -86,9 +89,7 @@
     });
     let result = await response.json();
     if(result.type === 'success') {
-      list_md = list_md.filter(item => item !== slug);
-      list_pdf = list_pdf.filter(item => item !== slug);
-      list_img = list_img.filter(item => item !== slug);
+      list_files = list_files.filter(item => item !== slug);
       toast.success(`${slug} deleted`)
     }    
   }
@@ -120,24 +121,31 @@
  
 
 {#snippet uploadForm()}
-<form action="?/upload" method="POST" enctype="multipart/form-data">
-  <div class="flex max-w-full items-center m-4 space-x-3">
-    <Label for="title">Upload asset</Label>
-    <Button class="menu" type="submit" variant="secondary">
-      <ArrowUpToLine />
-    </Button>
-    <input bind:files multiple type="file" name="file" placeholder="file" required/>
-    {#if files}
-      <div class="flex-col">
-        {#each Array.from(files) as file}
-        <div>
-          <span class="text-sm">{file.name}</span> <span class="text-sm">({file.size} bytes)</span>
+<Accordion.Root type="single">
+  <Accordion.Item value="uploads">
+    <Accordion.Trigger class="ml-4">Upload</Accordion.Trigger>
+    <Accordion.Content>
+      <form action="?/upload" method="POST" enctype="multipart/form-data">
+        <div class="flex max-w-full items-center m-4 space-x-3">
+          <Button class="menu" type="submit" variant="secondary">
+            <ArrowUpToLine />
+          </Button>
+          <input bind:files multiple type="file" name="file" placeholder="file" required/>
+          {#if files}
+            <div class="flex-col">
+              {#each Array.from(files) as file}
+              <div>
+                <span class="text-sm">{file.name}</span> <span class="text-sm">({file.size} bytes)</span>
+              </div>
+              {/each}
+            </div>
+          {/if}
         </div>
-        {/each}
-      </div>
-    {/if}
-  </div>
-</form>  
+      </form>  
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+
 {/snippet}
 
 {#snippet metaForm()}
@@ -187,17 +195,29 @@
 
 {#snippet assets()}
   {#snippet assetItems(assetList)}
-    <ScrollArea class="h-[400px] w-full rounded-md border p-4">
-      {#each assetList as asset}
-        {@render assetItem(asset)}
-      <!-- <Separator class="my-2" /> -->
-      {/each} 
-    </ScrollArea>
+    {@render uploadForm()}
+
+    <input
+    type="text"
+    placeholder="Search assets"
+    bind:value={searchQuery}
+    class="w-full px-4 py-2 ml-4 mb-2 border bg-slate-200 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+    
+    {#if assetList.length > 0}
+      <ScrollArea class="h-[400px] w-full rounded-md border p-4">
+        {#each assetList as asset}
+          {@render assetItem(asset)}
+        <!-- <Separator class="my-2" /> -->
+        {/each} 
+      </ScrollArea>
+    {:else}
+      <div class="text-center text-gray-500 py-4">No items match your search.</div>
+    {/if}  
   {/snippet}
   
   {#snippet assetItem(asset)}
   {@const assetUrl = asset.endsWith('.md') ? `/${asset.slice(0, -3)}` : `/assets/${asset}`}
-  {@const assetFile = asset.endsWith('.md') ? false : true}
+  {@const assetMDoc = asset.endsWith('.md') ? false : true}
   {@const assetPdf = asset.endsWith('.pdf') ? true : false}
   
   <div class="flex items-center border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
@@ -205,7 +225,7 @@
       <button use:copy={assetUrl}  onclick={() => {toast.success(`${assetUrl} Link copied to clipboard`)}}>
         <Copy size={15} class="cursor-pointer m-1" />
       </button>
-      {#if assetFile && !assetPdf}
+      {#if assetMDoc && !assetPdf}
         <button use:copy={assetUrl}  onclick={() => {
           editorRef.insertMarkdown(`![${assetUrl.slice(1)}](${assetUrl})`) }}>
           <Link size={15} class="cursor-pointer m-1" />
@@ -220,7 +240,7 @@
         <Trash2 size={15} class="cursor-pointer m-1" />
       </button>
       
-      {#if assetFile && !assetPdf}
+      {#if assetMDoc && !assetPdf}
         <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
       {/if}
       <div class="text-sm ml-2">
@@ -230,55 +250,36 @@
     </div>
   {/snippet}
 
-<Tabs.Root value="md">
+<Tabs.Root  bind:value={tabState} 	
+onValueChange={(v) => {
+  tabState = v;
+  if (v === 'md') {
+    list_files = data.list_md
+  } else if (v === 'pdf') {
+    list_files = data.list_pdf
+  } else if (v === 'img') {
+    list_files = data.list_img
+  }
+}}>
   <Tabs.List class="grid w-full grid-cols-3">
     <Tabs.Trigger value="md"> <FilePenLine/> </Tabs.Trigger>
     <Tabs.Trigger value="pdf">  <img src="/pdf-icon.svg" class="h-6 w-8" alt="pdf" /> </Tabs.Trigger>
     <Tabs.Trigger value="img" ><ImageUp/></Tabs.Trigger>
   </Tabs.List>
   <Tabs.Content value="md">
-    {@render assetItems(list_md)}
+    {@render assetItems(filteredItems)}
   </Tabs.Content>
   <Tabs.Content value="pdf">
-    {@render assetItems(list_pdf)}
+    {@render assetItems(filteredItems)}
   </Tabs.Content>
   <Tabs.Content value="img">
-    {@render assetItems(list_img)}
+    {@render assetItems(filteredItems)}
   </Tabs.Content>
 </Tabs.Root>        
 {/snippet}
 
-
-<Tabs.Root bind:value={tabState} 	
-	onValueChange={(v) => {
-		tabState = v;
-		if (v === 'edit') {
-      titleValue = data.frontmatter.title
-      descriptionValue = data.frontmatter.description
-      editorRef?.setMarkdown(data.md_only)
-		} 
-	}}>
-	<Tabs.List class="grid w-full grid-cols-2">
-		<Tabs.Trigger value="edit">
-      <FileCode/>&nbsp; Meta
-    </Tabs.Trigger>
-      
-    <Tabs.Trigger value="upload"> 
-      <ArrowUpToLine />&nbsp; Upload
-    </Tabs.Trigger>
-	  <!-- <Tabs.Trigger value="view" >View</Tabs.Trigger> -->
-	</Tabs.List>
-	<Tabs.Content value="edit">
-    {@render metaForm()}
-
-	</Tabs.Content>
-	<Tabs.Content value="upload">
-    {@render uploadForm()}
-	</Tabs.Content>
-	<!-- <Tabs.Content value="view">
-		<MarkdocRenderer children={JSON.parse(data.children)} />
-	</Tabs.Content> -->
-</Tabs.Root>    
+ 
+{@render metaForm()}
 
 {@render cmdMenu()}
 <Resizable.PaneGroup  direction="horizontal"
