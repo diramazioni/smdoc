@@ -147,7 +147,7 @@
   <TuiEditor
   bind:this={editorRef}
   initialValue={data.md_only}
-  pluginsOn={['colorSyntax', 'tableMergedCell','codeSyntaxHighlight', 'chart', 'uml']} 
+  pluginsOn={['tableMergedCell','codeSyntaxHighlight', 'chart', 'uml']} 
   />
 </div>
 {/snippet}
