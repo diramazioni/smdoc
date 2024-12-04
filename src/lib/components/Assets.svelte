@@ -2,7 +2,7 @@
   import { copy } from 'svelte-copy';
   import { toast } from "svelte-sonner";
   import { page } from '$app/stores';
-  import { getContext } from 'svelte';
+  import { onMount } from 'svelte';
   
   import { Copy, Link, FilePenLine,ImageUp, Trash2} from 'lucide-svelte';
   import * as Tabs from "$lib/components/ui/tabs/index.js";
@@ -11,6 +11,7 @@
   import UploadForm from "$lib/components/UploadForm.svelte";
   import Dialog from '$lib/components/Dialog.svelte';
 
+	let { editorRef = $bindable() } = $props()
 
   let tabState = $state('md');
   let listAssets = $state($page.data.listAssets['md']);
@@ -19,8 +20,14 @@
     item.toLowerCase().includes(searchQuery.toLowerCase())
 	));
 
-  let editorRef = getContext('editorRef');
-  
+  onMount(() => {
+  });
+  $effect(() => {
+    if (editorRef) {
+
+    } 
+    //console.log(`effect url ${$page.url.pathname}`);
+  });
   async function handleDelete(slug) {
     const formData = new FormData();
     formData.append('slug', slug);
@@ -32,13 +39,13 @@
     if(result.type === 'success') {
       listAssets = listAssets.filter(item => item !== slug);
       toast.success(`${slug} deleted`)
-    }    
+    }
   }
 </script>
 
  
 
-<Tabs.Root bind:value={tabState} 	
+<Tabs.Root bind:value={tabState}
   onValueChange={(v) => {
     tabState = v;
     listAssets = $page.data.listAssets[v];
@@ -58,7 +65,7 @@
   <Tabs.Content value="img">
     {@render assetItems(filteredItems)}
   </Tabs.Content>
-</Tabs.Root>      
+</Tabs.Root>
 
 {#snippet assetItems(assetList)}
   <UploadForm />
@@ -74,11 +81,11 @@
         {@render assetItem(asset)}
         <!-- {asset} -->
       <!-- <Separator class="my-2" /> -->
-      {/each} 
+      {/each}
     </ScrollArea>
   {:else}
     <div class="text-center text-gray-500 py-4">No items match your search.</div>
-  {/if}  
+  {/if}
 {/snippet}
 
 {#snippet assetItem(asset)}
@@ -106,7 +113,7 @@
     <Dialog>
       {#snippet trigger()}
         <Trash2 size={15} class="cursor-pointer m-1" />
-      {/snippet}  
+      {/snippet}
       {#snippet title()}
         Delete {asset}?
       {/snippet}
@@ -114,13 +121,13 @@
       {#snippet description()}
         This will permanently delete the asset from the server.
         Are you sure you want to continue? <br/>
-        <button use:copy={assetUrl}  onclick={() => {handleDelete(asset)}}>
+        <button class="m-auto w-full flex justify-center hover:bg-red-500 hover:text-white"  onclick={() => {handleDelete(asset)}}>
           <Trash2 size={25} class="cursor-pointer m-1" />
         </button>
       {/snippet}
      
       <!-- Additional dialog content here... -->
-    </Dialog>      
+    </Dialog>
 
     
     {#if !assetMDoc && !assetPdf}
@@ -128,7 +135,7 @@
     {/if}
     <div class="text-sm ml-2">
         <a href={'/edit' + assetUrl} class="hover:underline" data-sveltekit-reload >{asset} </a>
-      <!-- rel="external" --> 
+      <!-- rel="external" -->
     </div>
   </div>
 {/snippet}

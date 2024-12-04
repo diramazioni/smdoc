@@ -29,12 +29,11 @@
   let slug = $derived(slugify(titleValue))
   
 	onMount(() => {
-
   });
   
   $effect(() => {
+
     //console.log(`effect url ${$page.url.pathname}`);
-    setContext('editor', editorRef)
   });
 
   async function handleSave(event) {
@@ -150,7 +149,7 @@
   <Resizable.Handle withHandle />
   <Resizable.Pane defaultSize={20}>
     <!-- {@render assets()} -->
-     <Assets />
+     <Assets bind:editorRef/>
   </Resizable.Pane>
 </Resizable.PaneGroup>
   <!-- {@html data.html} -->
