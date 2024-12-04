@@ -4,10 +4,11 @@ node_modules
 /.svelte-kit
 /package
 .env
+.venv
 .env.*
 .venv
 .aider*
 !.env.example
 vite.config.js.timestamp-*
 prisma/users.db
-static/assets
+static/assets/*

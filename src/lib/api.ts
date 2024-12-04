@@ -9,20 +9,21 @@ export const docDir = "mdocs"
 export const assetsDir = "static/assets"
 
 export async function getMD(slug: string) {
+  try {
+    const filePath = path.resolve(`${docDir}/${slug}.md`)
+    return await fs.readFile(filePath, 'utf-8')
+  } catch (error: any) {
+    return undefined
+  }
+}
+
+export async function copyTemplate(slug: string) {
   const filePath = path.resolve(`${docDir}/${slug}.md`)
   const templatePath = path.resolve(`${docDir}/_templates/new.md`)
 
-  try {
-    return await fs.readFile(filePath, 'utf-8')
-  } catch (error: any) {
-    if (error.code === 'ENOENT') {
-      console.log('File not found, copying from template')
-      await fs.copyFile(templatePath, filePath)
-      return await fs.readFile(filePath, 'utf-8')
-    } else {
-      error(500, error)
-    }
-  }
+  console.log('File not found, copying from template')
+  await fs.copyFile(templatePath, filePath) 
+  return await fs.readFile(filePath, 'utf-8')
 }
 
 export async function setMD(slug: string, content: string) {
@@ -81,6 +82,9 @@ export async function markdoc(ast: Node) {
 
 export async function loadMD(slug:string) {
 	const md = await getMD(slug)
+  if (!md) {
+    return error(404, 'Not found')
+  }
 	const { content: md_only } = getContent(md);
 	const ast = Markdoc.parse(md)
 	const children = await markdoc(ast)

@@ -7,6 +7,17 @@
 	let { data } = $props()
 	let showEditDiv = $state(false);
 
+  import MapLibre from 'svelte-maplibre/MapLibre.svelte';
+  import DefaultMarker from 'svelte-maplibre/DefaultMarker.svelte';
+  // import { mapClasses } from '../styles';
+  // import code from './+page.svelte?raw';
+  // import CodeSample from '$site/CodeSample.svelte';
+  import Popup from 'svelte-maplibre/Popup.svelte';
+
+  const {lngLat, name} = {
+    lngLat: [11.609026 , 44.072771],
+    name: 'Savl s.r.l. - Via Dino Campana 16, 50034 Marradi (FI), Italy'
+  }
 </script>
 
   <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -33,8 +44,27 @@
       <MarkdocRenderer children={JSON.parse(data.children)} />
     </div>
   {/if}	
-
-
+  <div id="map" class="m-4" >
+    <MapLibre
+    style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+    class=" aspect-[9/16] max-h-[600px] w-full"
+    standardControls
+    zoom={15}
+    center={lngLat}
+  >
+    <!-- {#each markers as { lngLat, name }} -->
+      <DefaultMarker {lngLat}>
+        <Popup offset={[0, -10]}>
+          <div class="text-lg font-bold">{name}</div>
+        </Popup>
+      </DefaultMarker>
+    <!-- {/each} -->
+    </MapLibre>
+  </div>
 
   <style>
+  :global(.map) {
+    height: 500px;
+  }
+
   </style>

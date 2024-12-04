@@ -3,23 +3,24 @@
   import * as Card from "$lib/components/ui/card/index.js";
   import * as Carousel from "$lib/components/ui/carousel/index.js";
     
-  const plugin = Autoplay({ delay: 3000, stopOnInteraction: false });
-
+  
   interface Props {
     class?: string | undefined | null;
     links: { href: string; title: string }[];
+    delay? : number;
   }
-
-  let { class: className = undefined, links }: Props = $props();
+  
+  let { class: className = undefined, links, delay = 5000 }: Props = $props();
+  const plugin = Autoplay({ delay: delay, stopOnInteraction: false });
   
 
 </script>
 <div class="justify-center flex">    
 <Carousel.Root
 plugins={[plugin]}
-class="w-full max-w-screen-md"
+class="w-full max-w-screen-xl"
 onmouseenter={plugin.stop}
-onmouseleave={plugin.reset}
+onmouseleave={plugin.reset} 
 >
   <Carousel.Content>
     {#each links as link}

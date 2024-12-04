@@ -83,6 +83,12 @@
     return editor?.getMarkdown();
   }
 
+  export function insertMarkdown(markdown: string): void {
+    editor.changeMode('markdown')
+    editor?.insertText(markdown);
+    editor.changeMode('wysiwyg');
+  }
+
   async function initEditor(): Promise<void> {
     const Editor = (await import('@toast-ui/editor')).default;
     // Plugins setup

@@ -1,45 +1,39 @@
-import Markdoc from '@markdoc/markdoc'
-import { redirect } from '@sveltejs/kit'
 import yaml from 'js-yaml'
-import { CloudRainWindIcon } from 'lucide-svelte'
-// import * as fs from 'node:fs/promises'
 import fs from 'fs/promises'
 import path from 'node:path'
 import { error } from '@sveltejs/kit';
 import { 
-	getMD, 
+	getMD,
+	loadMD,
+	copyTemplate,
 	setMD, 
 	getFileList, 
-	getFrontmatter, 
 	getContent, 
-	markdoc,
 	docDir,
 	assetsDir 
   } from '$lib/api'
 
 export async function load({ params }) {
-	const md = await getMD(params.slug)
-	const docFiles = await getFileList(docDir)
-	const assetFiles = await getFileList(assetsDir)
-	const { content: md_only } = getContent(md);
-	const ast = Markdoc.parse(md)
-	const children = await markdoc(ast)
-	const frontmatter = getFrontmatter(ast.attributes.frontmatter)
-	return { 
-		children,
-		md_only,
-		frontmatter,
-		slug: params.slug,
-		list_md: docFiles.filter((file) => file.endsWith('.md')),
-		list_img: assetFiles.filter((file) => file.endsWith('.png') || file.endsWith('.jpg')),
-		list_pdf: assetFiles.filter((file) => file.endsWith('.pdf')),
-	}
+		const {children, frontmatter, md_only} = await loadMD(params.slug)
+		const docFiles = await getFileList(docDir)
+		const assetFiles = await getFileList(assetsDir)
+		const listAssets = {
+			'md':docFiles.filter((file) => file.endsWith('.md')),
+			'pdf':assetFiles.filter((file) => file.endsWith('.pdf')),
+			'img':assetFiles.filter((file) =>  file.match(/\.(jpg|jpeg|png|gif|bmp|webp)$/i) !== null),
+		}
+		return { 
+			children,
+			md_only,
+			frontmatter,
+			slug: params.slug,
+			listAssets
+		}
 }
 
 export const actions = {
 	frontmatter: async ({ url, request }) => {
 		try {
-			console.log('frontmatter')
 			const data = await request.formData();
 			// Extract new frontmatter data from the form
 			const updatedFrontmatter = {
@@ -51,7 +45,10 @@ export const actions = {
       		const slug = data.get('slug')
 			console.log("slug", slug)
 			// const md = await getMD(params.slug)
-			const md = await getMD(slug)
+			let md = await getMD(slug)
+			if (!md) {
+				md = await copyTemplate(slug)
+			}
 			const { content } = getContent(md);
 			const newYaml = yaml.dump(updatedFrontmatter);
 			const updatedMd = `---\n${newYaml}\n---\n${content}`;
