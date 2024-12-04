@@ -7,7 +7,6 @@
   import { Copy, Link, FilePenLine,ImageUp, Trash2} from 'lucide-svelte';
   import * as Tabs from "$lib/components/ui/tabs/index.js";
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
-  import { Separator } from "$lib/components/ui/separator/index.js";
   import UploadForm from "$lib/components/UploadForm.svelte";
   import Dialog from '$lib/components/Dialog.svelte';
 

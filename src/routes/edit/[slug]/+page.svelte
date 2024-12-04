@@ -4,6 +4,8 @@
   import { Label } from "$lib/components/ui/label/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import * as Resizable from "$lib/components/ui/resizable/index.js";
+  import { Separator } from "$lib/components/ui/separator/index.js";
+  import { Switch } from "$lib/components/ui/switch/index.js";
 
   import { Save, Eye, Copy, FilePlus } from 'lucide-svelte';
   // Utils 
@@ -13,8 +15,8 @@
   // My component
 	import MarkdocRenderer from '$lib/markdoc/renderer.svelte'
   // import { Editor, Viewer } from 'tui-editor-svelte';
-  // import Editor from '$lib/components/Editor.svelte';
-  import Editor from '$lib/components/Crepe.svelte';
+  import TuiEditor from '$lib/components/Editor.svelte';
+  import Crepe from '$lib/components/Crepe.svelte';
   import Assets from '$lib/components/Assets.svelte';
   // Svelte
   import { onMount, setContext } from 'svelte';
@@ -23,11 +25,14 @@
 
 	let { data } = $props()
   
+  let useTuiEditor = $state(false);
   let editorRef = $state(); // Reference to store the editor instance
   let titleValue = $state(data.frontmatter.title)
   let descriptionValue = $state(data.frontmatter.description)
   let slug = $derived(slugify(titleValue))
   
+
+
 	onMount(() => {
   });
   
@@ -123,28 +128,47 @@
     <Button onclick={clearFields} class="menu" type="button" variant="secondary">
       <FilePlus />
     </Button>
+    <div>
+      <!-- switch editor-->
+       <Label for="editor">
+        {#if useTuiEditor}
+          TuiEditor
+        {:else}
+          Crepe
+        {/if}
+       </Label>
+       <Switch bind:checked={useTuiEditor} />
+      <!-- switch editor-->
+    </div>
   </div>
 {/snippet}
-{#snippet tuieditor()}
-  <Editor
+{#snippet tuiEditor()}
+<div class="mt-30">
+  <TuiEditor
   bind:this={editorRef}
   initialValue={data.md_only}
   pluginsOn={['colorSyntax', 'tableMergedCell','codeSyntaxHighlight', 'chart', 'uml']} 
   />
+</div>
 {/snippet}
 
-{#snippet editor()}
-<Editor bind:this={editorRef} markdown={data.md_only} />
+{#snippet crepeEditor()}
+<Crepe bind:this={editorRef} markdown={data.md_only} />
 {/snippet}
+<Separator class="mt-2"/>
 
 {@render metaForm()}
 
 {@render cmdMenu()}
 <Resizable.PaneGroup  direction="horizontal"
-  class="h-full w-full rounded-lg border relative -mt-10"
+  class="h-full w-full rounded-lg border relative "
 >
-  <Resizable.Pane defaultSize={80} >  
-    {@render editor()}
+  <Resizable.Pane defaultSize={80} >
+    {#if useTuiEditor}
+      {@render tuiEditor()}
+    {:else}
+      {@render crepeEditor()}
+    {/if}
   </Resizable.Pane>
   <Resizable.Handle withHandle />
   <Resizable.Pane defaultSize={20}>

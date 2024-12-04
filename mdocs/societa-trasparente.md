@@ -2,11 +2,9 @@
 title: Società Trasparente
 description: 'Società Trasparente: documenti amministrativi'
 slug: societa-trasparente
-updatedAt: 2024-12-01T17:25:55.432Z
+updatedAt: 2024-12-04T14:53:46.546Z
 
 ---
-***
-
 # Società Trasparente
 
 Data ultimo aggiornamento: 30/05/2024
