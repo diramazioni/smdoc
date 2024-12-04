@@ -10,7 +10,7 @@
   import slugify from 'voca/slugify';
   import { copy } from 'svelte-copy';
   import { toast } from "svelte-sonner";
-  // Renderer
+  // My component
 	import MarkdocRenderer from '$lib/markdoc/renderer.svelte'
   // import { Editor, Viewer } from 'tui-editor-svelte';
   // import Editor from '$lib/components/Editor.svelte';
@@ -105,7 +105,7 @@
       </button>  
     <Input type="text" name="slug_view" disabled value={slug} class="w-20"/> 
     <input name="slug" hidden value={slug} class="w-20"/> 
-    <Button type="submit">Save META</Button>
+    <Button type="submit">Save new</Button>
   </div>
 </form>    
 {/snippet}

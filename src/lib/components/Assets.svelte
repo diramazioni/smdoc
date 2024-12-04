@@ -1,18 +1,21 @@
 <script lang="ts">
-  import { Save, Eye, Copy, FilePlus, FolderPlus, FileUp, Link, FilePenLine, ArrowUpToLine, FileCode, TypeOutline, ImageUp, Trash2} from 'lucide-svelte';
   import { copy } from 'svelte-copy';
   import { toast } from "svelte-sonner";
-  import * as Tabs from "$lib/components/ui/tabs/index.js";
   import { page } from '$app/stores';
+  import { getContext } from 'svelte';
+  
+  import { Copy, Link, FilePenLine,ImageUp, Trash2} from 'lucide-svelte';
+  import * as Tabs from "$lib/components/ui/tabs/index.js";
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
   import { Separator } from "$lib/components/ui/separator/index.js";
   import UploadForm from "$lib/components/UploadForm.svelte";
-    import { getContext } from 'svelte';
+  import Dialog from '$lib/components/Dialog.svelte';
+
 
   let tabState = $state('md');
-  let list_files = $state($page.data.list_md);
+  let listAssets = $state($page.data.listAssets['md']);
 	let searchQuery = $state("");
-	let filteredItems = $derived(list_files.filter(item =>
+	let filteredItems = $derived(listAssets.filter(item =>
     item.toLowerCase().includes(searchQuery.toLowerCase())
 	));
 
@@ -27,23 +30,18 @@
     });
     let result = await response.json();
     if(result.type === 'success') {
-      list_files = list_files.filter(item => item !== slug);
+      listAssets = listAssets.filter(item => item !== slug);
       toast.success(`${slug} deleted`)
     }    
   }
 </script>
-   
+
+ 
 
 <Tabs.Root bind:value={tabState} 	
-onValueChange={(v) => {
-  tabState = v;
-  if (v === 'md') {
-    list_files = $page.data.list_md
-  } else if (v === 'pdf') {
-    list_files = $page.data.list_pdf
-  } else if (v === 'img') {
-    list_files = $page.data.list_img
-  }
+  onValueChange={(v) => {
+    tabState = v;
+    listAssets = $page.data.listAssets[v];
 }}>
 
   <Tabs.List class="grid w-full grid-cols-3">
@@ -90,9 +88,7 @@ onValueChange={(v) => {
 
   <div class="flex items-center border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
 
-    <button use:copy={assetUrl}  onclick={() => {toast.success(`${assetUrl} Link copied to clipboard`)}}>
-      <Copy size={15} class="cursor-pointer m-1" />
-    </button>
+
     {#if !assetMDoc && !assetPdf}
       <button use:copy={assetUrl}  onclick={() => {
         editorRef.insertMarkdown(`![${assetUrl.slice(1)}](${assetUrl})`) }}>
@@ -104,9 +100,28 @@ onValueChange={(v) => {
         <Link size={15} class="cursor-pointer m-1" />
       </button>
     {/if}
-    <button use:copy={assetUrl}  onclick={() => {handleDelete(asset)}}>
-      <Trash2 size={15} class="cursor-pointer m-1" />
+    <button use:copy={assetUrl}  onclick={() => {toast.success(`${assetUrl} Link copied to clipboard`)}}>
+      <Copy size={15} class="cursor-pointer m-1" />
     </button>
+    <Dialog>
+      {#snippet trigger()}
+        <Trash2 size={15} class="cursor-pointer m-1" />
+      {/snippet}  
+      {#snippet title()}
+        Delete {asset}?
+      {/snippet}
+     
+      {#snippet description()}
+        This will permanently delete the asset from the server.
+        Are you sure you want to continue? <br/>
+        <button use:copy={assetUrl}  onclick={() => {handleDelete(asset)}}>
+          <Trash2 size={25} class="cursor-pointer m-1" />
+        </button>
+      {/snippet}
+     
+      <!-- Additional dialog content here... -->
+    </Dialog>      
+
     
     {#if !assetMDoc && !assetPdf}
       <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
