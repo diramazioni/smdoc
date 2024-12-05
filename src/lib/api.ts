@@ -1,5 +1,6 @@
 
 import Markdoc from '@markdoc/markdoc'
+
 import yaml from 'js-yaml'
 import fs from 'fs/promises'
 import path from 'node:path'
@@ -22,7 +23,7 @@ export async function copyTemplate(slug: string) {
   const templatePath = path.resolve(`${docDir}/_templates/new.md`)
 
   console.log('File not found, copying from template')
-  await fs.copyFile(templatePath, filePath) 
+  await fs.copyFile(templatePath, filePath)
   return await fs.readFile(filePath, 'utf-8')
 }
 
@@ -49,11 +50,13 @@ export function getFrontmatter(frontmatter: string) {
   return yaml.load(frontmatter)
 }
 
-export function getContent(mdContent: string): { frontmatter: string, content: string } {
-  const frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/
-  const match = mdContent.match(frontmatterRegex)
-  const frontmatter = match ? match[1] : ''
-  const content = match ? match[2] : mdContent
+export function getContent(md: string): { frontmatter: string, content: string } {
+  const frontmatterStart = md.indexOf('---') + 3 // Start of frontmatter content
+  const frontmatterEnd = md.indexOf('---', frontmatterStart) // End of frontmatter
+  const frontmatter = md.slice(frontmatterStart, frontmatterEnd).trim() // Extract frontmatter content
+  
+  const content = md.slice(frontmatterEnd + 3).trim() // Extract content after frontmatter
+  
   return { frontmatter, content }
 }
 
@@ -77,8 +80,11 @@ export async function markdoc(ast: Node) {
       frontmatter: getFrontmatter(ast.attributes.frontmatter),
     },
   })
+  // console.log(JSON.stringify(content))
   return JSON.stringify(content.children)
 }
+
+
 
 export async function loadMD(slug:string) {
 	const md = await getMD(slug)

@@ -2,8 +2,7 @@
 title: Società Trasparente
 description: 'Società Trasparente: documenti amministrativi'
 slug: societa-trasparente
-updatedAt: 2024-12-05T09:19:35.423Z
-
+updatedAt: 2024-12-05T13:00:47.145Z
 ---
 # Società Trasparente
 
@@ -12,11 +11,11 @@ Data ultimo aggiornamento: 30/05/2024
 ## Disposizioni Generali
 
 * [DETERMINA A CONTRARRE DEL 05-11-2024](/assets/determina-a-contrarre-del-05-11-2024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B41D2000FB](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B41D2000FB)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B41D2000FB)
 * [DETERMINA A CONTRARRE DEL 05-11-2024](/assets/determina-a-contrarre-del-05-11-2024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B41D2173F5](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B41D2173F5)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B41D2173F5)
 * [DETERMINA A CONTRARRE DEL 27-11-2024](/assets/determina-a-contrarre-del-05-11-2024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B47D40DE51](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B47D40DE51)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B47D40DE51)
 
 #### Piano triennale per la prevenzione della corruzione e della trasparenza
 
@@ -248,7 +247,7 @@ Data ultimo aggiornamento: 30/05/2024
 
 #### Collegamento alla BDNCP
 
-* [https://dati.anticorruzione.it/superset/dashboard/appalti/](https://dati.anticorruzione.it/superset/dashboard/appalti/)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/appalti/)
 
 #### Atti e documenti di carattere generale riferiti a tutte le procedure
 
@@ -257,79 +256,79 @@ Data ultimo aggiornamento: 30/05/2024
 #### Dati per singola procedura di affidamento anno 2024
 
 * [DETERMINA A CONTRARRE DEL 19/12/2023](/assets/tabella-cig-2024-rif-2023.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=Z833DD919B](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=Z833DD919B)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=Z833DD919B)
 * [DETERMINA A CONTRARRE DEL 20/12/2023](/assets/determina-a-contrarre-del-20122023.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=ZA53DDFCD1](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=ZA53DDFCD1)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=ZA53DDFCD1)
 * [DETERMINA A CONTRARRE DEL 29/01/2024](/assets/determina-a-contrarre-del-29012024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B02542992C](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B02542992C)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B02542992C)
 * [DETERMINA A CONTRARRE DEL 29/01/2024](/assets/determina-a-contrarre-del-29012024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0252B348B](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0252B348B)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0252B348B)
 * [DETERMINA A CONTRARRE DEL 06/02/2024](/assets/determina-a-contrarre-del-06022024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B042DC5EE1](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B042DC5EE1)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B042DC5EE1)
 * [DETERMINA A CONTRARRE DEL 06/02/2024](/assets/determina-a-contrarre-del-06022024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0442AF128](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0442AF128)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0442AF128)
 * [DETERMINA A CONTRARRE DEL 14/02/2024](/assets/determina-a-contrarre-del-14022024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B062923037](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B062923037)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B062923037)
 * [DETERMINA A CONTRARRE DEL 21/02/2024](/assets/determina-a-contrarre-del-21022024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B07B72B772](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B07B72B772)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B07B72B772)
 * [DETERMINA A CONTRARRE DEL 29/02/2024](/assets/determina-a-contrarre-del-21022024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B099C7723E](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B099C7723E)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B099C7723E)
 * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C259B251](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C259B251)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C259B251)
 * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2626505](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2626505)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2626505)
 * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2713898](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2713898)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2713898)
 * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C27F0EF6](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C27F0EF6)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C27F0EF6)
 * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2A785B8](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2A785B8)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2A785B8)
 * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2B6F18E](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2B6F18E)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2B6F18E)
 * [DETERMINA A CONTRARRE DEL 21/03/2024](/assets/determina-a-contrarre-del-21032024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0ED062469](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0ED062469)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0ED062469)
 * [DETERMINA A CONTRARRE DEL 28/03/2024](/assets/determina-a-contrarre-del-21032024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B106B3E1B2](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B106B3E1B2)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B106B3E1B2)
 * [DETERMINA A CONTRARRE DEL 04/04/2024](/assets/determina-a-contrarre-del-04042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B11A989B95](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B11A989B95)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B11A989B95)
 * [DETERMINA A CONTRARRE DEL 04/04/2024](/assets/determina-a-contrarre-del-04042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B11B90B7BC](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B11B90B7BC)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B11B90B7BC)
 * [DETERMINA A CONTRARRE DEL 11/04/2024](/assets/determina-a-contrarre-del-11042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B137555B4C](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B137555B4C)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B137555B4C)
 * [DETERMINA A CONTRARRE DEL 17/04/2024](/assets/determina-a-contrarre-del-17042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1489A0C5D](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1489A0C5D)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1489A0C5D)
 * [DETERMINA A CONTRARRE DEL 17/04/2024](/assets/determina-a-contrarre-del-17042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B148DAF5C8](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B148DAF5C8)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B148DAF5C8)
 * [DETERMINA A CONTRARRE DEL 23/04/2024](/assets/determina-a-contrarre-del-23042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B159ADB676](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B159ADB676)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B159ADB676)
 * [CONTRATTO QUADRO DEL 23/04/2024](/assets/contratto-quadro-del-23042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B15DA6773D](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B15DA6773D)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B15DA6773D)
 * [DETERMINA A CONTRARRE DEL 22/04/2024](/assets/determina-a-contrarre-del-22042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B160070A76](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B160070A76)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B160070A76)
 * [DETERMINA A CONTRARRE DEL 23/04/2024](/assets/determina-a-contrarre-del-22042024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B162EF9164](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B162EF9164)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B162EF9164)
 * [DETERMINA A CONTRARRE DEL 09/05/2024](/assets/determina-a-contrarre-del-09052024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B18744983B](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B18744983B)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B18744983B)
 * [DETERMINA A CONTRARRE DEL 22/05/2024](/assets/determina-a-contrarre-del-22052024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1CB214E8C](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1CB214E8C)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1CB214E8C)
 * [DETERMINA A CONTRARRE DEL 28/05/2024](/assets/determina-a-contrarre-del-28052024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1DF3624B5](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1DF3624B5)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1DF3624B5)
 * [DETERMINA A CONTRARRE DEL 28/05/2024](/assets/determina-a-contrarre-del-28052024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1DFE9A6C1](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1DFE9A6C1)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1DFE9A6C1)
 * [DETERMINA A CONTRARRE DEL 03/06/2024](/assets/determina-a-contrarre-del-03062024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1F38B07E2](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1F38B07E2)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1F38B07E2)
 * [DETERMINA A CONTRARRE DEL 11/07/2024](/assets/determina-a-contrarre-del-11072024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B26FEF867D](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B26FEF867D)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B26FEF867D)
 * [DETERMINA A CONTRARRE DEL 21/08/2024](/assets/determina-a-contrarre-del-21082024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B2D08F9401](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B2D08F9401)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B2D08F9401)
 * [DETERMINA A CONTRARRE DEL 10-09-2024](/assets/determina-a-contrarre-del-21082024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B30244C683](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B30244C683)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B30244C683)
 * [DETERMINA A CONTRARRE DEL 25-09-2024](/assets/determina-a-contrarre-del-25-09-2024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B33E819108](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B33E819108)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B33E819108)
 * [DETERMINA A CONTRARRE DEL 06-11-2024](/assets/determina-a-contrarre-del-06-11-2024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B424603D5B](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B424603D5B)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B424603D5B)
 * [DETERMINA A CONTRARRE DEL 08-11-2024](/assets/determina-a-contrarre-del-08-11-2024.pdf)
-* [https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B42E56DAD6](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B42E56DAD6)
+* [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B42E56DAD6)
 
 ## Sovvenzioni, contributi, sussidi, vantaggi economici
 
@@ -513,14 +512,14 @@ Data ultimo aggiornamento: 30/05/2024
   *
     1. Tramite posto all’indirizzo: S.A.V.L. S.r.l. Via Dino Campana n. 16 50034 Marradi
   *
-    1. via mail: all’indirizzo [trasparenzasavl@gmail.com](mailto:trasparenzasavl@gmail.com)
+    1. via mail: all’indirizzo <trasparenzasavl@gmail.com>
   * Per quanto non espressamente previsto in materia di accesso civico si rinvia alle disposizioni di legge vigenti.
   * [Modulo per l’accesso civico](/assets/modulo-per-laccesso-civico.pdf)
 
 * Accesso civico “generalizzato” concernente dati e documenti ulteriori rispetto a quelli oggetto di pubblicazione obbligatoria
   * L’esercizio dell’accesso generalizzato è disciplinato dall’art.5 e 5 bis del D.lgs. 33/2013.
   * La richiesta può essere inoltrata da chiunque.
-  * Le istanze di accesso dovranno essere inoltrate all’indirizzo [trasparenzasavl@gmail.com](mailto:trasparenzasavl@gmail.com).
+  * Le istanze di accesso dovranno essere inoltrate all’indirizzo <trasparenzasavl@gmail.com>.
 
 * Registro degli accessi
   * [Tabella accessi](/assets/modulo-per-laccesso-civico.pdf)

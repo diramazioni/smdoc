@@ -57,7 +57,7 @@
       toast.success('Frontmatter saved')
     }
     const updatedContent = editorRef?.getMarkdown();
-    //console.log(updatedContent)
+    // console.log(updatedContent)
     
     const formData = new FormData();
     formData.append('updatedContent', updatedContent);
