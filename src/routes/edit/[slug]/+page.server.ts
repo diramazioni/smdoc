@@ -43,8 +43,7 @@ export const actions = {
 				updatedAt: new Date(),
 			};
       		const slug = data.get('slug')
-			console.log("updatedFrontmatter", updatedFrontmatter)
-			// const md = await getMD(params.slug)
+			// console.log("updatedFrontmatter", updatedFrontmatter)
 			let md = await getMD(slug)
 			if (!md) {
 				md = await copyTemplate(slug)

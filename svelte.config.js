@@ -6,9 +6,7 @@ const config = {
 	extensions: ['.svelte'],
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter({
-			bodySizeLimit: 1048576 // 1MB
-		  })
+		adapter: adapter()
 	},
 }
 

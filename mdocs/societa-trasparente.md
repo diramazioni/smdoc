@@ -449,11 +449,12 @@ Data ultimo aggiornamento: 30/05/2024
 #### Indicatore di tempestività dei pagamenti
 
 * Indicatore di tempestivita’ dei pagamenti
-  * Indicatore trimestrale di pagamento valido dal 2019 | Indicatore annuale di pagamento valido dal 2019\
-    \---|---\
-    I pagamenti degli stipendi vengono realizzati mensilmente\
-    I pagamenti dei fornitori avvengono mediamente entro 60 giorni\
-    I pagamenti delle utenze e dei tributi vengono realizzati alla scadenza  |  I pagamenti degli stipendi vengono svolti mensilmente mentre quelli dei fornitori mediamente entro 60 giorni
+  * Indicatore trimestrale di pagamento valido dal 2019 
+    Indicatore annuale di pagamento valido dal 2019
+    I pagamenti degli stipendi vengono realizzati mensilmente
+    I pagamenti dei fornitori avvengono mediamente entro 60 giorni
+    I pagamenti delle utenze e dei tributi vengono realizzati alla scadenza 
+    I pagamenti degli stipendi vengono svolti mensilmente mentre quelli dei fornitori mediamente entro 60 giorni
   * [Indicatore trimestrale tempestività dei pagamenti - anno 2023](/assets/pagamenti-1-trimestre-2024.pdf)
   * [Indicatore annuale tempestività dei pagamenti - anno 2023](/assets/pagamenti-1-trimestre-2024.pdf)
   * [Indicatore trimestrale tempestività dei pagamenti - anno 2024](/assets/indicatore-trimestrale-tempestività-dei-pagamenti-anno-2024.pdf)
@@ -509,13 +510,11 @@ Data ultimo aggiornamento: 30/05/2024
 
 * Accesso civico “semplice" concernente dati, documenti e informazioni soggetti a pubblicazione obbligatoria
   * La richiesta di accesso civico è gratuita, non deve essere motivata e va indirizzata al R.P.C.T. tramite le seguenti modalità:
-  *
-    1. Tramite posto all’indirizzo: S.A.V.L. S.r.l. Via Dino Campana n. 16 50034 Marradi
-  *
-    1. via mail: all’indirizzo [trasparenzasavl@gmail.com](mailto:trasparenzasavl@gmail.com)
+    * Tramite posto all’indirizzo: S.A.V.L. S.r.l. Via Dino Campana n. 16 50034 Marradi
+    * via mail: all’indirizzo [trasparenzasavl@gmail.com](mailto:trasparenzasavl@gmail.com)
 
   * Per quanto non espressamente previsto in materia di accesso civico si rinvia alle disposizioni di legge vigenti.
-  * [Modulo per l’accesso civico](/assets/modulo-per-laccesso-civico.pdf)
+    * [Modulo per l’accesso civico](/assets/modulo-per-laccesso-civico.pdf)
 
 * Accesso civico “generalizzato” concernente dati e documenti ulteriori rispetto a quelli oggetto di pubblicazione obbligatoria
   * L’esercizio dell’accesso generalizzato è disciplinato dall’art.5 e 5 bis del D.lgs. 33/2013.

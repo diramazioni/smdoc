@@ -20,6 +20,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 export const handle: Handle = async ({ event, resolve }) => {
 	// get cookies from browser
 	const session = event.cookies.get('session')
+	if (event.url.pathname.startsWith('/edit') ) {
+		const length = +(event.request.headers.get('content-length') ?? '0');
+	
+		console.log('length', length)	
+	}
 
 	if (!session) {
         if (event.url.pathname.startsWith('/edit') ) {
