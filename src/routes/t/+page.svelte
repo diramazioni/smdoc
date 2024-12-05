@@ -5,6 +5,8 @@
   let data = $state();
   let paras = $state(50);
 
+  let status = $state('try to save 5 paragraphs');
+
   onMount(async () => {
     await fetchData();
   });
@@ -14,6 +16,7 @@
   }
 
   async function handleSave(event: Event) {
+    status = 'trying to save... ';
     event.preventDefault();
     const updatedContent = (event.target as HTMLFormElement).content.value;
     const formData = new FormData();
@@ -25,6 +28,7 @@
     const result = await response.json();
     if (result.type === 'success') {
       console.log('Document saved');
+      status = 'Document saved';
     } else {
       console.error(`Error saving document: ${result.message}`);
     }
@@ -48,6 +52,7 @@
   <button type="submit">Save</button>
 </form>
 
+{status}
 
 <style>
   form {
