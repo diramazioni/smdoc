@@ -66,8 +66,11 @@ export const actions = {
 			const data = await request.formData();
 			const updatedContent = data.get('updatedContent')
 			const slug = data.get('slug')
+			console.log('s1')
 			const md = await getMD(slug)
+			console.log('s2')
 			const { frontmatter } = getContent(md);
+			console.log('s3')
 			const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
 			console.log('save lenght', updatedMd.length)
 			await setMD(slug, updatedMd)
