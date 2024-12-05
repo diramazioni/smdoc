@@ -57,7 +57,7 @@
       toast.success('Frontmatter saved')
     }
     const updatedContent = editorRef?.getMarkdown();
-    console.log(updatedContent)
+    //console.log(updatedContent)
     
     const formData = new FormData();
     formData.append('updatedContent', updatedContent);
@@ -67,8 +67,11 @@
         method: 'POST',
         body: formData
     });
+    result = await response.json();
     if(result.type === 'success') {
       toast.success('Document saved')
+    } else {
+      toast.error(`Error saving document: ${result.message}`) 
     }
   }
 
