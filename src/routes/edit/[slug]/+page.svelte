@@ -25,7 +25,7 @@
 
 	let { data } = $props()
   
-  let useTuiEditor = $state(false);
+  let useTuiEditor = $state(true);
   let editorRef = $state(); // Reference to store the editor instance
   let titleValue = $state(data.frontmatter.title)
   let descriptionValue = $state(data.frontmatter.description)

@@ -512,14 +512,15 @@ Data ultimo aggiornamento: 30/05/2024
   *
     1. Tramite posto all’indirizzo: S.A.V.L. S.r.l. Via Dino Campana n. 16 50034 Marradi
   *
-    1. via mail: all’indirizzo <trasparenzasavl@gmail.com>
+    1. via mail: all’indirizzo [trasparenzasavl@gmail.com](mailto:trasparenzasavl@gmail.com)
+
   * Per quanto non espressamente previsto in materia di accesso civico si rinvia alle disposizioni di legge vigenti.
   * [Modulo per l’accesso civico](/assets/modulo-per-laccesso-civico.pdf)
 
 * Accesso civico “generalizzato” concernente dati e documenti ulteriori rispetto a quelli oggetto di pubblicazione obbligatoria
   * L’esercizio dell’accesso generalizzato è disciplinato dall’art.5 e 5 bis del D.lgs. 33/2013.
   * La richiesta può essere inoltrata da chiunque.
-  * Le istanze di accesso dovranno essere inoltrate all’indirizzo <trasparenzasavl@gmail.com>.
+  * Le istanze di accesso dovranno essere inoltrate all’indirizzo [trasparenzasavl@gmail.com](mailto:trasparenzasavl@gmail.com).
 
 * Registro degli accessi
   * [Tabella accessi](/assets/modulo-per-laccesso-civico.pdf)
