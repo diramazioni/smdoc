@@ -69,6 +69,7 @@ export const actions = {
 			const md = await getMD(slug)
 			const { frontmatter } = getContent(md);
 			const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
+			console.log('save lenght', updatedMd.length)
 			await setMD(slug, updatedMd)
 			return { success: true };
 		} catch (error) {
