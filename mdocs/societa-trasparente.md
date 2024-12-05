@@ -2,7 +2,7 @@
 title: Società Trasparente
 description: 'Società Trasparente: documenti amministrativi'
 slug: societa-trasparente
-updatedAt: 2024-12-04T14:53:46.546Z
+updatedAt: 2024-12-05T09:19:35.423Z
 
 ---
 # Società Trasparente
@@ -533,5 +533,5 @@ Data ultimo aggiornamento: 30/05/2024
 * [Programma di formazione 2023](/assets/programma-di-formazione-2022.pdf)
 * [Programma di formazione 2024](/assets/programma-di-formazione-2024.pdf)
 
-[Savl s.r.l. - Società Acquedotto Valle del Lamone](https://www.digiteco.it/savl) - [Via Dino Campana 16, 50034 Marradi (FI), Italy](http://www.google.it/maps/place/Via+dino+campana,+16,+50034+Marradi)\
+[Savl s.r.l. - Società Acquedotto Valle del Lamone](https://www.digiteco.it/savl) - [Via Dino Campana 16, 50034 Marradi (FI), Italy](https://www.google.it/maps/place/Via+dino+campana,+16,+50034+Marradi)\
 Tel. \[+39 055 80 45 200]\(tel:+39 055 80 45 200) - Email <info@savl.it> - Pec <savl@pec.it> - P.IVA 05483800487
