@@ -101,3 +101,65 @@ export async function loadMD(slug:string) {
         md_only
     }
 }
+export interface GuestbookEntry {
+  name: string;
+  email: string;
+  content: string;
+  date: string;
+}
+
+export async function getGuestbookEntries(): Promise<GuestbookEntry[]> {
+  try {
+    const md = await getMD('guestbook');
+    if (!md) {
+      // Create guestbook.md if it doesn't exist
+      await setMD('guestbook', `---\ntitle: Guestbook\ndescription: Our visitors' messages\n---\n`);
+      return [];
+    }
+    
+    const { content } = getContent(md);
+    
+    // Parse messages from markdown content
+    // Remove any leading/trailing whitespace and split by '---'
+    return content.trim()
+      .split('---')
+      .filter(entry => entry.trim()) // Remove empty entries
+      .map(entry => {
+        const [info, ...contentLines] = entry.trim().split('\n');
+        const [name, email, date] = info.split(' | ');
+        return {
+          name: name?.replace('**', '').replace('**', '') || '',
+          email: email || '',
+          date: date || '',
+          content: contentLines.join('\n').trim()
+        };
+      })
+      .filter(entry => entry.name && entry.content);
+  } catch (error) {
+    console.error('Error reading guestbook:', error);
+    return [];
+  }
+}
+
+export async function addGuestbookEntry(entry: Omit<GuestbookEntry, 'date'>): Promise<boolean> {
+  try {
+    const md = await getMD('guestbook');
+    const { frontmatter = '', content = '' } = md ? getContent(md) : { 
+      frontmatter: 'title: Guestbook\ndescription: Our visitors\' messages', 
+      content: '' 
+    };
+
+    const date = new Date().toISOString();
+    const newEntry = `---\n**${entry.name}** | ${entry.email} | ${date}\n${entry.content}`;
+    
+    // If there's existing content, add it after the new entry
+    const updatedContent = content.trim() ? `${newEntry}\n${content.trim()}` : newEntry;
+    const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
+    
+    await setMD('guestbook', updatedMd);
+    return true;
+  } catch (error) {
+    console.error('Error adding guestbook entry:', error);
+    return false;
+  }
+}
