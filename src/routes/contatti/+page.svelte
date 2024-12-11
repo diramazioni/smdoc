@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { Pencil} from 'lucide-svelte';
+  import Guestbook from '$lib/components/Guestbook.svelte';
 
 	let { data } = $props()
 	let showEditDiv = $state(false);
@@ -61,6 +62,14 @@
     <!-- {/each} -->
     </MapLibre>
   </div>
+  <section class="mx-4 m-10">
+    <h2 class="text-2xl font-semibold mb-6 text-center">Guestbook</h2>
+    <Guestbook />
+    <section class="m-10">
+      &nbsp;
+    </section>
+  </section>
+
 
   <style>
   :global(.map) {

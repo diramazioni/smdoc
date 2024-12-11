@@ -7,6 +7,7 @@ module.exports = {
       env: {
             HOST:'127.0.0.1', 
             PORT:'4000', 
+            BODY_SIZE_LIMIT=10M,
             ORIGIN:'https://example.com'
             },
       },

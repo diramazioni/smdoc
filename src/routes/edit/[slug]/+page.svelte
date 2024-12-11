@@ -25,7 +25,7 @@
 
 	let { data } = $props()
   
-  let useTuiEditor = $state(false);
+  let useTuiEditor = $state(true);
   let editorRef = $state(); // Reference to store the editor instance
   let titleValue = $state(data.frontmatter.title)
   let descriptionValue = $state(data.frontmatter.description)
@@ -57,18 +57,21 @@
       toast.success('Frontmatter saved')
     }
     const updatedContent = editorRef?.getMarkdown();
-    console.log(updatedContent)
+    // console.log(updatedContent)
     
     const formData = new FormData();
     formData.append('updatedContent', updatedContent);
     formData.append('slug', slug);
-    
+    console.log(updatedContent.length)
     response = await fetch('?/save', {
         method: 'POST',
         body: formData
     });
+    result = await response.json();
     if(result.type === 'success') {
       toast.success('Document saved')
+    } else {
+      toast.error(`Error saving document: ${result.message}`) 
     }
   }
 
