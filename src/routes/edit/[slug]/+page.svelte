@@ -110,7 +110,7 @@
       </button>  
     <Input type="text" name="slug_view" disabled value={slug} class="w-20"/> 
     <input name="slug" hidden value={slug} class="w-20"/> 
-    <Button type="submit">Save new</Button>
+    <!-- <Button type="submit">Save new</Button> -->
   </div>
 </form>    
 {/snippet}
