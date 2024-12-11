@@ -57,11 +57,13 @@
       loadMessages();
     });
   </script>
+
+<h2 class="text-2xl font-semibold mb-6 text-center">Lascia un messaggio</h2>
   
   <div class="w-full max-w-2xl mx-auto p-4">
     <form class="space-y-4 mb-8" onsubmit={handleSubmit}>
       <div>
-        <Label for="name">Name</Label>
+        <Label for="name">Nome</Label>
         <Input type="text" id="name" bind:value={name} required />
       </div>
       
@@ -71,7 +73,7 @@
       </div>
       
       <div>
-        <Label for="message">Message</Label>
+        <Label for="message">Messaggio</Label>
         <Textarea 
           id="message" 
           bind:value={content}
@@ -81,14 +83,14 @@
         />
       </div>
   
-      <Button type="submit">Send Message</Button>
+      <Button type="submit">Lascia un messaggio</Button>
     </form>
   
     <div class="space-y-4">
-      <h3 class="text-xl font-semibold">Recent Messages</h3>
+      <h3 class="text-xl font-semibold">Messaggi recenti</h3>
       
       {#if messages.length === 0}
-        <p class="text-muted-foreground">No messages yet. Be the first to write something!</p>
+        <p class="text-muted-foreground">Non ci sono messaggi, lasciane uno tu!</p>
       {/if}
   
       {#each messages as message}

@@ -57,12 +57,10 @@
       toast.success('Frontmatter saved')
     }
     const updatedContent = editorRef?.getMarkdown();
-    // console.log(updatedContent)
     
     const formData = new FormData();
     formData.append('updatedContent', updatedContent);
     formData.append('slug', slug);
-    console.log(updatedContent.length)
     response = await fetch('?/save', {
         method: 'POST',
         body: formData
