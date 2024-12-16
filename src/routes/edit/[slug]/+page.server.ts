@@ -9,9 +9,10 @@ import {
 } from '$lib/api'
 import yaml from 'js-yaml';
 
-export async function load({ params }) {
+export async function load({ params, depends }) {
   const { children, frontmatter, md_only } = await loadMD(params.slug);
-
+  depends('page')
+  console.log("load slug", params.slug)
   const [mdFiles, pdfFiles, imgFiles] = await Promise.all([
     getFileList('md'),
     getFileList('pdf'),

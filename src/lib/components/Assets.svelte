@@ -7,6 +7,7 @@
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
   import UploadForm from "$lib/components/UploadForm.svelte";
   import Dialog from '$lib/components/Dialog.svelte';
+    import { onMount } from 'svelte';
 
   let { editorRef = $bindable() } = $props();
   let tabState = $state('md');
@@ -17,6 +18,14 @@
   let filteredItems = $derived(listAssets.filter(item =>
     item.toLowerCase().includes(searchQuery.toLowerCase())
   ));
+  
+  onMount(() => {
+  })
+
+  $effect(() => {
+    listAssets = $page.data.listAssets['md']
+
+  })
   
   async function handleDelete(slug: string) {
     const formData = new FormData();
@@ -29,8 +38,8 @@
     
     if (response.ok) {
       listAssets = listAssets.filter(item => item !== slug);
-      toast.success(`${slug} deleted`);
       selectedAsset = false;
+      toast.success(`${slug} deleted`);
     } else {
       toast.error(`Failed to delete ${slug}`);
     }

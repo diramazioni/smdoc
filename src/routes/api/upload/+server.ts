@@ -5,6 +5,7 @@ import { pipeline } from 'node:stream/promises';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
+  MAX_FILE_SIZE,
   isAllowedFileType,
   getMimeTypeFromFilename
 } from '$lib/config/files.types';

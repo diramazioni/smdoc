@@ -21,7 +21,7 @@
   // Svelte
   import { onMount, setContext } from 'svelte';
   import { page } from '$app/stores';
-    import { goto } from "$app/navigation";
+  import { goto, invalidate, invalidateAll } from "$app/navigation";
 
 
 	let { data } = $props()
@@ -68,8 +68,10 @@
     });
     result = await response.json();
     if(result.type === 'success') {
-      toast.success('Document saved')
-      goto(`/edit/${slug}`)
+      toast.success(`${slug} saved`)
+      await goto(`/edit/${slug}`, { invalidateAll: true });
+      // await invalidate('page');
+
     } else {
       toast.error(`Error saving document: ${result.message}`) 
     }
