@@ -48,9 +48,7 @@ export const actions = {
       		const slug = data.get('slug')
 			// console.log("updatedFrontmatter", updatedFrontmatter)
 			let md = await getMD(slug)
-			let isNewFile = false
 			if (!md) {
-				isNewFile = true
 				md = await copyTemplate(slug)
 			}
 			const { content } = getContent(md);
@@ -59,9 +57,6 @@ export const actions = {
 			const updatedMd = `---\n${newYaml}\n---\n${content}`;
 			
 			await setMD(slug, updatedMd)
-			if(isNewFile) {
-				redirect(300, url.origin + '/edit/' + data.get('slug'))
-			}
 			return { success: true };
 		} catch (error) {
 			return {

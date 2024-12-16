@@ -4,18 +4,14 @@ import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import fs from 'node:fs';
 import path from 'node:path';
-
-import { 
-  type FileType,
-  MAX_FILE_SIZE,
-  getMimeTypeFromFilename,
-  isAllowedFileType 
+import {
+  isAllowedFileType,
+  getMimeTypeFromFilename
 } from '$lib/config/files.types';
-import { 
-  DOCS_DIR, 
+import {
+  DOCS_DIR,
   ASSETS_DIR,
-  getFileDirectory,
-  getDirectoryForType 
+  getFileDirectory
 } from '$lib/config/files.server';
 
 // Ensure directories exist
@@ -73,5 +69,47 @@ export const POST: RequestHandler = async ({ request }) => {
       fs.unlinkSync(filePath);
     }
     return error(500, 'Upload failed');
+  }
+};
+
+export const DELETE: RequestHandler = async ({ request }) => {
+  try {
+    const formData = await request.formData();
+    const fileName = formData.get('file_name');
+
+    if (!fileName || typeof fileName !== 'string') {
+      return error(400, 'No filename provided');
+    }
+
+    const mimeType = getMimeTypeFromFilename(fileName);
+    if (!mimeType || !isAllowedFileType(mimeType)) {
+      return error(400, 'Invalid file type');
+    }
+
+    const directory = getFileDirectory(mimeType);
+    const filePath = path.join(directory, fileName);
+
+    // Security check: Verify the file is within allowed directories
+    const realPath = await fs.promises.realpath(filePath);
+    const isInDocsDir = realPath.startsWith(await fs.promises.realpath(DOCS_DIR));
+    const isInAssetsDir = realPath.startsWith(await fs.promises.realpath(ASSETS_DIR));
+
+    if (!isInDocsDir && !isInAssetsDir) {
+      return error(400, 'Invalid file path');
+    }
+
+    if (!fs.existsSync(filePath)) {
+      return error(404, 'File not found');
+    }
+
+    await fs.promises.unlink(filePath);
+    
+    return json({
+      success: true,
+      message: 'File deleted successfully'
+    });
+  } catch (err) {
+    console.error('Error deleting file:', err);
+    return error(500, 'Failed to delete file');
   }
 };

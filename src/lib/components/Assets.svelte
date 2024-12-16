@@ -12,11 +12,12 @@
   let tabState = $state('md');
   let listAssets = $state($page.data.listAssets['md']);
   let searchQuery = $state("");
+  let selectedAsset = $state<string | boolean>(null);
   
   let filteredItems = $derived(listAssets.filter(item =>
     item.toLowerCase().includes(searchQuery.toLowerCase())
   ));
-
+  
   async function handleDelete(slug: string) {
     const formData = new FormData();
     formData.append('file_name', slug);
@@ -29,6 +30,7 @@
     if (response.ok) {
       listAssets = listAssets.filter(item => item !== slug);
       toast.success(`${slug} deleted`);
+      selectedAsset = false;
     } else {
       toast.error(`Failed to delete ${slug}`);
     }
@@ -58,8 +60,7 @@
   onValueChange={(v) => {
     tabState = v;
     listAssets = $page.data.listAssets[v];
-  }}
->
+  }} >
   <Tabs.List class="grid w-full grid-cols-3">
     <Tabs.Trigger value="md">
       <FilePenLine/>
@@ -127,9 +128,12 @@
       <Copy size={15} class="cursor-pointer m-1" />
     </button>
 
-    <Dialog>
+    <Dialog 
+      open={selectedAsset} 
+    >
       {#snippet trigger()}
-        <Trash2 size={15} class="cursor-pointer m-1" />
+          <Trash2 size={15} class="cursor-pointer m-1" 
+          onclick={() => selectedAsset = asset}/>
       {/snippet}
       
       {#snippet title()}
@@ -137,15 +141,14 @@
       {/snippet}
       
       {#snippet description()}
+      <p>
         This will permanently delete the asset.
         Are you sure you want to continue?
-        <br/>
-        <button 
-          class="m-auto w-full flex justify-center hover:bg-red-500 hover:text-white"
-          onclick={() => handleDelete(asset)}
-        >
-          <Trash2 size={25} class="cursor-pointer m-1" />
-        </button>
+      </p>
+      <div class="m-auto w-full flex justify-center hover:bg-red-500 hover:text-white">
+        <Trash2 onclick={() => handleDelete(asset)} 
+          size={25} class="cursor-pointer m-1" />
+      </div>
       {/snippet}
     </Dialog>
 
