@@ -1,39 +1,42 @@
-import yaml from 'js-yaml'
-import fs from 'fs/promises'
-import path from 'node:path'
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { 
-	getMD,
-	loadMD,
-	copyTemplate,
-	setMD, 
-	getFileList, 
-	getContent, 
-	docDir,
-	assetsDir 
-  } from '$lib/api'
+  getMD,
+  loadMD,
+  copyTemplate,
+  setMD, 
+  getFileList, 
+  getContent
+} from '$lib/api'
+import yaml from 'js-yaml';
 
 export async function load({ params }) {
-		const {children, frontmatter, md_only} = await loadMD(params.slug)
-		const docFiles = await getFileList(docDir)
-		const assetFiles = await getFileList(assetsDir)
-		const listAssets = {
-			'md':docFiles.filter((file) => file.endsWith('.md')),
-			'pdf':assetFiles.filter((file) => file.endsWith('.pdf')),
-			'img':assetFiles.filter((file) =>  file.match(/\.(jpg|jpeg|png|gif|bmp|webp)$/i) !== null),
-		}
-		return { 
-			children,
-			md_only,
-			frontmatter,
-			slug: params.slug,
-			listAssets
-		}
+  const { children, frontmatter, md_only } = await loadMD(params.slug);
+
+  const [mdFiles, pdfFiles, imgFiles] = await Promise.all([
+    getFileList('md'),
+    getFileList('pdf'),
+    getFileList('img')
+  ]);
+
+  const listAssets = {
+    'md': mdFiles,
+    'pdf': pdfFiles,
+    'img': imgFiles
+  };
+
+  return { 
+    children,
+    md_only,
+    frontmatter,
+    slug: params.slug,
+    listAssets
+  }
 }
 
 export const actions = {
 	frontmatter: async ({ url, request }) => {
 		try {
+			console.log('save frontmatter')
 			const data = await request.formData();
 			// Extract new frontmatter data from the form
 			const updatedFrontmatter = {
@@ -45,13 +48,20 @@ export const actions = {
       		const slug = data.get('slug')
 			// console.log("updatedFrontmatter", updatedFrontmatter)
 			let md = await getMD(slug)
+			let isNewFile = false
 			if (!md) {
+				isNewFile = true
 				md = await copyTemplate(slug)
 			}
 			const { content } = getContent(md);
 			const newYaml = yaml.dump(updatedFrontmatter);
+			console.log("newYaml", newYaml)
 			const updatedMd = `---\n${newYaml}\n---\n${content}`;
+			
 			await setMD(slug, updatedMd)
+			if(isNewFile) {
+				redirect(300, url.origin + '/edit/' + data.get('slug'))
+			}
 			return { success: true };
 		} catch (error) {
 			return {
@@ -62,17 +72,14 @@ export const actions = {
 	},
 	save: async ({ params, request }) => {
 		try {
-			console.log('save')
+			console.debug('save md')
 			const data = await request.formData();
 			const updatedContent = data.get('updatedContent')
 			const slug = data.get('slug')
-			console.log('s1')
 			const md = await getMD(slug)
-			console.log('s2')
 			const { frontmatter } = getContent(md);
-			console.log('s3')
+			console.debug("updatedContent", updatedContent)
 			const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
-			console.log('save lenght', updatedMd.length)
 			await setMD(slug, updatedMd)
 			return { success: true };
 		} catch (error) {
@@ -86,17 +93,17 @@ export const actions = {
 		const data = await request.formData();
 		const files = data.getAll('file') as File[];
 		try {
-      for (const file of files) {
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        let filePath = ''
-        if(file.name.endsWith('.md')) {
-          filePath = path.join(docDir, file.name);
-        } else {
-          filePath = path.join(assetsDir, file.name);
-        }
-        await fs.writeFile(filePath, buffer);
-      }
+			for (const file of files) {
+				const arrayBuffer = await file.arrayBuffer();
+				const buffer = Buffer.from(arrayBuffer);
+				let filePath = ''
+				if(file.name.endsWith('.md')) {
+				filePath = path.join(docDir, file.name);
+				} else {
+				filePath = path.join(assetsDir, file.name);
+				}
+				await fs.writeFile(filePath, buffer);
+			}
 			return {
 			  success: true,
 			};
