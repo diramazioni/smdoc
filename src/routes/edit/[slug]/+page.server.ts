@@ -37,7 +37,7 @@ export async function load({ params, depends }) {
 export const actions = {
 	frontmatter: async ({ url, request }) => {
 		try {
-			console.log('save frontmatter')
+			console.debug('save frontmatter')
 			const data = await request.formData();
 			// Extract new frontmatter data from the form
 			const updatedFrontmatter = {
@@ -54,7 +54,7 @@ export const actions = {
 			}
 			const { content } = getContent(md);
 			const newYaml = yaml.dump(updatedFrontmatter);
-			console.log("newYaml", newYaml)
+			console.debug("newYaml", newYaml)
 			const updatedMd = `---\n${newYaml}\n---\n${content}`;
 			
 			await setMD(slug, updatedMd)
@@ -74,7 +74,7 @@ export const actions = {
 			const slug = data.get('slug')
 			const md = await getMD(slug)
 			const { frontmatter } = getContent(md);
-			console.debug("updatedContent", updatedContent)
+			// console.debug("updatedContent", updatedContent)
 			const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
 			await setMD(slug, updatedMd)
 			return { success: true };

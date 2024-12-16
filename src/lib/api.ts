@@ -120,14 +120,20 @@ export async function markdoc(ast: any) {
       callout: {
         render: 'Callout',
         attributes: {
-          type: {
+          color: {
             type: String,
-            default: 'note',
+            default: 'default',
           },
         },
       },
-      counter: {
-        render: 'Counter',
+      spacer: {
+        render: 'Spacer',
+        attributes: {
+          h: {
+            type: String,
+            default: '1',
+          },
+        }
       },
     },
     variables: {

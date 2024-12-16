@@ -18,9 +18,6 @@
   let filteredItems = $derived(listAssets.filter(item =>
     item.toLowerCase().includes(searchQuery.toLowerCase())
   ));
-  
-  onMount(() => {
-  })
 
   $effect(() => {
     listAssets = $page.data.listAssets['md']

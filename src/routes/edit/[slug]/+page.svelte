@@ -26,7 +26,7 @@
 
 	let { data } = $props()
   
-  let useTuiEditor = $state(true);
+  let useTuiEditor = $state(false);
   let editorRef = $state(); // Reference to store the editor instance
   let titleValue = $state(data.frontmatter.title)
   let descriptionValue = $state(data.frontmatter.description)
@@ -81,19 +81,6 @@
     titleValue = descriptionValue = ""
     editorRef?.setMarkdown('')
   }
-  // function invokeTest() {
-  //   //const editorInstance = editorRef.getEditor();
-  //   //editorInstance.changeMode('markdown');
-  //   // editorInstance.exec('bold');
-  //   // editorInstance.exec('addLink', { linkText: 'TOAST UI', linkUrl: 'https://ui.toast.com' });
-  //   // editorInstance.changePreviewStyle('tab');
-  //   //editorInstance.insertText('[example test]("http://example.com")')
-    
-  //   // editorRef.insertMarkdown('# easy squeezy')
-  //   // editorRef.setMarkdown('# easy squeezy')
-  //   markdown = editorRef.getMarkdown()
-  //   console.log(markdown);
-  // }
 </script>
 
 <!-- <a href="/edit/home" class="hover:underline">go home</a>
@@ -108,7 +95,7 @@
     <Label for="title">Title</Label>
     <Input type="text" name="title" placeholder="Title" bind:value={titleValue} />
     <Label for="description">Description</Label>
-    <Input type="text" name="description" placeholder="Description" value={descriptionValue} />
+    <Input type="text" name="description" placeholder="Description" bind:value={descriptionValue} />
       <button type="button" use:copy={`/${slug}`} onclick={() => {toast.success(`/${slug} Link copied to clipboard`)}}> 
         <Copy />
       </button>  
@@ -123,14 +110,14 @@
   <div id="cmdMenu" class="relative z-10 flex max-w-fit items-center space-x-3 ">
     <form method="POST" action="?/save" onsubmit={handleSave}>
       <input type="hidden" name="updatedContent" value="" />
-      <Button class="menu" type="submit" variant="secondary">
+      <Button class="menu" type="submit" variant="outline">
         <Save />              
       </Button>
     </form>      
-    <Button href={$page.url.pathname.replace('/edit','')} class="menu" type="button" variant="secondary">
+    <Button href={$page.url.pathname.replace('/edit','')} class="menu" type="button" variant="outline">
       <Eye />              
     </Button>
-    <Button onclick={clearFields} class="menu" type="button" variant="secondary">
+    <Button onclick={clearFields} class="menu" type="button" variant="outline">
       <FilePlus />
     </Button>
     <div>
@@ -177,8 +164,8 @@
   </Resizable.Pane>
   <Resizable.Handle withHandle />
   <Resizable.Pane defaultSize={20}>
-    <!-- {@render assets()} -->
      <Assets bind:editorRef/>
   </Resizable.Pane>
 </Resizable.PaneGroup>
-  <!-- {@html data.html} -->
+
+
