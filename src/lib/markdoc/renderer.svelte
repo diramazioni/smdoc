@@ -2,14 +2,14 @@
     import Renderer from './renderer.svelte';
     import type { ComponentType } from 'svelte'
     import Callout from './components/callout.svelte'
-    import Counter from './components/counter.svelte'
+    import Spacer from './components/spacer.svelte'
 
     let { children }: any = $props()
     
 
     const components: Record<string, ComponentType> = {
         Callout: Callout,
-        Counter: Counter,
+        Spacer: Spacer,
     }
 </script>
 
@@ -34,8 +34,8 @@
       {#each childSplit as str}
         {#if str.trim().length > 0}
           {str}
-        {:else}
-          <br />
+        <!-- {:else}
+          <br /> -->
         {/if}
       {/each}
       

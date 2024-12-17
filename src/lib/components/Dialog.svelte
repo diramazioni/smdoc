@@ -36,7 +36,7 @@
 				{@render description()}
 			</Dialog.Description>
 			{@render children?.()}
-			<Dialog.Close>Close Dialog</Dialog.Close>
+			<Dialog.Close>Cancel</Dialog.Close>
 		</Dialog.Content>
 	</Dialog.Portal>
 </Dialog.Root>

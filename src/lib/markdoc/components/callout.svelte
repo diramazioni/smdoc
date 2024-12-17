@@ -1,20 +1,44 @@
 <script lang="ts">
-	let { children, type }: any = $props()
+	let { children, color = 'default' }: any = $props()
 </script>
 
-<div class="callout {type}">
+<div class="callout {color}">
 	{@render children()}
 </div>
- <style>
+
+
+<style>
 	.callout {
-		/* margin-block: 2rem;
-		padding: 1rem;
-		color: oklch(100% 0 0);
-		border-radius: 8px; */
-		@apply text-lg font-semibold  text-muted-foreground p-4 m-3 rounded-lg;
+		@apply text-lg font-semibold p-4 m-3 rounded-lg border border-border shadow-md;
 	}
 
-	.check {
-		background-color: oklch(28% 0.01 200);
+	.default {
+		background-color: oklch(95% 0.03 200);
+		color: oklch(30% 0.03 200);
+	}
+
+	.blue {
+		background-color: oklch(95% 0.05 240);
+		color: oklch(30% 0.1 240);
+	}
+
+	.green {
+		background-color: oklch(95% 0.05 140);
+		color: oklch(30% 0.1 140);
+	}
+
+	.yellow {
+		background-color: oklch(95% 0.05 90);
+		color: oklch(30% 0.1 90);
+	}
+
+	.red {
+		background-color: oklch(95% 0.05 20);
+		color: oklch(30% 0.1 20);
+	}
+
+	.purple {
+		background-color: oklch(95% 0.05 300);
+		color: oklch(30% 0.1 300);
 	}
 </style>

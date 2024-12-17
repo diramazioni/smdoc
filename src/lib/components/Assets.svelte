@@ -2,59 +2,83 @@
   import { copy } from 'svelte-copy';
   import { toast } from "svelte-sonner";
   import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  
-  import { Copy, Link, FilePenLine,ImageUp, Trash2} from 'lucide-svelte';
+  import { Copy, Link, FilePenLine, ImageUp, Trash2 } from 'lucide-svelte';
   import * as Tabs from "$lib/components/ui/tabs/index.js";
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
   import UploadForm from "$lib/components/UploadForm.svelte";
   import Dialog from '$lib/components/Dialog.svelte';
+    import { onMount } from 'svelte';
 
-	let { editorRef = $bindable() } = $props()
-
+  let { editorRef = $bindable() } = $props();
   let tabState = $state('md');
   let listAssets = $state($page.data.listAssets['md']);
-	let searchQuery = $state("");
-	let filteredItems = $derived(listAssets.filter(item =>
+  let searchQuery = $state("");
+  let selectedAsset = $state<string | boolean>(null);
+  
+  let filteredItems = $derived(listAssets.filter(item =>
     item.toLowerCase().includes(searchQuery.toLowerCase())
-	));
+  ));
 
-  onMount(() => {
-  });
   $effect(() => {
-    if (editorRef) {
+    listAssets = $page.data.listAssets['md']
 
-    } 
-    //console.log(`effect url ${$page.url.pathname}`);
-  });
-  async function handleDelete(slug) {
+  })
+  
+  async function handleDelete(slug: string) {
     const formData = new FormData();
-    formData.append('slug', slug);
-    let response = await fetch('?/delete', {
-        method: 'POST',
-        body: formData
+    formData.append('file_name', slug);
+    
+    let response = await fetch('/api/upload', {
+      method: 'DELETE',
+      body: formData
     });
-    let result = await response.json();
-    if(result.type === 'success') {
+    
+    if (response.ok) {
       listAssets = listAssets.filter(item => item !== slug);
-      toast.success(`${slug} deleted`)
+      selectedAsset = false;
+      toast.success(`${slug} deleted`);
+    } else {
+      toast.error(`Failed to delete ${slug}`);
+    }
+  }
+
+  function getAssetUrl(asset: string): string {
+    if (asset.endsWith('.md')) {
+      return `/${asset.slice(0, -3)}`;
+    }
+    return `/assets/${asset}`;
+  }
+
+  function insertAsset(asset: string) {
+    if (!editorRef) return;
+    
+    const assetUrl = getAssetUrl(asset);
+    if (asset.endsWith('.md') || asset.endsWith('.pdf')) {
+      editorRef.insertMarkdown(`[${asset}](${assetUrl})`);
+    } else {
+      editorRef.insertMarkdown(`![${asset}](${assetUrl})`);
     }
   }
 </script>
 
- 
-
-<Tabs.Root bind:value={tabState}
+<Tabs.Root 
+  bind:value={tabState}
   onValueChange={(v) => {
     tabState = v;
     listAssets = $page.data.listAssets[v];
-}}>
-
+  }} >
   <Tabs.List class="grid w-full grid-cols-3">
-    <Tabs.Trigger value="md"> <FilePenLine/> </Tabs.Trigger>
-    <Tabs.Trigger value="pdf">  <img src="/pdf-icon.svg" class="h-6 w-8" alt="pdf" /> </Tabs.Trigger>
-    <Tabs.Trigger value="img" ><ImageUp/></Tabs.Trigger>
+    <Tabs.Trigger value="md">
+      <FilePenLine/>
+    </Tabs.Trigger>
+    <Tabs.Trigger value="pdf">
+      <img src="/pdf-icon.svg" class="h-6 w-8" alt="pdf" />
+    </Tabs.Trigger>
+    <Tabs.Trigger value="img">
+      <ImageUp/>
+    </Tabs.Trigger>
   </Tabs.List>
+
   <Tabs.Content value="md">
     {@render assetItems(filteredItems)}
   </Tabs.Content>
@@ -72,69 +96,80 @@
     type="text"
     placeholder="Search assets"
     bind:value={searchQuery}
-    class="w-full px-4 py-2 ml-4 mb-2 border bg-slate-200 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-
+    class="w-full px-4 py-2 ml-4 mb-2 border bg-slate-200 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+  
   {#if assetList.length > 0}
     <ScrollArea class="h-[400px] w-full rounded-md border p-4">
       {#each assetList as asset}
         {@render assetItem(asset)}
-        <!-- {asset} -->
-      <!-- <Separator class="my-2" /> -->
       {/each}
     </ScrollArea>
   {:else}
-    <div class="text-center text-gray-500 py-4">No items match your search.</div>
+    <div class="text-center text-gray-500 py-4">
+      No items match your search.
+    </div>
   {/if}
 {/snippet}
 
 {#snippet assetItem(asset)}
-{@const assetUrl = asset.endsWith('.md') ? `/${asset.slice(0, -3)}` : `/assets/${asset}`}
-{@const assetMDoc = asset.endsWith('.md') ? true : false}
-{@const assetPdf = asset.endsWith('.pdf') ? true : false}
-
+  {@const assetUrl = getAssetUrl(asset)}
+  {@const isMarkdown = asset.endsWith('.md')}
+  {@const isPdf = asset.endsWith('.pdf')}
+  
   <div class="flex items-center border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
+    <button 
+      use:copy={assetUrl}
+      onclick={() => insertAsset(asset)}
+    >
+      <Link size={15} class="cursor-pointer m-1" />
+    </button>
 
-
-    {#if !assetMDoc && !assetPdf}
-      <button use:copy={assetUrl}  onclick={() => {
-        editorRef.insertMarkdown(`![${assetUrl.slice(1)}](${assetUrl})`) }}>
-        <Link size={15} class="cursor-pointer m-1" />
-      </button>
-    {:else}
-      <button use:copy={assetUrl}  onclick={() => {
-        editorRef.insertMarkdown(`[${assetUrl.slice(1)}](${assetUrl})`) }}>
-        <Link size={15} class="cursor-pointer m-1" />
-      </button>
-    {/if}
-    <button use:copy={assetUrl}  onclick={() => {toast.success(`${assetUrl} Link copied to clipboard`)}}>
+    <button 
+      use:copy={assetUrl}
+      onclick={() => {
+        toast.success(`${assetUrl} Link copied to clipboard`);
+      }}
+    >
       <Copy size={15} class="cursor-pointer m-1" />
     </button>
-    <Dialog>
+
+    <Dialog 
+      open={selectedAsset} 
+    >
       {#snippet trigger()}
-        <Trash2 size={15} class="cursor-pointer m-1" />
+          <Trash2 size={15} class="cursor-pointer m-1" 
+          onclick={() => selectedAsset = asset}/>
       {/snippet}
+      
       {#snippet title()}
         Delete {asset}?
       {/snippet}
-     
+      
       {#snippet description()}
-        This will permanently delete the asset from the server.
-        Are you sure you want to continue? <br/>
-        <button class="m-auto w-full flex justify-center hover:bg-red-500 hover:text-white"  onclick={() => {handleDelete(asset)}}>
-          <Trash2 size={25} class="cursor-pointer m-1" />
-        </button>
+      <p>
+        This will permanently delete the asset.
+        Are you sure you want to continue?
+      </p>
+      <div class="m-auto w-full flex justify-center hover:bg-red-500 hover:text-white">
+        <Trash2 onclick={() => handleDelete(asset)} 
+          size={25} class="cursor-pointer m-1" />
+      </div>
       {/snippet}
-     
-      <!-- Additional dialog content here... -->
     </Dialog>
 
-    
-    {#if !assetMDoc && !assetPdf}
+    {#if !isMarkdown && !isPdf}
       <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
     {/if}
+
     <div class="text-sm ml-2">
-        <a href={'/edit' + assetUrl} class="hover:underline" data-sveltekit-reload >{asset} </a>
-      <!-- rel="external" -->
+      <a 
+        href={isMarkdown ? '/edit' + assetUrl : assetUrl} 
+        class="hover:underline" 
+        data-sveltekit-reload={isMarkdown}
+      >
+        {asset}
+      </a>
     </div>
   </div>
 {/snippet}

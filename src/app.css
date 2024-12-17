@@ -84,7 +84,12 @@
   h4 {
     @apply scroll-m-20 text-xl font-semibold tracking-tight;
   }
+  h1, h2, h3, h4, h5, h6 {
+    font-family:'Noto Serif', Cambria, 'Times New Roman', Times, serif;
+    @apply mt-4 
+  }
   p {
+    font-family:'Noto Serif', Cambria, 'Times New Roman', Times, serif;
     @apply leading-7 [&:not(:first-child)]:mt-6;
   }  
   ul {
@@ -107,7 +112,15 @@
     @apply font-semibold;
   }
 
-
+  table {
+    @apply w-full border-2;
+  }
+  thead {
+    @apply w-full border-2 text-left  bg-muted text-muted-foreground;
+  }
+  td {
+    @apply border-2 p-1;
+  }
   a[href$=".pdf"] {
     color: #59645c; 
     text-decoration: underline;

@@ -48,7 +48,9 @@
 
 </main>
 {#if $page.data.footer}
-<div id="footer" class="fixed bottom-0 left-0 right-0 ml-4 mr-4 p-2 w-full space-y-1 justify-center items-center text-center bg-gradient-to-b from-transparent to-white" >
+<div style="margin-top: 100px">
+</div>
+<div id="footer" class="fixed bottom-0 left-0 right-0 ml-4 mr-4 p-2 w-full space-y-0.5 justify-center items-center text-center bg-gradient-to-b from-transparent to-white" >
   <MarkdocRenderer children={JSON.parse($page.data.footer)} />
 </div>
 {/if}	

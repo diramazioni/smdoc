@@ -1,18 +1,18 @@
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
 declare global {
 	namespace App {
-		// interface Error {}
-		interface Locals {
-			user: {
-			  name: string
-			  role: string
-			}
-		  }
-		// interface PageData {}
-		// interface PageState {}
-		// interface Platform {}
+	  interface Locals {
+		user: {
+		  name: string
+		  role: string
+		}
+	  }
 	}
-}
-
-export {};
+  }
+  
+  // Add proper typing for File in FormData
+  interface FormData {
+	get(name: string): string | File | null;
+	getAll(name: string): (string | File)[];
+  }
+  
+  export {};
