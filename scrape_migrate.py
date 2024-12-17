@@ -6,6 +6,8 @@ import html2text
 import frontmatter
 from urllib.parse import urljoin, urlparse
 from datetime import datetime
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class WebsiteMigrator:
     def __init__(self, base_url, output_dir='mdocs', assets_dir='static/assets'):
@@ -24,20 +26,14 @@ class WebsiteMigrator:
     def download_asset(self, url, link_text=''):
         """Download an asset and return its local path."""
         try:
-            response = requests.get(url, stream=True)
+            response = requests.get(url, stream=True, verify=False)
             response.raise_for_status()
-            
-            # Create slug from link text or use a default
-            if link_text:
-                slug = re.sub(r'[^\w\s-]', '', link_text.lower())
-                slug = re.sub(r'[-\s]+', '-', slug).strip('-')
-                filename = f"{slug}.pdf"
-            else:
-                filename = 'document-' + datetime.now().strftime('%Y%m%d-%H%M%S') + '.pdf'
-            
+
+            filename = url.split('/')[-1] + '.pdf'
             local_path = os.path.join(self.assets_dir, filename)
             
             # Save file
+            print(f"Downloading {url} to {local_path}")
             with open(local_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
@@ -87,7 +83,7 @@ class WebsiteMigrator:
     def migrate_page(self, url, output_filename):
         """Migrate a single page from URL to markdown file."""
         try:
-            response = requests.get(url)
+            response = requests.get(url, verify=False)
             response.raise_for_status()
             
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -99,7 +95,7 @@ class WebsiteMigrator:
                 title = title.split('|')[1].strip()
             
             description = soup.find('meta', {'name': 'description'})
-            description = description['content'] if description else 'Sezione dedicata alla trasparenza amministrativa'
+            description = description['content'] if description else ''
             
             # Get main content (adjust selector based on your HTML structure)
             main_content = soup.find('main') or soup.find('article') or soup.body
@@ -161,8 +157,8 @@ def rename_pdfs_from_markdown(markdown_file):
         content = content.replace(old_path, new_path)
         
         # Rename actual file
-        old_file = os.path.join('static', old_path.lstrip('/'))
-        new_file = os.path.join('static', new_path.lstrip('/'))
+        old_file = old_path.lstrip('/')
+        new_file = new_path.lstrip('/')
         
         if os.path.exists(old_file):
             os.rename(old_file, new_file)
@@ -172,16 +168,35 @@ def rename_pdfs_from_markdown(markdown_file):
     with open(markdown_file, 'w', encoding='utf-8') as f:
         f.write(content)
 
+def fix_markdown_links(markdown_file):
+    """Convert angle bracket links to standard markdown links"""
+    with open(markdown_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Find and replace angle bracket links with standard markdown links
+    content = re.sub(
+        r'<(https?://[^>]+)>', 
+        r'[Link](\1)', 
+        content
+    )
+    
+    # Write updated content back to file
+    with open(markdown_file, 'w', encoding='utf-8') as f:
+        f.write(content)
+
 def main():
     # Migrate specific pages
-    migrator = WebsiteMigrator(base_url='https://www.savlmarradi.it', output_dir='mdocs', assets_dir='static/assets')
+    # base_url="https://www.savlmarradi.it"
+    base_url="https://www.savl.digiteco.it"
+
+    migrator = WebsiteMigrator(base_url=base_url, output_dir='mdocs', assets_dir='assets')
     migrator.migrate_page(
-        'https://www.savlmarradi.it/societa-trasparente',
+        base_url+'/societa-trasparente',
         'societa-trasparente.md'
     )
     
 
 if __name__ == "__main__":
-    #main()
-    # Rename PDFs based on markdown content
-    rename_pdfs_from_markdown('mdocs/societa-trasparente.md')
+    # main()
+    # rename_pdfs_from_markdown('mdocs/societa-trasparente.md')
+    fix_markdown_links('mdocs/societa-trasparente.md')

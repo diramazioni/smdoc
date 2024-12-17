@@ -12,4 +12,5 @@ vite.config.ts.timestamp-*
 prisma/users.db
 #deploy/pm2/ecosystem.config.js
 .aider*
-static/assets/*
+assets/*
+assets_/*
