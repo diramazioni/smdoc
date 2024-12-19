@@ -29,10 +29,29 @@ class WebsiteMigrator:
             response = requests.get(url, stream=True, verify=False)
             response.raise_for_status()
 
-            filename = url.split('/')[-1] + '.pdf'
+            # Try to get filename from Content-Disposition header
+            content_disposition = response.headers.get('Content-Disposition')
+            if content_disposition:
+                # Try UTF-8 encoded filename first
+                utf8_match = re.findall(r"filename\*=utf-8''(.+)", content_disposition)
+                if utf8_match:
+                    from urllib.parse import unquote
+                    filename = unquote(utf8_match[0])
+                else:
+                    # Fall back to regular filename
+                    filename = re.findall("filename=(.+?)(;|$)", content_disposition)[0][0].strip('"')
+            else:
+                # Fallback to URL filename or link text
+                filename = link_text.strip() if link_text else url.split('/')[-1]
+                filename = filename + '.pdf'
+                
             local_path = os.path.join(self.assets_dir, filename)
+
+            # Skip if file already exists
+            if os.path.exists(local_path):
+                print(f"File already exists: {local_path}")
+                return os.path.join('/assets', filename)
             
-            # Save file
             print(f"Downloading {url} to {local_path}")
             with open(local_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
@@ -42,6 +61,7 @@ class WebsiteMigrator:
         except Exception as e:
             print(f"Error downloading {url}: {e}")
             return url
+
 
     def process_links(self, content):
         """Process and download assets for all links in content."""

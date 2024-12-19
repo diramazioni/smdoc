@@ -1,34 +1,36 @@
 ---
 description: 'Società Trasparente: documenti amministrativi'
 title: Società Trasparente
-updatedAt: '2024-12-17T09:57:25.916161'
+updatedAt: '2024-12-19T10:33:37.136597'
 ---
 # Società Trasparente
+
+![Società Acquedotto Valle del Lamone s.r.l.](https://www.savl.digiteco.it/img/logo.png)
 
 Data ultimo aggiornamento: 30/05/2024
 
 ## Disposizioni Generali
 
-  * [DETERMINA A CONTRARRE DEL 05-11-2024](/assets/determina-a-contrarre-del-05-11-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 05-11-2024](/assets/DETERMINA_A_CONTRARRE_DEL_05-11-2024_\(525_CAGLIA\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B41D2000FB)
-  * [DETERMINA A CONTRARRE DEL 05-11-2024](/assets/determina-a-contrarre-del-05-11-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 05-11-2024](/assets/DETERMINA_A_CONTRARRE_DEL_05-11-2024_\(526_GUIDUCCI\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B41D2173F5)
-  * [DETERMINA A CONTRARRE DEL 27-11-2024](/assets/determina-a-contrarre-del-27-11-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 27-11-2024](/assets/DETERMINA_A_CONTRARRE_DEL_27-11-2024_\(529_TAMOIL\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B47D40DE51)
-  * [DETERMINA A CONTRARRE DEL 4-12-2024](/assets/determina-a-contrarre-del-4-12-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 4-12-2024](/assets/DETERMINA_A_CONTRARRE_DEL_4-12-2024_\(530_LATITUDE\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B4A0B79EA9)
-  * [DETERMINA A CONTRARRE DEL 4-12-2024](/assets/determina-a-contrarre-del-4-12-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 4-12-2024](/assets/DETERMINA_A_CONTRARRE_DEL_4-12-2024_\(531_HACH\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B4A11EB04D)
-  * [DETERMINA A CONTRARRE DEL 5-12-2024](/assets/determina-a-contrarre-del-5-12-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 5-12-2024](/assets/DETERMINA_A_CONTRARRE_DEL_5-12.2024_\(532_BRENNTAG\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B4A2926BE8)
-  * [DETERMINA A CONTRARRE DEL 5-12-2024](/assets/determina-a-contrarre-del-5-12-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 5-12-2024](/assets/DETERMINA_A_CONTRARRE_DEL_5-12-2024_\(533_NCR\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B4A3DEC079)
 
 
 
 #### Piano triennale per la prevenzione della corruzione e della trasparenza
 
-  * [Piano Triennali di Prevenzione della Corruzione e della Trasparenza 2024-2026](/assets/piano-triennali-di-prevenzione-della-corruzione-e-della-trasparenza-2024-2026.pdf)
+  * [Piano Triennali di Prevenzione della Corruzione e della Trasparenza 2024-2026](/assets/SAVL_PTPCT_2024-2026.pdf)
 
 
 
@@ -39,25 +41,25 @@ Data ultimo aggiornamento: 30/05/2024
 
 
   * Riferimenti normativi su organizzazione e attività
-    * [Riferimenti normativi su organizzazione e attività](/assets/riferimenti-normativi-su-organizzazione-e-attività.pdf)
+    * [Riferimenti normativi su organizzazione e attività](/assets/Riferimenti_normativi_su_organizzazione_e_attività.pdf)
 
   * Atti amministrativi generali (SAVL Applica il Codice degli Appalti pubblici vigente e opera nel suo rispetto)
-    * [Regolamento Economale](/assets/regolamento-economale.pdf)
-    * [Nuovo Statuo (27 aprile 2017)](/assets/nuovo-statuo-27-aprile-2017.pdf)
-    * [Manuale di gestione del protocollo informatico, dei documenti e degli archivi della SAVL S.r.l.](/assets/manuale-di-gestione-del-protocollo-informatico-dei-documenti-e-degli-archivi-della-savl-srl.pdf)
-    * [Modello di segnalazione degli illeciti](/assets/modello-di-segnalazione-degli-illeciti.pdf)
-    * [Regolamento in materia di segnalazione degli illeciti (Whistelblowing)](/assets/regolamento-in-materia-di-segnalazione-degli-illeciti-whistelblowing.pdf)
-    * [Privacy policy segnalazioni](/assets/privacy-policy-segnalazioni.pdf)
+    * [Regolamento Economale](/assets/Regolamento_economale.pdf)
+    * [Nuovo Statuo (27 aprile 2017)](/assets/STATUTO_SAVL_27APRILE2017.pdf)
+    * [Manuale di gestione del protocollo informatico, dei documenti e degli archivi della SAVL S.r.l.](/assets/manuale_di_gestione_del_protocollo_informatico_SAVL.pdf)
+    * [Modello di segnalazione degli illeciti](/assets/Modello_di_segnalazione_illeciti.pdf)
+    * [Regolamento in materia di segnalazione degli illeciti (Whistelblowing)](/assets/Regolamento_whistelblowing.pdf)
+    * [Privacy policy segnalazioni](/assets/PRIVACY_POLICY_SEGNALAZIONI.pdf)
 
   * Documenti di programmazione strategico-gestionale
-    * [Stralcio Verbale Assemblea Obiettivi Strategici Gennaio 2020](/assets/stralcio-verbale-assemblea-obiettivi-strategici-gennaio-2020.pdf)
-    * [Stralcio verbale Assemblea Obiettivi strategici marzo 2021](/assets/stralcio-verbale-assemblea-obiettivi-strategici-marzo-2021.pdf)
-    * [Stralcio verbale Assemblea obiettivi strategici anno 2022](/assets/stralcio-verbale-assemblea-obiettivi-strategici-anno-2022.pdf)
-    * [Stralcio verbale Assemblea Obiettivi strategici anno 2023](/assets/stralcio-verbale-assemblea-obiettivi-strategici-anno-2023.pdf)
-    * [Stralcio verbale Assemblea Obiettivi strategici anno 2024](/assets/stralcio-verbale-assemblea-obiettivi-strategici-anno-2024.pdf)
+    * [Stralcio Verbale Assemblea Obiettivi Strategici Gennaio 2020](/assets/StralcioVerbaleGennaio2020obiettivistrategici.pdf)
+    * [Stralcio verbale Assemblea Obiettivi strategici marzo 2021](/assets/doc00305420210531125603.pdf)
+    * [Stralcio verbale Assemblea obiettivi strategici anno 2022](/assets/Stralcio_verbale_Assemblea_obiettivi_strategici_anno_2022.pdf)
+    * [Stralcio verbale Assemblea Obiettivi strategici anno 2023](/assets/Stralcio_verbale_Assemblea_Obiettivi_strategici_anno_2023.pdf)
+    * [Stralcio verbale Assemblea Obiettivi strategici anno 2024](/assets/Stralcio_verbale_Assemblea_Obiettivi_strategici_anno_2024.pdf)
 
   * Codice di condotta e codice etico
-    * [Codice di comportamento (4 settembre 2018)](/assets/codice-di-comportamento-4-settembre-2018.pdf)
+    * [Codice di comportamento (4 settembre 2018)](/assets/Codice_di_comportamento04settembre2018.pdf)
 
 
 
@@ -73,28 +75,28 @@ Data ultimo aggiornamento: 30/05/2024
 
 
   * Titolari di incarichi politici, di amministrazione, di direzione o di governo
-    * [Elenco organi di indirizzo politico amministrativo](/assets/elenco-organi-di-indirizzo-politico-amministrativo.pdf)
-    * [Estremi verbale nomina Amministratore Unico 2023](/assets/estremi-verbale-nomina-amministratore-unico-2023.pdf)
-    * [Dichiarazione insussitenza cause incompatibilità A.U. 2023](/assets/dichiarazione-insussitenza-cause-incompatibilità-au-2023.pdf)
-    * [Dichiarazione insussitenza cause inconferibilità A.U. 2023](/assets/dichiarazione-insussitenza-cause-inconferibilità-au-2023.pdf)
-    * [CV Amministratore Unico](/assets/cv-amministratore-unico.pdf)
-    * [Compenso Amministratore Unico](/assets/compenso-amministratore-unico.pdf)
-    * [Estratto verbale di nomina Revisore Unico 2023](/assets/estratto-verbale-di-nomina-revisore-unico-2023.pdf)
-    * [Dichiarazione assenza cause incompatibilità Revisore Unico](/assets/dichiarazione-assenza-cause-incompatibilità-revisore-unico.pdf)
-    * [Dichiarazione assenza cause inconferibilità Revisore Unico](/assets/dichiarazione-assenza-cause-inconferibilità-revisore-unico.pdf)
-    * [Dichiarazione insussistenza cause incompatibilità A.U. 2024](/assets/dichiarazione-insussistenza-cause-incompatibilità-au-2024.pdf)
-    * [Dichiarazione insussistenza cause incompatibilità Revisore Unico 2024](/assets/dichiarazione-insussistenza-cause-incompatibilità-revisore-unico-2024.pdf)
+    * [Elenco organi di indirizzo politico amministrativo](/assets/Elenco_organi_di_indirizzo_politico_amministrativo.pdf)
+    * [Estremi verbale nomina Amministratore Unico 2023](/assets/ESTREMI_NOMINA_AMMINISTRATORE_UNICO_SAVL_2023.pdf)
+    * [Dichiarazione insussitenza cause incompatibilità A.U. 2023](/assets/DICHIARAZIONE_INSUSSISTENZA_CAUSE_INCOMPATIBILITA'.pdf)
+    * [Dichiarazione insussitenza cause inconferibilità A.U. 2023](/assets/DICHIARAZIONE_INSUSSISTENZA_CAUSE_INCONFERIBILITA'.pdf)
+    * [CV Amministratore Unico](/assets/CV_STEFANO_MOSCONI.pdf)
+    * [Compenso Amministratore Unico](/assets/COMPENSO_A.U..pdf)
+    * [Estratto verbale di nomina Revisore Unico 2023](/assets/Estratto_verbale_di_nomina_Revisore_Unico.pdf)
+    * [Dichiarazione assenza cause incompatibilità Revisore Unico](/assets/Dichiarazione_incompatibilità.pdf)
+    * [Dichiarazione assenza cause inconferibilità Revisore Unico](/assets/Dichiarzione_inconferibilità.pdf)
+    * [Dichiarazione insussistenza cause incompatibilità A.U. 2024](/assets/dichiarazione_assenza_incompatibilita_A.U._signed.pdf)
+    * [Dichiarazione insussistenza cause incompatibilità Revisore Unico 2024](/assets/DICHIARAZIONE_Laganà.pdf)
 
   * Titolari di incarichi politici, di amministrazione, di direzione o di governo cessati dall’incarico
-    * [Dichiarazione Insussistenza di inconferibilità ed incompatibilità Amministratore Unico anno 2019](/assets/dichiarazione-insussistenza-di-inconferibilità-ed-incompatibilità-amministratore-unico-anno-2019.pdf)
-    * [Dichiarazione assunzione altre cariche presso enti pubblici o privati e relativi compensi a qualsiasi titolo corrisposti anno 2019](/assets/dichiarazione-assunzione-altre-cariche-presso-enti-pubblici-o-privati-e-relativi-compensi-a-qualsiasi-titolo-corrisposti-anno-2019.pdf)
-    * [Dichiarazione assunzione altre cariche presso enti pubblici o privati e relativi compensi a qualsiasi titolo corrisposti anno 2020](/assets/dichiarazione-assunzione-altre-cariche-presso-enti-pubblici-o-privati-e-relativi-compensi-a-qualsiasi-titolo-corrisposti-anno-2020.pdf)
-    * [Informazioni Amministratore Unico anni 2021 e 2022](/assets/informazioni-amministratore-unico-anni-2021-e-2022.pdf)
-    * [Verbale nomina Amministratore Unico](/assets/verbale-nomina-amministratore-unico.pdf)
-    * [Dichiarazione di assenza cause di inconferibilità](/assets/dichiarazione-di-assenza-cause-di-inconferibilità.pdf)
-    * [Dichiarazione assenza cause incompatibilità anno 2020](/assets/dichiarazione-assenza-cause-incompatibilità-anno-2020.pdf)
-    * [Dichiarazione assenza cause incompatibilità anno 2021](/assets/dichiarazione-assenza-cause-incompatibilità-anno-2021.pdf)
-    * [Dichiarazione assenza cause incompatibilità anno 2022](/assets/dichiarazione-assenza-cause-incompatibilità-anno-2022.pdf)
+    * [Dichiarazione Insussistenza di inconferibilità ed incompatibilità Amministratore Unico anno 2019](/assets/Dichiarazione_InconferibilitàIncompatibilitàAmministratore_Unico2019.pdf)
+    * [Dichiarazione assunzione altre cariche presso enti pubblici o privati e relativi compensi a qualsiasi titolo corrisposti anno 2019](/assets/ALTRIINCARICHI.pdf)
+    * [Dichiarazione assunzione altre cariche presso enti pubblici o privati e relativi compensi a qualsiasi titolo corrisposti anno 2020](/assets/200901162902.pdf)
+    * [Informazioni Amministratore Unico anni 2021 e 2022](/assets/Informazioni_Amministratore_Unico_anni_2021_e2022.pdf)
+    * [Verbale nomina Amministratore Unico](/assets/Verbale_nomina_Amministratore_Unico.pdf)
+    * [Dichiarazione di assenza cause di inconferibilità](/assets/Dichiarazione_di_assenza_cause_inconferibilità.pdf)
+    * [Dichiarazione assenza cause incompatibilità anno 2020](/assets/Dichiarazione_assenza_cause_incompatibilità_anno_2020.pdf)
+    * [Dichiarazione assenza cause incompatibilità anno 2021](/assets/Dichiarazione_assenza_cause_incompatibilità_anno_2021.pdf)
+    * [Dichiarazione assenza cause incompatibilità anno 2022](/assets/Dichiarazione_assenza_cause_incompatibilità_anno_2022.pdf)
 
 
 
@@ -120,11 +122,11 @@ Data ultimo aggiornamento: 30/05/2024
     * UFFICIO TECNICO con competenze per tutte le attività di intervento sugli impianti 
 
   * Organigramma
-    * [Organigramma 2020](/assets/organigramma-2020.pdf)
-    * [Organigramma 2021](/assets/organigramma-2021.pdf)
-    * [Organigramma 2022](/assets/organigramma-2022.pdf)
-    * [Organigramma 2023](/assets/organigramma-2023.pdf)
-    * [Organigramma 2024](/assets/organigramma-2024.pdf)
+    * [Organigramma 2020](/assets/ORGANIGRAMMASAVL2020.pdf)
+    * [Organigramma 2021](/assets/210211123754.pdf)
+    * [Organigramma 2022](/assets/Organigramma_2022.pdf)
+    * [Organigramma 2023](/assets/ORGANIGRAMMASAVL2023.pdf)
+    * [Organigramma 2024](/assets/ORGANIGRAMMASAVL2024.pdf)
 
 
 
@@ -147,11 +149,11 @@ Data ultimo aggiornamento: 30/05/2024
 
 
   * Incarichi di collaborazione, consulenza, professionali
-    * [Consulenti e collaboratori anno 2020](/assets/consulenti-e-collaboratori-anno-2020.pdf)
-    * [Consulenti e collaboratori anno 2021](/assets/consulenti-e-collaboratori-anno-2021.pdf)
-    * [Consulenti e collaboratori anno 2022](/assets/consulenti-e-collaboratori-anno-2022.pdf)
-    * [Consulenti e collaboratori anno 2023](/assets/consulenti-e-collaboratori-anno-2023.pdf)
-    * [Consulenti e collaboratori anno 2024](/assets/consulenti-e-collaboratori-anno-2024.pdf)
+    * [Consulenti e collaboratori anno 2020](/assets/Consulenti_e_collaboratori_anno_2020.pdf)
+    * [Consulenti e collaboratori anno 2021](/assets/Consulenti_e_collaboratori_anno_2021.pdf)
+    * [Consulenti e collaboratori anno 2022](/assets/Consulenti_e_collaboratori_anno_2022.pdf)
+    * [Consulenti e collaboratori anno 2023](/assets/Consulenti_e_collaboratori_anno_2023.pdf)
+    * [Consulenti e collaboratori anno 2024](/assets/CONSULENTI_E_COLLABORATORI_2024-combinato.pdf)
 
 
 
@@ -235,13 +237,13 @@ Data ultimo aggiornamento: 30/05/2024
 
 
   * Tassi di assenza trimestrali
-    * [Tasso assenze trimestrali anno 2018](/assets/tasso-assenze-trimestrali-anno-2018.pdf)
-    * [Tasso assenze trimestrali anno 2019](/assets/tasso-assenze-trimestrali-anno-2019.pdf)
-    * [Tasso assenze trimestrali anno 2020](/assets/tasso-assenze-trimestrali-anno-2020.pdf)
-    * [Tasso assenze trimestrali anno 2021](/assets/tasso-assenze-trimestrali-anno-2021.pdf)
-    * [Tasso assenze trimestrali anno 2022](/assets/tasso-assenze-trimestrali-anno-2022.pdf)
-    * [Tasso assenze trimestrali anno 2023](/assets/tasso-assenze-trimestrali-anno-2023.pdf)
-    * [Tasso assenze trimestrali anno 2024](/assets/tasso-assenze-trimestrali-anno-2024.pdf)
+    * [Tasso assenze trimestrali anno 2018](/assets/TabellaTassi_AssenzaPersonale2018.pdf)
+    * [Tasso assenze trimestrali anno 2019](/assets/TabellaTassi_AssenzaPersonale2019.pdf)
+    * [Tasso assenze trimestrali anno 2020](/assets/doc00066720210309162014.pdf)
+    * [Tasso assenze trimestrali anno 2021](/assets/Tasso_Assenza_2021.pdf)
+    * [Tasso assenze trimestrali anno 2022](/assets/TabellaTassi_AssenzaPersonale2022.pdf)
+    * [Tasso assenze trimestrali anno 2023](/assets/TabellaTassi_AssenzaPersonale2023.pdf)
+    * [Tasso assenze trimestrali anno 2024](/assets/TabellaTassi_AssenzaPersonale2024.pdf)
 
 
 
@@ -285,30 +287,30 @@ Data ultimo aggiornamento: 30/05/2024
 
 
   * Criteri e modalità
-    * [Regolamento reclutamento del personale 2020](/assets/regolamento-reclutamento-del-personale-2020.pdf)
+    * [Regolamento reclutamento del personale 2020](/assets/regolamento_personale_SETTEMBRE_2020.pdf)
 
   * Bandi di concorso
 
     * Selezione pubblica per curriculum e colloquio per la formazione di una graduatoria da utilizzare per l’assunzione con contratto a tempo indeterminato di n. 1 Operaio Comune Polivalente - ANNO 2020
-      * [Bando](/assets/bando.pdf)
+      * [Bando](/assets/BANDO_SELEZIONE.pdf)
       * [Modello-domanda](/assets/modello-domanda.pdf)
-      * [CV formato europeo](/assets/cv-formato-europeo.pdf)
-      * [Nomina Commissione Giudicatrice](/assets/nomina-commissione-giudicatrice.pdf)
-      * [Elenco candidati ammessi alla valutazione dei curriculum ed al colloquio](/assets/elenco-candidati-ammessi-alla-valutazione-dei-curriculum-ed-al-colloquio.pdf)
-      * [Convocazione Candidati](/assets/convocazione-candidati.pdf)
-      * [Autodichiarazione](/assets/autodichiarazione.pdf)
-      * [Verbale Commissione Giudicatrice](/assets/verbale-commissione-giudicatrice.pdf)
-      * [Determina Amministratore Unico](/assets/determina-amministratore-unico.pdf)
+      * [CV formato europeo](/assets/cv-formato-europeo.doc)
+      * [Nomina Commissione Giudicatrice](/assets/nomina_commissione_giudicatrice_signed.pdf)
+      * [Elenco candidati ammessi alla valutazione dei curriculum ed al colloquio](/assets/elenco_candidati_ammessi.pdf)
+      * [Convocazione Candidati](/assets/Convocazione_Candidati_.pdf)
+      * [Autodichiarazione](/assets/Autodichiarazione_\(2\).pdf)
+      * [Verbale Commissione Giudicatrice](/assets/Verbale_Commissione_Giudicatrice.pdf)
+      * [Determina Amministratore Unico](/assets/Determina_Amministratore_Unico.pdf)
 
     * Bandi di selezione interna
-      * [AVVISO DI SELEZIONE INTERNA - 14 febbraio 2022](/assets/avviso-di-selezione-interna-14-febbraio-2022.pdf)
-      * [Modello - domanda](/assets/modello-domanda.pdf)
-      * [Nomina commissione giudicatrice](/assets/nomina-commissione-giudicatrice.pdf)
-      * [Elenco dei candidati ammessi alla valutazione del curriculum ed al colloquio](/assets/elenco-dei-candidati-ammessi-alla-valutazione-del-curriculum-ed-al-colloquio.pdf)
-      * [Convocazione candidati](/assets/convocazione-candidati.pdf)
-      * [Autodichiarazione](/assets/autodichiarazione.pdf)
-      * [Verbale Commissione Giudicatrice](/assets/verbale-commissione-giudicatrice.pdf)
-      * [Determina Amministratore Unico](/assets/determina-amministratore-unico.pdf)
+      * [AVVISO DI SELEZIONE INTERNA - 14 febbraio 2022](/assets/AVVISO_DI_SELEZIONE_INTERNA_-_14_febbraio_2022.pdf)
+      * [Modello - domanda](/assets/Modello-domanda.pdf)
+      * [Nomina commissione giudicatrice](/assets/Nomina_Commissione_Giudicatrice_SAVL_signed.pdf)
+      * [Elenco dei candidati ammessi alla valutazione del curriculum ed al colloquio](/assets/Elenco_candidati_ammessi_alla_valutazione_dei_curriculum_e_al_colloquio.pdf)
+      * [Convocazione candidati](/assets/Convocazione_candidati.pdf)
+      * [Autodichiarazione](/assets/Autodichiarazione.pdf)
+      * [Verbale Commissione Giudicatrice](/assets/VERBALE_COMMISSIONE_GIUDICATRICE.pdf)
+      * [Determina Amministratore Unico](/assets/Determina_Amministratore_Unico.pdf)
 
 
 
@@ -349,15 +351,15 @@ Data ultimo aggiornamento: 30/05/2024
 
 #### Informazioni sulle singole procedure in formato tabellare
 
-  * [TABELLA CIG 2020 XML](/assets/tabella-cig-2020-xml.pdf)
-  * [TABELLA CIG GENNAIO 2020](/assets/tabella-cig-gennaio-2020.pdf)
-  * [TABELLA CIG GIUGNO 2020](/assets/tabella-cig-giugno-2020.pdf)
-  * [Tabella CIG Gennaio 2021 leggibile](/assets/tabella-cig-gennaio-2021-leggibile.pdf)
-  * [Tabella CIG Gennaio 2021 xml](/assets/tabella-cig-gennaio-2021-xml.pdf)
-  * [Tabella CIG AGGIORNATA AL 15/11/2021](/assets/tabella-cig-aggiornata-al-15112021.pdf)
-  * [TABELLA CIG 2022 secondo direttive ANAC](/assets/tabella-cig-2022-secondo-direttive-anac.pdf)
-  * [TABELLA CIG 2023 secondo direttive ANAC](/assets/tabella-cig-2023-secondo-direttive-anac.pdf)
-  * [Tabella CIG 2024 rif. 2023](/assets/tabella-cig-2024-rif-2023.pdf)
+  * [TABELLA CIG 2020 XML](/assets/Tabella_CIG_GENNAIO2020.xml)
+  * [TABELLA CIG GENNAIO 2020](/assets/Tabella_CIG_GENNAIO2020LEGGIBILE.pdf)
+  * [TABELLA CIG GIUGNO 2020](/assets/Tabella_CIG_GIUGNO2020.pdf)
+  * [Tabella CIG Gennaio 2021 leggibile](/assets/Tabella_CIG_Gennaio2021.pdf)
+  * [Tabella CIG Gennaio 2021 xml](/assets/Tabella_CIG_Gennaio2021.xml)
+  * [Tabella CIG AGGIORNATA AL 15/11/2021](/assets/Tabella_CIG_novembre2021.pdf)
+  * [TABELLA CIG 2022 secondo direttive ANAC](/assets/dataset2021_.xml)
+  * [TABELLA CIG 2023 secondo direttive ANAC](/assets/dataset2022.xml)
+  * [Tabella CIG 2024 rif. 2023](/assets/TABELLA_CIG_2024_pagamenti_anno_2023.pdf)
 
 
 
@@ -385,77 +387,77 @@ Data ultimo aggiornamento: 30/05/2024
 
 #### Dati per singola procedura di affidamento anno 2024
 
-  * [DETERMINA A CONTRARRE DEL 19/12/2023](/assets/determina-a-contrarre-del-19122023.pdf)
+  * [DETERMINA A CONTRARRE DEL 19/12/2023](/assets/DETERMINA_A_CONTRARRE_DEL_19_12_2023.pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=Z833DD919B)
-  * [DETERMINA A CONTRARRE DEL 20/12/2023](/assets/determina-a-contrarre-del-20122023.pdf)
+  * [DETERMINA A CONTRARRE DEL 20/12/2023](/assets/DETERMINA_A_CONTRARRE_DEL_20_12_2023.pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=ZA53DDFCD1)
-  * [DETERMINA A CONTRARRE DEL 29/01/2024](/assets/determina-a-contrarre-del-29012024.pdf)
+  * [DETERMINA A CONTRARRE DEL 29/01/2024](/assets/DETERMINA_A_CONTRARRE_DEL_29-01-2024_\(492_NCR\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B02542992C)
-  * [DETERMINA A CONTRARRE DEL 29/01/2024](/assets/determina-a-contrarre-del-29012024.pdf)
+  * [DETERMINA A CONTRARRE DEL 29/01/2024](/assets/DETERMINA_A_CONTRARRE_DEL_29-01-2024_\(493_BRENNTAG\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0252B348B)
-  * [DETERMINA A CONTRARRE DEL 06/02/2024](/assets/determina-a-contrarre-del-06022024.pdf)
+  * [DETERMINA A CONTRARRE DEL 06/02/2024](/assets/DETERMINA_A_CONTRARRE_DEL_06-02-2024_\(494_BORRI\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B042DC5EE1)
-  * [DETERMINA A CONTRARRE DEL 06/02/2024](/assets/determina-a-contrarre-del-06022024.pdf)
+  * [DETERMINA A CONTRARRE DEL 06/02/2024](/assets/DETERMINA_A_CONTRARRE_DEL_06-02-2024_\(495_INGALLINA\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0442AF128)
-  * [DETERMINA A CONTRARRE DEL 14/02/2024](/assets/determina-a-contrarre-del-14022024.pdf)
+  * [DETERMINA A CONTRARRE DEL 14/02/2024](/assets/DETERMINA_A_CONTRARRE_DEL_14-02-2024_\(496_GM_TRATT_ACQUE\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B062923037)
-  * [DETERMINA A CONTRARRE DEL 21/02/2024](/assets/determina-a-contrarre-del-21022024.pdf)
+  * [DETERMINA A CONTRARRE DEL 21/02/2024](/assets/DETERMINA_A_CONTRARRE_DEL_21-02-2024_\(497_TEAM_SYSTEM\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B07B72B772)
-  * [DETERMINA A CONTRARRE DEL 29/02/2024](/assets/determina-a-contrarre-del-29022024.pdf)
+  * [DETERMINA A CONTRARRE DEL 29/02/2024](/assets/DETERMINA_A_CONTRARRE_DEL_29-02-2024_\(498_VALLI_GRANUL\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B099C7723E)
-  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
+  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/DETERMINA_A_CONTRARRE_DEL_11-03-2024_\(499_TRONY\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C259B251)
-  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
+  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/DETERMINA_A_CONTRARRE_DEL_11-03-2024_\(500_GUIDUCCI\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2626505)
-  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
+  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/DETERMINA_A_CONTRARRE_DEL_11-03-2024_\(501_HACH_MANUT\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2713898)
-  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
+  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/DETERMINA_A_CONTRARRE_DEL_11-03-2024_\(502_TANI\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C27F0EF6)
-  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
+  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/DETERMINA_A_CONTRARRE_DEL_11-03-2024_\(503_SEPAG\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2A785B8)
-  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/determina-a-contrarre-del-11032024.pdf)
+  * [DETERMINA A CONTRARRE DEL 11/03/2024](/assets/DETERMINA_A_CONTRARRE_DEL_11-03-2024_\(504_BRENNTAG\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0C2B6F18E)
-  * [DETERMINA A CONTRARRE DEL 21/03/2024](/assets/determina-a-contrarre-del-21032024.pdf)
+  * [DETERMINA A CONTRARRE DEL 21/03/2024](/assets/DETERMINA_A_CONTRARRE_DEL_21-03-2024_\(505_HACH_REATTIVI\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B0ED062469)
-  * [DETERMINA A CONTRARRE DEL 28/03/2024](/assets/determina-a-contrarre-del-28032024.pdf)
+  * [DETERMINA A CONTRARRE DEL 28/03/2024](/assets/DETERMINA_A_CONTRARRE_DEL_28-03-2024_\(506_NCR\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B106B3E1B2)
-  * [DETERMINA A CONTRARRE DEL 04/04/2024](/assets/determina-a-contrarre-del-04042024.pdf)
+  * [DETERMINA A CONTRARRE DEL 04/04/2024](/assets/DETERMINA_A_CONTRARRE_DEL_04-04-2024_\(507_CAPECCHI\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B11A989B95)
-  * [DETERMINA A CONTRARRE DEL 04/04/2024](/assets/determina-a-contrarre-del-04042024.pdf)
+  * [DETERMINA A CONTRARRE DEL 04/04/2024](/assets/DETERMINA_A_CONTRARRE_DEL_04-04-2024_\(508_RONCOTER\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B11B90B7BC)
-  * [DETERMINA A CONTRARRE DEL 11/04/2024](/assets/determina-a-contrarre-del-11042024.pdf)
+  * [DETERMINA A CONTRARRE DEL 11/04/2024](/assets/DETERMINA_A_CONTRARRE_DEL_11-04-2024_\(509_GIANNI_NERI\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B137555B4C)
-  * [DETERMINA A CONTRARRE DEL 17/04/2024](/assets/determina-a-contrarre-del-17042024.pdf)
+  * [DETERMINA A CONTRARRE DEL 17/04/2024](/assets/DETERMINA_A_CONTRARRE_DEL_17-04-2024_\(510_BRENNTAG\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1489A0C5D)
-  * [DETERMINA A CONTRARRE DEL 17/04/2024](/assets/determina-a-contrarre-del-17042024.pdf)
+  * [DETERMINA A CONTRARRE DEL 17/04/2024](/assets/DETERMINA_A_CONTRARRE_DEL_17-04-2024_\(511HERATECH\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B148DAF5C8)
-  * [DETERMINA A CONTRARRE DEL 23/04/2024](/assets/determina-a-contrarre-del-23042024.pdf)
+  * [DETERMINA A CONTRARRE DEL 23/04/2024](/assets/DETERMINA_A_CONTRARRE_DEL_23-04-2024_\(512_NCR_BIOCHEMICAL\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B159ADB676)
-  * [DETERMINA A CONTRARRE DEL 22/04/2024](/assets/determina-a-contrarre-del-22042024.pdf)
+  * [DETERMINA A CONTRARRE DEL 22/04/2024](/assets/DETERMINA_A_CONTRARRE_DEL_22-04-2024_\(514_DIGITECO_manut\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B160070A76)
-  * [DETERMINA A CONTRARRE DEL 23/04/2024](/assets/determina-a-contrarre-del-23042024.pdf)
+  * [DETERMINA A CONTRARRE DEL 23/04/2024](/assets/DETERMINA_A_CONTRARRE_DEL_23-04-2024_\(515_DIGITECO_ricambi\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B162EF9164)
-  * [DETERMINA A CONTRARRE DEL 09/05/2024](/assets/determina-a-contrarre-del-09052024.pdf)
+  * [DETERMINA A CONTRARRE DEL 09/05/2024](/assets/DETERMINA_A_CONTRARRE_DEL_09-05-2024_\(516_HERAMBIENTE\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B18744983B)
-  * [DETERMINA A CONTRARRE DEL 22/05/2024](/assets/determina-a-contrarre-del-22052024.pdf)
+  * [DETERMINA A CONTRARRE DEL 22/05/2024](/assets/DETERMINA_A_CONTRARRE_DEL_22-05-2024_\(faenza_spurghi_517\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1CB214E8C)
-  * [DETERMINA A CONTRARRE DEL 28/05/2024](/assets/determina-a-contrarre-del-28052024.pdf)
+  * [DETERMINA A CONTRARRE DEL 28/05/2024](/assets/DETERMINA_A_CONTRARRE_DEL_28-05-2024_\(mordini_518\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1DF3624B5)
-  * [DETERMINA A CONTRARRE DEL 28/05/2024](/assets/determina-a-contrarre-del-28052024.pdf)
+  * [DETERMINA A CONTRARRE DEL 28/05/2024](/assets/DETERMINA_A_CONTRARRE_DEL_28-05-2024_\(international_519\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1DFE9A6C1)
-  * [DETERMINA A CONTRARRE DEL 03/06/2024](/assets/determina-a-contrarre-del-03062024.pdf)
+  * [DETERMINA A CONTRARRE DEL 03/06/2024](/assets/DETERMINA_A_CONTRARRE_DEL_03-06-2024_\(520_COMPAGNIA_DEL_SOFTWARE\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B1F38B07E2)
-  * [DETERMINA A CONTRARRE DEL 11/07/2024](/assets/determina-a-contrarre-del-11072024.pdf)
+  * [DETERMINA A CONTRARRE DEL 11/07/2024](/assets/DETERMINA_A_CONTRARRE_DEL_11-07-2024_\(521_EUROFINS\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B26FEF867D)
-  * [DETERMINA A CONTRARRE DEL 21/08/2024](/assets/determina-a-contrarre-del-21082024.pdf)
+  * [DETERMINA A CONTRARRE DEL 21/08/2024](/assets/DETERMINA_A_CONTRARRE_DEL_21-08-2024_\(522_HERATECH\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B2D08F9401)
-  * [DETERMINA A CONTRARRE DEL 10-09-2024](/assets/determina-a-contrarre-del-10-09-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 10-09-2024](/assets/DETERMINA_A_CONTRARRE_DEL_10-09-2024_\(_523_ACEROSRL\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B30244C683)
-  * [DETERMINA A CONTRARRE DEL 25-09-2024](/assets/determina-a-contrarre-del-25-09-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 25-09-2024](/assets/DETERMINA_A_CONTRARRE_DEL_25-9-2024_\(524_RONCOTER2\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B33E819108)
-  * [DETERMINA A CONTRARRE DEL 06-11-2024](/assets/determina-a-contrarre-del-06-11-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 06-11-2024](/assets/DETERMINA_A_CONTRARRE_DEL_06-11-2024_\(528_RONCOTER\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B424603D5B)
-  * [DETERMINA A CONTRARRE DEL 08-11-2024](/assets/determina-a-contrarre-del-08-11-2024.pdf)
+  * [DETERMINA A CONTRARRE DEL 08-11-2024](/assets/DETERMINA_A_CONTRARRE_DEL_08-11-2024_\(527_SIAV\).pdf)
   * [Link](https://dati.anticorruzione.it/superset/dashboard/dettaglio_cig/?cig=B42E56DAD6)
 
 
@@ -468,11 +470,11 @@ Data ultimo aggiornamento: 30/05/2024
 
 #### Atti di concessione
 
-  * [Sovvenzioni e contributi anno 2019](/assets/sovvenzioni-e-contributi-anno-2019.pdf)
-  * [Sovvenzioni e contributi anno 2021](/assets/sovvenzioni-e-contributi-anno-2021.pdf)
-  * [Sovvenzioni e contributi anno 2022](/assets/sovvenzioni-e-contributi-anno-2022.pdf)
-  * [Sovvenzioni e contributi anno 2023](/assets/sovvenzioni-e-contributi-anno-2023.pdf)
-  * [Sovvenzioni e contributi anno 2024](/assets/sovvenzioni-e-contributi-anno-2024.pdf)
+  * [Sovvenzioni e contributi anno 2019](/assets/TABELLA_SOVVENZIONI_E_CONTRIBUTI.pdf)
+  * [Sovvenzioni e contributi anno 2021](/assets/MODIFICA_SOVVENZIOINE_CONTRIBUTI_ANNO_2021.pdf)
+  * [Sovvenzioni e contributi anno 2022](/assets/Tabella_sovvenzioni_e_contributi_anno_2022.pdf)
+  * [Sovvenzioni e contributi anno 2023](/assets/TABELLA_SOVVENZIONI_E_CONTRIBUTI2023.pdf)
+  * [Sovvenzioni e contributi anno 2024](/assets/TABELLA_SOVVENZIONI_E_CONTRIBUTI.pdf)
 
 
 
@@ -491,12 +493,12 @@ Data ultimo aggiornamento: 30/05/2024
 
 #### Bilanci
 
-  * [Bilancio e Nota Integrativa anno 2018](/assets/bilancio-e-nota-integrativa-anno-2018.pdf)
-  * [Bilancio e Nota Integrativa anno 2019](/assets/bilancio-e-nota-integrativa-anno-2019.pdf)
-  * [Bilancio e nota integrativa anno 2020](/assets/bilancio-e-nota-integrativa-anno-2020.pdf)
-  * [Bilancio e Nota Integrativa anno 2021](/assets/bilancio-e-nota-integrativa-anno-2021.pdf)
-  * [Bilancio e Nota Integrativa anno 2022](/assets/bilancio-e-nota-integrativa-anno-2022.pdf)
-  * [Bilancio e Nota Integrativa anno 2023](/assets/bilancio-e-nota-integrativa-anno-2023.pdf)
+  * [Bilancio e Nota Integrativa anno 2018](/assets/BILANCIO_E_NOTA_INTEGRATIVA2018_da_xbrl.pdf)
+  * [Bilancio e Nota Integrativa anno 2019](/assets/BILANCIO_E_NOTA_2019.pdf)
+  * [Bilancio e nota integrativa anno 2020](/assets/C84_NOTA_INTEGRATIVA_2020_savl_nota_20_da_xbrl_def.pdf)
+  * [Bilancio e Nota Integrativa anno 2021](/assets/savl_srl_bilancio_2021_da_xbrl.pdf)
+  * [Bilancio e Nota Integrativa anno 2022](/assets/SAVL_BILANCIO_2022.pdf)
+  * [Bilancio e Nota Integrativa anno 2023](/assets/BILANCIO_SAVL_2023.pdf)
 
 
 
@@ -508,11 +510,11 @@ Data ultimo aggiornamento: 30/05/2024
 
   * Obiettivi sul complesso delle spese di funzionamento fissati dalla P.A.
     * Per gli anni dal 2020 al 2022 non sono stati fissati obiettivi 
-    * [Atto di indirizzo ai sensi dell'art. 19 comma 5 D.Lgs. 175/2016](/assets/atto-di-indirizzo-ai-sensi-dellart-19-comma-5-dlgs-1752016.pdf)
+    * [Atto di indirizzo ai sensi dell'art. 19 comma 5 D.Lgs. 175/2016](/assets/OBIETTIVI_SOCIETA'_PARTECIPATE_CON.AMI.pdf)
 
   * Obiettivi sul complesso delle spese di funzionamento concretamente perseguiti dalle società in controllo pubblico
     * Per gli anni dal 2020 al 2022 non sono stati fissati obiettivi 
-    * [Atto di indirizzo ai sensi dell'art. 19 comma 6 D.Lgs 175/2016](/assets/atto-di-indirizzo-ai-sensi-dellart-19-comma-6-dlgs-1752016.pdf)
+    * [Atto di indirizzo ai sensi dell'art. 19 comma 6 D.Lgs 175/2016](/assets/DETERMINA_AU_116_DEL_7_MARZO_2024.pdf)
 
 
 
@@ -524,7 +526,7 @@ Data ultimo aggiornamento: 30/05/2024
 
 #### Patrimonio immobiliare
 
-  * [Elenco immobili](/assets/elenco-immobili.pdf)
+  * [Elenco immobili](/assets/ElencoImmobiliSAVL.pdf)
 
 
 
@@ -550,21 +552,21 @@ Data ultimo aggiornamento: 30/05/2024
     * L'organo di controllo che svolge le funzioni di OIV è il Responabile della prevenzione della Corruzione e della Trasparenza, come da PTPC aggiornato (art.2) 
 
   * Atti dell’organo di controllo che svolge le funzioni di oiv
-    * [Allegato 3 Scheda di sintesi sulla rilevazione degli OIV o organismi con funzioni analoghe 2019](/assets/allegato-3-scheda-di-sintesi-sulla-rilevazione-degli-oiv-o-organismi-con-funzioni-analoghe-2019.pdf)
-    * [Allegato 1.2 alla delibera ANAC n. 213/2020 - Documento di attestazione per le società e gli enti di diritto privato in controllo pubblico e gli enti pubblici economici di cui al 1.2.](/assets/allegato-12-alla-delibera-anac-n-2132020-documento-di-attestazione-per-le-società-e-gli-enti-di-diritto-privato-in-controllo-pubblico-e-gli-enti-pubblici-economici-di-cui-al-12.pdf)
-    * [Allegato 2.2 alla delibera n. 213/2020 - Griglia di rilevazione al 31/03/2020 (proroga 30/06/2020) società e enti di diritto privato in controllo pubblico e enti pubblici economici di cui al 1.2.](/assets/allegato-22-alla-delibera-n-2132020-griglia-di-rilevazione-al-31032020-proroga-30062020-società-e-enti-di-diritto-privato-in-controllo-pubblico-e-enti-pubblici-economici-di-cui-al-12.pdf)
-    * [Allegato 3 Scheda di sintesi sulla rilevazione degli OIV o organismi con funzione analoghe 2020](/assets/allegato-3-scheda-di-sintesi-sulla-rilevazione-degli-oiv-o-organismi-con-funzione-analoghe-2020.pdf)
-    * [Allegato 1.2 alla delibera ANAC N. 294/2021 - Documento di attestazione per le società e gli enti di diritto privato in controllo pubblico e gli enti pubblici economici di cui al 1.2](/assets/allegato-12-alla-delibera-anac-n-2942021-documento-di-attestazione-per-le-società-e-gli-enti-di-diritto-privato-in-controllo-pubblico-e-gli-enti-pubblici-economici-di-cui-al-12.pdf)
-    * [Allegato 2.2 alla delibera n. 294/2021 - Griglia di rilevazione al 31/05/2021 Società e enti di diritto privato in controllo pubblico e enti pubblici economici di cui al 1.2](/assets/allegato-22-alla-delibera-n-2942021-griglia-di-rilevazione-al-31052021-società-e-enti-di-diritto-privato-in-controllo-pubblico-e-enti-pubblici-economici-di-cui-al-12.pdf)
-    * [Allegato 3 alla delibera ANAC N. 294/2021 - Scheda di sintesi sulla rilevazione degli OIV o organismi con funzioni analoghe](/assets/allegato-3-alla-delibera-anac-n-2942021-scheda-di-sintesi-sulla-rilevazione-degli-oiv-o-organismi-con-funzioni-analoghe.pdf)
-    * [Allegato 1.2 alla delibera ANAC n. 201/2022 - Documento di attestazione per le Società e gli enti di diritto privato in controllo pubblico](/assets/allegato-12-alla-delibera-anac-n-2012022-documento-di-attestazione-per-le-società-e-gli-enti-di-diritto-privato-in-controllo-pubblico.pdf)
-    * [All. 2.2 - Griglia di rilevazione al 31.05.2022 per Società ed enti - par.1](/assets/all-22-griglia-di-rilevazione-al-31052022-per-società-ed-enti-par1.pdf)
-    * [All. 3 alla delibera ANAC n. 201-2022 - Scheda di sintesi sulla rilevazione degli OIV o organismi con funzioni analoghe](/assets/all-3-alla-delibera-anac-n-201-2022-scheda-di-sintesi-sulla-rilevazione-degli-oiv-o-organismi-con-funzioni-analoghe.pdf)
-    * [Seconda griglia di attestazione per enti in controllo pubblico All 6.2 - 2022](/assets/seconda-griglia-di-attestazione-per-enti-in-controllo-pubblico-all-62-2022.pdf)
-    * [Griglia OIV](/assets/griglia-oiv.pdf)
-    * [Attestazione OIV 2023](/assets/attestazione-oiv-2023.pdf)
-    * [Griglia OIV](/assets/griglia-oiv.pdf)
-    * [Attestazione OIV 2024](/assets/attestazione-oiv-2024.pdf)
+    * [Allegato 3 Scheda di sintesi sulla rilevazione degli OIV o organismi con funzioni analoghe 2019](/assets/Allegato3schedasintesi2019.pdf)
+    * [Allegato 1.2 alla delibera ANAC n. 213/2020 - Documento di attestazione per le società e gli enti di diritto privato in controllo pubblico e gli enti pubblici economici di cui al 1.2.](/assets/All12attestato2020.pdf)
+    * [Allegato 2.2 alla delibera n. 213/2020 - Griglia di rilevazione al 31/03/2020 (proroga 30/06/2020) società e enti di diritto privato in controllo pubblico e enti pubblici economici di cui al 1.2.](/assets/All_2.2_Griglia_di_rilevazione2020-1.pdf)
+    * [Allegato 3 Scheda di sintesi sulla rilevazione degli OIV o organismi con funzione analoghe 2020](/assets/All3attestazione2020.pdf)
+    * [Allegato 1.2 alla delibera ANAC N. 294/2021 - Documento di attestazione per le società e gli enti di diritto privato in controllo pubblico e gli enti pubblici economici di cui al 1.2](/assets/doc00399920210629012118.pdf)
+    * [Allegato 2.2 alla delibera n. 294/2021 - Griglia di rilevazione al 31/05/2021 Società e enti di diritto privato in controllo pubblico e enti pubblici economici di cui al 1.2](/assets/SAVLmodificato_15.6_Copia_di_Copia_di_SAVL_All_2.pdf)
+    * [Allegato 3 alla delibera ANAC N. 294/2021 - Scheda di sintesi sulla rilevazione degli OIV o organismi con funzioni analoghe](/assets/doc00400120210629012759.pdf)
+    * [Allegato 1.2 alla delibera ANAC n. 201/2022 - Documento di attestazione per le Società e gli enti di diritto privato in controllo pubblico](/assets/ALLEGATO_1.2_alla_delibera_ANAC_n._201-2022_Documento_di_attestazione_per_le_società_e_gli_enti_di_diritto_privato_in_controllo_pubblic_.pdf)
+    * [All. 2.2 - Griglia di rilevazione al 31.05.2022 per Società ed enti - par.1](/assets/SAVL_All_2.2._Griglia_rilevazione_al_31.05.2022_per_società_ed_enti_-_par._1.pdf)
+    * [All. 3 alla delibera ANAC n. 201-2022 - Scheda di sintesi sulla rilevazione degli OIV o organismi con funzioni analoghe](/assets/ALLEGATO_3_alla_delibera_ANAC_n._201-2022_Scheda_di_sintesi_sulla_rilevazione_degli_OIV_o_organismi_con_funzioni_analoghe.pdf)
+    * [Seconda griglia di attestazione per enti in controllo pubblico All 6.2 - 2022](/assets/SAVL_seconda_griglia_di_attestazione_per_enti_in_controllo_pubblico_All_6.2._.pdf)
+    * [Griglia OIV](/assets/Griglia_OIV.pdf)
+    * [Attestazione OIV 2023](/assets/ATTESTAZIONE_OIV.pdf)
+    * [Griglia OIV](/assets/Griglia_OIV.pdf)
+    * [Attestazione OIV 2024](/assets/ATTESTAZIONE_OIV_2024.pdf)
 
 
 
@@ -575,11 +577,11 @@ Data ultimo aggiornamento: 30/05/2024
 
 
   * Relazioni degli organi di revizione amministrativa e contabile
-    * [Relazione Unitaria del Sindaco Unico - Bilancio 2019](/assets/relazione-unitaria-del-sindaco-unico-bilancio-2019.pdf)
-    * [Relazione Unitaria del Sindaco Unico - Bilancio 2020](/assets/relazione-unitaria-del-sindaco-unico-bilancio-2020.pdf)
-    * [Relazione Unitaria del Sindaco Unico - Bilancio 2021](/assets/relazione-unitaria-del-sindaco-unico-bilancio-2021.pdf)
-    * [Relazione Unitaria del Sindaco Unico - Bilancio 2022](/assets/relazione-unitaria-del-sindaco-unico-bilancio-2022.pdf)
-    * [Relazione Unitaria del Sindaco Unico - Bilancio 2023](/assets/relazione-unitaria-del-sindaco-unico-bilancio-2023.pdf)
+    * [Relazione Unitaria del Sindaco Unico - Bilancio 2019](/assets/RelazioneUnitariadel_SindacoUnico_Bilancio2019.pdf)
+    * [Relazione Unitaria del Sindaco Unico - Bilancio 2020](/assets/Relazione_del_Sindaco_Unico_Bilancio_anno_2020FIRMATA.pdf)
+    * [Relazione Unitaria del Sindaco Unico - Bilancio 2021](/assets/Relazione_del_Sindaco_Unico_al_Bilancio_2021.pdf)
+    * [Relazione Unitaria del Sindaco Unico - Bilancio 2022](/assets/Relazione_del_Sindaco_Unico_al_Bilancio_2022.pdf)
+    * [Relazione Unitaria del Sindaco Unico - Bilancio 2023](/assets/Relazione_del_Sindaco_Unico_al_Bilancio_2023.pdf)
 
 
 
@@ -624,21 +626,21 @@ Data ultimo aggiornamento: 30/05/2024
 
 #### Dati sui pagamenti
 
-  * [Pagamenti 1° trimestre 2021](/assets/pagamenti-1-trimestre-2021.pdf)
-  * [Pagamenti 2° trimestre 2021](/assets/pagamenti-2-trimestre-2021.pdf)
-  * [Pagamenti 3° trimestre 2021](/assets/pagamenti-3-trimestre-2021.pdf)
-  * [Pagamenti 4° trimestre 2021](/assets/pagamenti-4-trimestre-2021.pdf)
-  * [Pagamenti 1° trimestre 2022](/assets/pagamenti-1-trimestre-2022.pdf)
-  * [Pagamenti 2° trimestre 2022](/assets/pagamenti-2-trimestre-2022.pdf)
-  * [Pagamenti 3° trimestre 2022](/assets/pagamenti-3-trimestre-2022.pdf)
-  * [Pagamenti 4° trimestre 2022](/assets/pagamenti-4-trimestre-2022.pdf)
-  * [Pagamenti 1° trimestre 2023](/assets/pagamenti-1-trimestre-2023.pdf)
-  * [Pagamenti 2° trimestre 2023](/assets/pagamenti-2-trimestre-2023.pdf)
-  * [Pagamenti 3° trimestre 2023](/assets/pagamenti-3-trimestre-2023.pdf)
-  * [Pagamenti 4° trimestre 2023](/assets/pagamenti-4-trimestre-2023.pdf)
-  * [Pagamenti 1° trimestre 2024](/assets/pagamenti-1-trimestre-2024.pdf)
-  * [Pagamenti 2° trimestre 2024](/assets/pagamenti-2-trimestre-2024.pdf)
-  * [Pagamenti 3° trimestre 2024](/assets/pagamenti-3-trimestre-2024.pdf)
+  * [Pagamenti 1° trimestre 2021](/assets/PAGAMENTI_2021-1°TRIM.pdf)
+  * [Pagamenti 2° trimestre 2021](/assets/PAGAMENTI_2021-2°_TRIM.pdf)
+  * [Pagamenti 3° trimestre 2021](/assets/PAGAMENTI_2021-3°_TRIM.pdf)
+  * [Pagamenti 4° trimestre 2021](/assets/PAGAMENTI_2021-4°_TRIM.pdf)
+  * [Pagamenti 1° trimestre 2022](/assets/PAGAMENTI_2022-1°TRIM.pdf)
+  * [Pagamenti 2° trimestre 2022](/assets/PAGAMENTI_2022-2°_TRIM.pdf)
+  * [Pagamenti 3° trimestre 2022](/assets/PAGAMENTI_2022-3°_TRIM.pdf)
+  * [Pagamenti 4° trimestre 2022](/assets/PAGAMENTI_2022-4°TRIM.pdf)
+  * [Pagamenti 1° trimestre 2023](/assets/PAGAMENTI_2023_-1_TRIM.pdf)
+  * [Pagamenti 2° trimestre 2023](/assets/PAGAMENTI_2°TRIMESTRE_2023.pdf)
+  * [Pagamenti 3° trimestre 2023](/assets/PAGAMENTI_3°_TRIMESTRE_2023.pdf)
+  * [Pagamenti 4° trimestre 2023](/assets/PAGAMENTI_4°_TRIMESTRE_2023.pdf)
+  * [Pagamenti 1° trimestre 2024](/assets/PAGAMENTI_1°_TRIMESTRE_2024.pdf)
+  * [Pagamenti 2° trimestre 2024](/assets/PAGAMENTI_2°_TRIMESTRE_2024.pdf)
+  * [Pagamenti 3° trimestre 2024](/assets/PAGAMENTI_3°_TRIMESTRE_2024.pdf)
 
 
 
@@ -654,9 +656,9 @@ Data ultimo aggiornamento: 30/05/2024
 I pagamenti degli stipendi vengono realizzati mensilmente  
 I pagamenti dei fornitori avvengono mediamente entro 60 giorni  
 I pagamenti delle utenze e dei tributi vengono realizzati alla scadenza  |  I pagamenti degli stipendi vengono svolti mensilmente mentre quelli dei fornitori mediamente entro 60 giorni   
-    * [Indicatore trimestrale tempestività dei pagamenti - anno 2023](/assets/indicatore-trimestrale-tempestività-dei-pagamenti-anno-2023.pdf)
-    * [Indicatore annuale tempestività dei pagamenti - anno 2023](/assets/indicatore-annuale-tempestività-dei-pagamenti-anno-2023.pdf)
-    * [Indicatore trimestrale tempestività dei pagamenti - anno 2024](/assets/indicatore-trimestrale-tempestività-dei-pagamenti-anno-2024.pdf)
+    * [Indicatore trimestrale tempestività dei pagamenti - anno 2023](/assets/INDICATORE_TEMPI_PAGAMENTO_TRIMESTRALE_2023.pdf)
+    * [Indicatore annuale tempestività dei pagamenti - anno 2023](/assets/INDICATORE_TEMPI_PAGAMENTO_ANNUALE_2023.pdf)
+    * [Indicatore trimestrale tempestività dei pagamenti - anno 2024](/assets/INDICATORE_TEMPESTIVITA'_PAGAMENTO_3°_TRIMESTRE_2024.pdf)
 
   * Ammontare complessivo dei debiti
     * L'ammontare complessivo dei debiti 2019 è pari ad € 319.213 e il numero delle imprese creditrici è pari a 6 
@@ -705,25 +707,25 @@ I pagamenti delle utenze e dei tributi vengono realizzati alla scadenza  |  I pa
 
 
   * Piano triennale perla prevenzione della corruzione e della trasparenza
-    * [Piano Triennale di prevenzione della Corruzione e della Trasparenza 2020/2022](/assets/piano-triennale-di-prevenzione-della-corruzione-e-della-trasparenza-20202022.pdf)
-    * [Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2021/2023](/assets/piano-triennale-di-prevenzione-della-corruzione-e-della-trasparenza-20212023.pdf)
-    * [Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2022-2024](/assets/piano-triennale-di-prevenzione-della-corruzione-e-della-trasparenza-2022-2024.pdf)
-    * [Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2023-2025](/assets/piano-triennale-di-prevenzione-della-corruzione-e-della-trasparenza-2023-2025.pdf)
-    * [Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2024-2026](/assets/piano-triennale-di-prevenzione-della-corruzione-e-della-trasparenza-2024-2026.pdf)
+    * [Piano Triennale di prevenzione della Corruzione e della Trasparenza 2020/2022](/assets/PTPCT2020_2022.pdf)
+    * [Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2021/2023](/assets/doc00067220210309175436.pdf)
+    * [Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2022-2024](/assets/SAVL_PTPCT_2022-2024_approvato.pdf)
+    * [Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2023-2025](/assets/Piano_Triennale_di_Prevenzione_della_Corruzione_e_della_trasparenza_2023-2025.pdf)
+    * [Piano Triennale di Prevenzione della Corruzione e della Trasparenza 2024-2026](/assets/SAVL_PTPCT_2024-2026.pdf)
 
   * Responsabile della prevenzione della corruzione e della trasparenza
-    * [Nomina RPCT del 01/03/2024](/assets/nomina-rpct-del-01032024.pdf)
-    * [Nomina R.A.S.A del 01/03/2024](/assets/nomina-rasa-del-01032024.pdf)
+    * [Nomina RPCT del 01/03/2024](/assets/determina_nomina_RPCT.pdf)
+    * [Nomina R.A.S.A del 01/03/2024](/assets/determina_nomina_RASA.pdf)
 
   * Relazione del responsabile della prevenzione della corruzione e della trasparenza
-    * [Relazione del RPCT 2019](/assets/relazione-del-rpct-2019.pdf)
-    * [RelazioneRPCT2020](/assets/relazionerpct2020.pdf)
-    * [Relazione annuale RPCT - 2021](/assets/relazione-annuale-rpct-2021.pdf)
-    * [Relazione annuale RPCT - 2022](/assets/relazione-annuale-rpct-2022.pdf)
-    * [Relazione annuale RPCT - anno 2023](/assets/relazione-annuale-rpct-anno-2023.pdf)
+    * [Relazione del RPCT 2019](/assets/Relazione_RPCT_2019.pdf)
+    * [RelazioneRPCT2020](/assets/RelazioneRPCT2020.pdf)
+    * [Relazione annuale RPCT - 2021](/assets/Relazione_nnuale_RPCT_-_Anno_2021.pdf)
+    * [Relazione annuale RPCT - 2022](/assets/Relazione_annuale_RPCT_-_2022.pdf)
+    * [Relazione annuale RPCT - anno 2023](/assets/Relazione_RPCT_2023.pdf)
 
   * Atti di accertamento delle violazioni
-    * [Modello segnalazione violazioni Codice di Comportamento e P.T.P.C.T.](/assets/modello-segnalazione-violazioni-codice-di-comportamento-e-ptpct.pdf)
+    * [Modello segnalazione violazioni Codice di Comportamento e P.T.P.C.T.](/assets/Modello_segnalazione_2022.pdf)
     * Non sono state accertate violazioni del D.lgs. 39/2013 
 
 
@@ -739,7 +741,7 @@ I pagamenti delle utenze e dei tributi vengono realizzati alla scadenza  |  I pa
     * 1) Tramite posto all’indirizzo: S.A.V.L. S.r.l. Via Dino Campana n. 16 50034 Marradi 
     * 2) via mail: all’indirizzo trasparenzasavl@gmail.com 
     * Per quanto non espressamente previsto in materia di accesso civico si rinvia alle disposizioni di legge vigenti. 
-    * [Modulo per l’accesso civico](/assets/modulo-per-laccesso-civico.pdf)
+    * [Modulo per l’accesso civico](/assets/LetteraAccesso_civico.pdf)
 
   * Accesso civico “generalizzato” concernente dati e documenti ulteriori rispetto a quelli oggetto di pubblicazione obbligatoria
     * L’esercizio dell’accesso generalizzato è disciplinato dall’art.5 e 5 bis del D.lgs. 33/2013. 
@@ -747,18 +749,18 @@ I pagamenti delle utenze e dei tributi vengono realizzati alla scadenza  |  I pa
     * Le istanze di accesso dovranno essere inoltrate all’indirizzo trasparenzasavl@gmail.com. 
 
   * Registro degli accessi
-    * [Tabella accessi](/assets/tabella-accessi.pdf)
+    * [Tabella accessi](/assets/tabella_accessi.pdf)
 
 
 
 
 #### Dati ulteriori
 
-  * [Programma di formazione 2020](/assets/programma-di-formazione-2020.pdf)
-  * [Programma di formazione 2021](/assets/programma-di-formazione-2021.pdf)
-  * [Programma di formazione 2022](/assets/programma-di-formazione-2022.pdf)
-  * [Programma di formazione 2023](/assets/programma-di-formazione-2023.pdf)
-  * [Programma di formazione 2024](/assets/programma-di-formazione-2024.pdf)
+  * [Programma di formazione 2020](/assets/ProgrammaFormazione2020.pdf)
+  * [Programma di formazione 2021](/assets/210119142927.pdf)
+  * [Programma di formazione 2022](/assets/PROGRAMMA_DI_FORMAZIONE_2022.pdf)
+  * [Programma di formazione 2023](/assets/PROGRAMMA_DI_FORMAZIONE_2023.pdf)
+  * [Programma di formazione 2024](/assets/Formazione_personale_anno_2024.pdf)
 
 
 
