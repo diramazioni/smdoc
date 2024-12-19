@@ -13,4 +13,3 @@ prisma/users.db
 #deploy/pm2/ecosystem.config.js
 .aider*
 assets/*
-assets_/*

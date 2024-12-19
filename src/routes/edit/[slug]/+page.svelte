@@ -6,6 +6,7 @@
   import * as Resizable from "$lib/components/ui/resizable/index.js";
   import { Separator } from "$lib/components/ui/separator/index.js";
   import { Switch } from "$lib/components/ui/switch/index.js";
+  import Dialog from '$lib/components/Dialog.svelte';
 
   import { Save, Eye, Copy, FilePlus } from 'lucide-svelte';
   // Utils 
@@ -19,7 +20,7 @@
   import Crepe from '$lib/components/Crepe.svelte';
   import Assets from '$lib/components/Assets.svelte';
   // Svelte
-  import { onMount, setContext } from 'svelte';
+  import { onDestroy, onMount, setContext } from 'svelte';
   import { page } from '$app/stores';
   import { goto, invalidate, invalidateAll } from "$app/navigation";
 
@@ -32,19 +33,28 @@
   let descriptionValue = $state(data.frontmatter.description)
   let slug = $derived(slugify(titleValue))
   
+  let autoSaveDialog = $state(false);
 
-
+  let interval = $state(); // 30 seconds
 	onMount(() => {
   });
-  
-  $effect(() => {
 
-    //console.log(`effect url ${$page.url.pathname}`);
+  onDestroy(() => {
+    clearInterval(interval);
+  });
+
+  $effect(() => {
+    interval = setInterval(() => {
+      autoSaveDialog = true
+    console.log('save-e')
+    }, 300000) // 5 min in milliseconds
+
   });
 
   async function handleSave(event) {
     event.preventDefault(); // Prevent the default form submission
     // ?/frontmatter
+    autoSaveDialog = false
     const frontmatterData = new FormData();
     frontmatterData.append('title', titleValue);
     frontmatterData.append('description', descriptionValue);
@@ -82,12 +92,37 @@
     editorRef?.setMarkdown('')
   }
 </script>
-
-<!-- <a href="/edit/home" class="hover:underline">go home</a>
+  <!-- <a href="/edit/home" class="hover:underline">go home</a>
 <a href="/home" class="hover:underline">go home</a>
  -->
 
 <!-- <button onclick={invokeTest}>Invoke Method</button> -->
+
+<Dialog bind:open={autoSaveDialog}>
+  {#snippet trigger()}
+      <!-- <Save size={15} class="cursor-pointer m-1" 
+      onclick={() => handleSave(event) } /> -->
+  {/snippet}
+
+  {#snippet title()}
+    Save ?
+  {/snippet}
+
+  {#snippet description()}
+  <p>
+    Save the changes?
+  </p>
+  <!-- svelte-ignore a11y_interactive_supports_focus -->
+  <div
+    role="button" tabIndex="0"
+    onclick={() => handleSave(event)}
+    onkeydown={(e) => e.key === 'Enter' && handleSave(event)}
+    class="cursor-pointer m-auto w-full flex justify-center hover:bg-green-500 hover:text-white"
+  >
+    <Save size={15} class="m-1" />
+  </div>
+  {/snippet}
+</Dialog>
 
 {#snippet metaForm()}
 <form method="POST" action="/edit/{slug}?/frontmatter" class="w-full bg-muted p-2 -mt-2">
