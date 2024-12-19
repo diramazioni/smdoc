@@ -91,6 +91,32 @@
     titleValue = descriptionValue = ""
     editorRef?.setMarkdown('')
   }
+
+  function scrollFixed(node: HTMLElement) {
+    let originalTop;
+    let originalWidth;
+
+    function handleScroll() {
+      if (!originalTop) {
+        originalTop = node.getBoundingClientRect().top;
+        originalWidth = node.getBoundingClientRect().width;
+      }
+      
+      if (window.scrollY > originalTop) {
+        node.classList.add('fixed', 'top-0');
+      } else {
+        node.classList.remove('fixed', 'top-0');
+      }
+    }
+
+    document.addEventListener('scroll', handleScroll);
+
+    return {
+      destroy() {
+        document.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }  
 </script>
   <!-- <a href="/edit/home" class="hover:underline">go home</a>
 <a href="/home" class="hover:underline">go home</a>
@@ -199,7 +225,9 @@
   </Resizable.Pane>
   <Resizable.Handle withHandle />
   <Resizable.Pane defaultSize={20}>
-     <Assets bind:editorRef/>
+    <div class="min-w-96 max-w-[600px]" use:scrollFixed>
+     <Assets bind:editorRef />
+    </div>
   </Resizable.Pane>
 </Resizable.PaneGroup>
 
