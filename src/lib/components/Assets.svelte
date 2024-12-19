@@ -7,7 +7,7 @@
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
   import UploadForm from "$lib/components/UploadForm.svelte";
   import Dialog from '$lib/components/Dialog.svelte';
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   let { editorRef = $bindable() } = $props();
   let tabState = $state('md');
@@ -59,15 +59,17 @@
       editorRef.insertMarkdown(`![${asset}](${assetUrl})`);
     }
   }
-</script>
 
-<Tabs.Root 
+
+</script>
+  <Tabs.Root 
   bind:value={tabState}
   onValueChange={(v) => {
     tabState = v;
     listAssets = $page.data.listAssets[v];
-  }} >
-  <Tabs.List class="grid w-full grid-cols-3">
+  }} 
+  >
+  <Tabs.List class="grid grid-cols-3">
     <Tabs.Trigger value="md">
       <FilePenLine/>
     </Tabs.Trigger>
@@ -100,7 +102,7 @@
   />
   
   {#if assetList.length > 0}
-    <ScrollArea class="h-[400px] w-full rounded-md border p-4">
+    <ScrollArea class="h-[600px] w-full rounded-md border p-4">
       {#each assetList as asset}
         {@render assetItem(asset)}
       {/each}
