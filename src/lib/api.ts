@@ -126,6 +126,23 @@ export async function markdoc(ast: any) {
           },
         },
       },
+      drop: {
+        render: 'Drop',
+        attributes: {
+          title: {
+            type: String,
+            default: '',
+          },          
+          color: {
+            type: String,
+            default: 'default',
+          },
+          open: {
+            type: Boolean,
+            default: false,
+          }
+        },
+      },      
       spacer: {
         render: 'Spacer',
         attributes: {

@@ -2,7 +2,7 @@
 title: guida
 description: Un riferimento per le operazioni più comuni
 slug: guida
-updatedAt: 2024-12-16T18:38:55.855Z
+updatedAt: 2024-12-20T09:56:17.097Z
 ---
 # {% $frontmatter.title %}
 
@@ -31,6 +31,30 @@ Testo evidenziato in rosso [con un link](/home)
 {% callout color="purple" %}
 Testo evidenziato in viola [con un link](/home)
 {% /callout %}
+
+# drop
+
+{% drop color="blue" title="Titolo del drop"  %}
+
+Contenuto
+
+* A
+  * B
+  * C
+    * D
+
+{% /drop %}
+
+{% drop open="true" color="purple" title="Titolo 2 " %}
+
+Contenuto
+
+* A
+  * B
+  * C
+    * D
+
+{% /drop %}
 
 # spacer
 
