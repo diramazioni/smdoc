@@ -85,34 +85,6 @@ class WebsiteMigrator:
 
         return links
 
-    def generate_output_path(self, url, title=''):
-        """Generate appropriate output path maintaining directory structure."""
-        parsed = urlparse(url)
-        path_parts = parsed.path.strip('/').split('/')
-        
-        # If we have a title, use it for the last part
-        if title:
-            if path_parts:
-                path_parts[-1] = self.slugify(title)
-            else:
-                path_parts = [self.slugify(title)]
-        
-        # Ensure all path parts are slugified
-        path_parts = [self.slugify(part) for part in path_parts]
-        
-        # Handle empty path (homepage)
-        if not path_parts or path_parts == ['']:
-            return os.path.join(self.output_dir, 'index.md')
-        
-        # Create directory structure
-        current_dir = self.output_dir
-        for part in path_parts[:-1]:
-            current_dir = os.path.join(current_dir, part)
-            os.makedirs(current_dir, exist_ok=True)
-        
-        # Add .md extension to final part
-        filename = f"{path_parts[-1]}.md"
-        return os.path.join(current_dir, filename)
 
     def download_asset(self, url, link_text=''):
         """Download an asset and return its local path. Reuse existing files if present."""
@@ -238,18 +210,49 @@ class WebsiteMigrator:
             return True
         return parsed_url.netloc == self.base_domain
 
-    def generate_filename(self, url):
-        """Generate an appropriate markdown filename from URL."""
-        path = urlparse(url).path.strip('/')
-        if not path:
-            path = 'index'
-        elif path.endswith('/'):
-            path = path[:-1]
+    def generate_output_path(self, url, title=''):
+        """Generate appropriate output path maintaining original URL structure."""
+        parsed = urlparse(url)
+        path = parsed.path.strip('/')
         
-        filename = re.sub(r'\.[^.]+$', '', path.replace('/', '-'))
-        filename = self.slugify(filename)
-        return f"{filename}.md"
+        # Handle empty path (homepage)
+        if not path:
+            return os.path.join(self.output_dir, 'index.md')
+        
+        # Split the path into components
+        path_parts = path.split('/')
+        
+        # If we have a title and it's the last part, use it
+        # if title and path_parts:
+        #     # Only slugify the title part
+        #     path_parts[-1] = self.slugify(title)
+        
+        # Create full directory path
+        current_dir = self.output_dir
+        
+        # Create intermediate directories
+        for part in path_parts[:-1]:
+            current_dir = os.path.join(current_dir, part)
+            os.makedirs(current_dir, exist_ok=True)
+        
+        # Add .md extension to final part
+        filename = f"{path_parts[-1]}.md"
+        return os.path.join(current_dir, filename)
 
+    def generate_filename(self, url):
+        """Generate an appropriate markdown filename from URL preserving path structure."""
+        parsed = urlparse(url)
+        path = parsed.path.strip('/')
+        
+        # Handle empty path (homepage)
+        if not path:
+            return 'index.md'
+        
+        # Keep the original path structure but ensure it ends with .md
+        if not path.endswith('.md'):
+            path = path + '.md'
+        
+        return path
 
     def convert_to_markdown(self, html_content, title='', description='', current_url=''):
         """Convert HTML to Markdown with frontmatter."""
@@ -347,9 +350,11 @@ class WebsiteMigrator:
         title_tag = soup.title
         if title_tag:
             title = title_tag.string.strip()
-            # Clean up title by removing site name if present
+            # Clean up title by taking the part after '|' if present
             if '|' in title:
-                title = title.split('|')[0].strip()
+                title = title.split('|')[1].strip()  # Take the second part after the separator
+            elif '-' in title:  # Also handle dash separator if present
+                title = title.split('-')[1].strip()
         
         # Extract description
         description = ''
