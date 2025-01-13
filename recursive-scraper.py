@@ -71,6 +71,58 @@ class WebsiteMigrator:
             return True
         return parsed_url.netloc == self.base_domain
     
+    def migrate_page(self, url, output_filename):
+        """Migrate a single page from URL to markdown file."""
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            
+            soup = BeautifulSoup(response.text, 'html.parser')
+            
+            # Extract title and description
+            title = soup.title.string if soup.title else ''
+            # Clean up title by removing site name if present
+            if '|' in title:
+                title = title.split('|')[1].strip()
+            
+            description = soup.find('meta', {'name': 'description'})
+            description = description['content'] if description else 'Sezione dedicata alla trasparenza amministrativa'
+            
+            # Get main content (adjust selector based on your HTML structure)
+            main_content = soup.find('main') or soup.find('article') or soup.body
+            
+            if main_content is None:
+                print(f"Warning: Could not find main content in {url}")
+                main_content = soup
+            
+            # Convert to markdown
+            try:
+                markdown_content = self.convert_to_markdown(
+                    str(main_content),
+                    title=title,
+                    description=description
+                )
+            except Exception as e:
+                print(f"Error converting to markdown: {e}")
+                # Fallback to basic frontmatter
+                markdown_content = f"""---
+title: {title}
+description: {description}
+updatedAt: {datetime.now().isoformat()}
+---
+
+# {title}"""
+            
+            # Save markdown file
+            output_path = os.path.join(self.output_dir, output_filename)
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(markdown_content)
+                
+            print(f"Successfully migrated {url} to {output_path}")
+            
+        except Exception as e:
+            print(f"Error migrating {url}: {e}")
+    
     def extract_links(self, soup, current_url):
         """Extract all valid links from the page."""
         links = set()
