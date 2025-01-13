@@ -40,23 +40,73 @@ class WebsiteMigrator:
             response = requests.get(url, stream=True)
             response.raise_for_status()
             
+            # Get content type from response headers
+            content_type = response.headers.get('content-type', '').lower()
+            
+            # Try to get original filename from content-disposition header
+            content_disp = response.headers.get('content-disposition')
+            original_filename = None
+            if content_disp:
+                import re
+                fname = re.findall("filename=(.+)", content_disp)
+                if fname:
+                    original_filename = fname[0].strip('"')
+            
+            # Determine file extension based on content type or original filename
+            extension = None
+            if original_filename:
+                extension = os.path.splitext(original_filename)[1]
+            if not extension:
+                # Map common content types to extensions
+                content_type_map = {
+                    'application/pdf': '.pdf',
+                    'image/jpeg': '.jpg',
+                    'image/png': '.png',
+                    'image/gif': '.gif',
+                    'image/svg+xml': '.svg',
+                    'application/msword': '.doc',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx',
+                    'application/vnd.ms-excel': '.xls',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': '.xlsx',
+                    'application/zip': '.zip',
+                    'text/plain': '.txt',
+                    'text/csv': '.csv'
+                }
+                extension = content_type_map.get(content_type, '.bin')
+            
+            # Generate filename
             if link_text:
+                # Use link text if available
                 slug = self.slugify(link_text)
-                filename = f"{slug}.pdf"
+                filename = f"{slug}{extension}"
+            elif original_filename:
+                # Use original filename if available
+                filename = self.slugify(os.path.splitext(original_filename)[0]) + extension
             else:
-                filename = 'document-' + datetime.now().strftime('%Y%m%d-%H%M%S') + '.pdf'
+                # Generate generic filename with timestamp
+                filename = 'asset-' + datetime.now().strftime('%Y%m%d-%H%M%S') + extension
             
-            local_path = os.path.join(self.assets_dir, filename)
+            # Ensure filename is unique
+            base_path = os.path.join(self.assets_dir, filename)
+            counter = 1
+            while os.path.exists(base_path):
+                base_name = os.path.splitext(filename)[0]
+                filename = f"{base_name}-{counter}{extension}"
+                base_path = os.path.join(self.assets_dir, filename)
+                counter += 1
             
-            with open(local_path, 'wb') as f:
+            # Save file
+            with open(base_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
             
+            print(f"Downloaded asset: {filename} (Content-Type: {content_type})")
             return os.path.join('/assets', filename)
+            
         except Exception as e:
             print(f"Error downloading {url}: {e}")
             return url
-
+        
     def is_same_domain(self, url):
         """Check if URL belongs to the same domain."""
         if not url:
