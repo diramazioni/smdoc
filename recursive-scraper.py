@@ -33,7 +33,59 @@ class WebsiteMigrator:
         text = re.sub(r'[^\w\s-]', ' ', text)
         text = re.sub(r'[-\s]+', '-', text).strip('-')
         return text
+    
+    def normalize_url(self, url):
+        """Normalize URL to prevent duplicates from slight variations."""
+        parsed = urlparse(url)
+        # Remove trailing slash and convert to lowercase
+        path = parsed.path.rstrip('/').lower()
+        # Reconstruct URL without query parameters or fragments
+        return f"{parsed.scheme}://{parsed.netloc}{path}"
 
+    def extract_links(self, soup, current_url):
+        """Extract all valid links from the page."""
+        links = set()
+        
+        # Process navigation menu
+        nav_menu = soup.find('div', class_=lambda x: x and 'navbar' in x)
+        if nav_menu:
+            navbar_main = nav_menu.find('div', id='navbar-main')
+            if navbar_main:
+                # Process all navigation links including dropdowns
+                for link in navbar_main.find_all('a', href=True):
+                    url = link['href']
+                    if (not url.startswith('#') and 
+                        not url.startswith('javascript:') and
+                        not 'data-toggle' in link.attrs and
+                        not 'data-target' in link.attrs):
+                        absolute_url = urljoin(current_url, url)
+                        normalized_url = self.normalize_url(absolute_url)
+                        if (self.is_same_domain(absolute_url) and 
+                            normalized_url not in self.visited_urls and 
+                            normalized_url not in [self.normalize_url(u) for u in self.url_queue]):
+                            links.add(absolute_url)
+                            print(f"Added nav link: {absolute_url}")
+
+        # Process other content links
+        for link in soup.find_all('a', href=True):
+            url = link['href']
+            if (not url.startswith('#') and 
+                not url.startswith('javascript:') and
+                not url.startswith('mailto:') and
+                not url.startswith('tel:') and
+                not 'data-toggle' in link.attrs and
+                not 'data-target' in link.attrs):
+                absolute_url = urljoin(current_url, url)
+                normalized_url = self.normalize_url(absolute_url)
+                if (self.is_same_domain(absolute_url) and 
+                    normalized_url not in self.visited_urls and 
+                    normalized_url not in [self.normalize_url(u) for u in self.url_queue]):
+                    links.add(absolute_url)
+                    print(f"Added content link: {absolute_url}")
+
+        return links
+
+     
     def download_asset(self, url, link_text=''):
         """Download an asset and return its local path. Reuse existing files if present."""
         try:
@@ -186,43 +238,6 @@ class WebsiteMigrator:
         
         return frontmatter.dumps(post)
 
-    def extract_links(self, soup, current_url):
-        """Extract all valid links from the page."""
-        links = set()
-        
-        # Process navigation menu
-        nav_menu = soup.find('div', class_=lambda x: x and 'navbar' in x)
-        if nav_menu:
-            navbar_main = nav_menu.find('div', id='navbar-main')
-            if navbar_main:
-                # Process all navigation links including dropdowns
-                for link in navbar_main.find_all('a', href=True):
-                    url = link['href']
-                    if (not url.startswith('#') and 
-                        not url.startswith('javascript:') and
-                        not 'data-toggle' in link.attrs and
-                        not 'data-target' in link.attrs):
-                        absolute_url = urljoin(current_url, url)
-                        if self.is_same_domain(absolute_url):
-                            links.add(absolute_url)
-                            print(f"Added nav link: {absolute_url}")
-
-        # Process other content links
-        for link in soup.find_all('a', href=True):
-            url = link['href']
-            if (not url.startswith('#') and 
-                not url.startswith('javascript:') and
-                not url.startswith('mailto:') and
-                not url.startswith('tel:') and
-                not 'data-toggle' in link.attrs and
-                not 'data-target' in link.attrs):
-                absolute_url = urljoin(current_url, url)
-                if self.is_same_domain(absolute_url):
-                    links.add(absolute_url)
-                    print(f"Added content link: {absolute_url}")
-
-        return links
-
     def migrate_page(self, url):
         """Migrate a single page from URL to markdown file."""
         try:
@@ -286,45 +301,89 @@ updatedAt: {datetime.now().isoformat()}
 
     def crawl(self, start_url=None, max_pages=None):
         """Crawl the website starting from the given URL."""
-        if start_url and start_url not in self.url_queue:
-            self.url_queue.append(start_url)
+        if start_url:
+            normalized_start = self.normalize_url(start_url)
+            if normalized_start not in [self.normalize_url(u) for u in self.url_queue]:
+                self.url_queue.append(start_url)
         
         pages_processed = 0
+        error_pages = []  # Track pages with errors
         print(f"\nStarting crawl with queue size: {len(self.url_queue)}")
         
         while self.url_queue and (max_pages is None or pages_processed < max_pages):
             current_url = self.url_queue.popleft()
+            normalized_current = self.normalize_url(current_url)
             
-            if current_url not in self.visited_urls:
+            if normalized_current not in self.visited_urls:
                 print(f"\nProcessing page {pages_processed + 1}: {current_url}")
                 
                 try:
+                    # Mark as visited before processing to prevent re-queuing on error
+                    self.visited_urls.add(normalized_current)
+                    
                     response = requests.get(current_url, timeout=30)
-                    response.raise_for_status()
+                    
+                    # Check for error status codes
+                    if response.status_code >= 400:
+                        print(f"Error {response.status_code} while processing {current_url}")
+                        error_pages.append((current_url, f"HTTP {response.status_code}"))
+                        continue
                     
                     soup = BeautifulSoup(response.text, 'html.parser')
                     
                     # Extract new links before processing the page
-                    new_links = self.extract_links(soup, current_url)
-                    for link in new_links:
-                        if link not in self.visited_urls and link not in self.url_queue:
-                            self.url_queue.append(link)
-                            print(f"Added to queue: {link}")
+                    try:
+                        new_links = self.extract_links(soup, current_url)
+                        for link in new_links:
+                            normalized_link = self.normalize_url(link)
+                            if (normalized_link not in self.visited_urls and 
+                                normalized_link not in [self.normalize_url(u) for u in self.url_queue]):
+                                self.url_queue.append(link)
+                                print(f"Added to queue: {link}")
+                    except Exception as e:
+                        print(f"Error extracting links from {current_url}: {str(e)}")
+                        error_pages.append((current_url, f"Link extraction error: {str(e)}"))
+                        continue
                     
-                    # Now process the page
-                    self.migrate_page(current_url)
-                    pages_processed += 1
+                    # Try to process the page
+                    try:
+                        self.migrate_page(current_url)
+                        pages_processed += 1
+                    except Exception as e:
+                        print(f"Error migrating {current_url}: {str(e)}")
+                        error_pages.append((current_url, f"Migration error: {str(e)}"))
+                        continue
+                    
+                except requests.exceptions.RequestException as e:
+                    print(f"Network error while processing {current_url}: {str(e)}")
+                    error_pages.append((current_url, f"Network error: {str(e)}"))
+                    continue
                     
                 except Exception as e:
-                    print(f"Error processing {current_url}: {e}")
+                    print(f"Unexpected error processing {current_url}: {str(e)}")
+                    error_pages.append((current_url, f"Unexpected error: {str(e)}"))
+                    continue
                 
                 print(f"Queue size: {len(self.url_queue)}")
-                print("Next 5 URLs in queue:")
+                print(f"Visited pages: {len(self.visited_urls)}")
+                print(f"Pages with errors: {len(error_pages)}")
+                print("Next URLs in queue:")
                 for i, url in enumerate(list(self.url_queue)[:5]):
                     print(f"{i + 1}. {url}")
         
-        print(f"\nCrawl completed. Processed {pages_processed} pages.")
+        # Print final summary
+        print(f"\nCrawl completed:")
+        print(f"- Processed successfully: {pages_processed} pages")
+        print(f"- Total visited URLs: {len(self.visited_urls)}")
+        print(f"- Failed pages: {len(error_pages)}")
+        
+        if error_pages:
+            print("\nPages with errors:")
+            for url, error in error_pages:
+                print(f"- {url}: {error}")
 
+        return pages_processed, error_pages  
+    
 def main():
     migrator = WebsiteMigrator(
         base_url='https://digiteco.it',
