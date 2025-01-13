@@ -241,11 +241,7 @@ class WebsiteMigrator:
     def migrate_page(self, url):
         """Migrate a single page from URL to markdown file."""
         try:
-            if url in self.visited_urls:
-                return
-            
-            print(f"Migrating {url}")
-            self.visited_urls.add(url)
+            print(f"\nMigrating {url}")  # Clear indication of migration start
             
             response = requests.get(url, timeout=30)
             response.raise_for_status()
@@ -294,10 +290,12 @@ updatedAt: {datetime.now().isoformat()}
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(markdown_content)
                 
-            print(f"Successfully migrated {url} to {output_path}")
+            print(f"Successfully saved markdown to: {output_path}")
+            return True
             
         except Exception as e:
             print(f"Error migrating {url}: {e}")
+            return False
 
     def crawl(self, start_url=None, max_pages=None):
         """Crawl the website starting from the given URL."""
@@ -307,7 +305,8 @@ updatedAt: {datetime.now().isoformat()}
                 self.url_queue.append(start_url)
         
         pages_processed = 0
-        error_pages = []  # Track pages with errors
+        error_pages = []
+        successful_pages = []
         print(f"\nStarting crawl with queue size: {len(self.url_queue)}")
         
         while self.url_queue and (max_pages is None or pages_processed < max_pages):
@@ -318,41 +317,34 @@ updatedAt: {datetime.now().isoformat()}
                 print(f"\nProcessing page {pages_processed + 1}: {current_url}")
                 
                 try:
-                    # Mark as visited before processing to prevent re-queuing on error
+                    # Mark as visited before processing
                     self.visited_urls.add(normalized_current)
                     
+                    # First try to get the page content
                     response = requests.get(current_url, timeout=30)
-                    
-                    # Check for error status codes
                     if response.status_code >= 400:
                         print(f"Error {response.status_code} while processing {current_url}")
                         error_pages.append((current_url, f"HTTP {response.status_code}"))
                         continue
                     
+                    # Parse the page and extract links
                     soup = BeautifulSoup(response.text, 'html.parser')
+                    new_links = self.extract_links(soup, current_url)
                     
-                    # Extract new links before processing the page
-                    try:
-                        new_links = self.extract_links(soup, current_url)
-                        for link in new_links:
-                            normalized_link = self.normalize_url(link)
-                            if (normalized_link not in self.visited_urls and 
-                                normalized_link not in [self.normalize_url(u) for u in self.url_queue]):
-                                self.url_queue.append(link)
-                                print(f"Added to queue: {link}")
-                    except Exception as e:
-                        print(f"Error extracting links from {current_url}: {str(e)}")
-                        error_pages.append((current_url, f"Link extraction error: {str(e)}"))
-                        continue
+                    # Add new links to queue
+                    for link in new_links:
+                        normalized_link = self.normalize_url(link)
+                        if (normalized_link not in self.visited_urls and 
+                            normalized_link not in [self.normalize_url(u) for u in self.url_queue]):
+                            self.url_queue.append(link)
+                            print(f"Added to queue: {link}")
                     
-                    # Try to process the page
-                    try:
-                        self.migrate_page(current_url)
+                    # Now try to migrate the page
+                    if self.migrate_page(current_url):
                         pages_processed += 1
-                    except Exception as e:
-                        print(f"Error migrating {current_url}: {str(e)}")
-                        error_pages.append((current_url, f"Migration error: {str(e)}"))
-                        continue
+                        successful_pages.append(current_url)
+                    else:
+                        error_pages.append((current_url, "Migration failed"))
                     
                 except requests.exceptions.RequestException as e:
                     print(f"Network error while processing {current_url}: {str(e)}")
@@ -364,16 +356,20 @@ updatedAt: {datetime.now().isoformat()}
                     error_pages.append((current_url, f"Unexpected error: {str(e)}"))
                     continue
                 
-                print(f"Queue size: {len(self.url_queue)}")
-                print(f"Visited pages: {len(self.visited_urls)}")
-                print(f"Pages with errors: {len(error_pages)}")
-                print("Next URLs in queue:")
-                for i, url in enumerate(list(self.url_queue)[:5]):
-                    print(f"{i + 1}. {url}")
+                # Print progress
+                print(f"\nCrawling Progress:")
+                print(f"- Queue size: {len(self.url_queue)}")
+                print(f"- Visited pages: {len(self.visited_urls)}")
+                print(f"- Successfully processed: {len(successful_pages)}")
+                print(f"- Failed pages: {len(error_pages)}")
+                if self.url_queue:
+                    print("\nNext URLs in queue:")
+                    for i, url in enumerate(list(self.url_queue)[:5]):
+                        print(f"{i + 1}. {url}")
         
         # Print final summary
         print(f"\nCrawl completed:")
-        print(f"- Processed successfully: {pages_processed} pages")
+        print(f"- Successfully processed: {len(successful_pages)} pages")
         print(f"- Total visited URLs: {len(self.visited_urls)}")
         print(f"- Failed pages: {len(error_pages)}")
         
@@ -382,8 +378,8 @@ updatedAt: {datetime.now().isoformat()}
             for url, error in error_pages:
                 print(f"- {url}: {error}")
 
-        return pages_processed, error_pages  
-    
+        return successful_pages, error_pages
+  
 def main():
     migrator = WebsiteMigrator(
         base_url='https://digiteco.it',
