@@ -7,7 +7,7 @@ updatedAt: '2025-01-13T22:42:25.027844'
 url: https://digiteco.it/home
 ---
 
-![DigitEco](https://digiteco.it/img/logo-digiteco.png)
+![DigitEco](/assets/logo-digiteco.png)
 
 # DigitEco s.r.l.
 
