@@ -340,33 +340,58 @@ class WebsiteMigrator:
             f.write('\n'.join(menu_content))
         print(f"Successfully saved menu to: {menu_path}")
 
+    def extract_metadata(self, soup):
+        """Extract title and description metadata from page."""
+        # Extract title
+        title = ''
+        title_tag = soup.title
+        if title_tag:
+            title = title_tag.string.strip()
+            # Clean up title by removing site name if present
+            if '|' in title:
+                title = title.split('|')[0].strip()
+        
+        # Extract description
+        description = ''
+        desc_tag = soup.find('meta', {'name': 'description'})
+        if desc_tag and desc_tag.get('content'):
+            description = desc_tag['content'].strip()
+        
+        return title, description
+
     def clean_content(self, soup):
         """Remove navigation and other unwanted elements from content."""
+        # Create a deep copy to preserve original metadata
+        cleaned = BeautifulSoup(str(soup), 'html.parser')
+        
         # Remove the navbar
-        navbar = soup.find('div', class_=lambda x: x and 'navbar' in x)
+        navbar = cleaned.find('div', class_=lambda x: x and 'navbar' in x)
         if navbar:
             navbar.decompose()
         
         # Remove login modal
-        login_modal = soup.find('div', id='login-modal')
+        login_modal = cleaned.find('div', id='login-modal')
         if login_modal:
             login_modal.decompose()
         
         # Remove cookie notice
-        cookie_modal = soup.find('div', id='cookie-modal')
+        cookie_modal = cleaned.find('div', id='cookie-modal')
         if cookie_modal:
             cookie_modal.decompose()
         
         # Remove scripts
-        for script in soup.find_all('script'):
+        for script in cleaned.find_all('script'):
             script.decompose()
             
-        # Remove meta tags and other head content
-        head = soup.find('head')
-        if head:
-            head.decompose()
+        # Remove style tags
+        for style in cleaned.find_all('style'):
+            style.decompose()
         
-        return soup
+        # Remove userStyle tags
+        for userstyle in cleaned.find_all('userStyle'):
+            userstyle.decompose()
+        
+        return cleaned
 
     def migrate_page(self, url):
         """Migrate a single page from URL to markdown file."""
@@ -376,22 +401,18 @@ class WebsiteMigrator:
             response = requests.get(url, timeout=30)
             response.raise_for_status()
             
+            # Parse the original HTML
             soup = BeautifulSoup(response.text, 'html.parser')
             
             # Extract menu from the first page only
             if url == self.base_url or not os.path.exists(os.path.join(self.output_dir, 'menu.md')):
                 self.extract_and_save_menu(soup, url)
             
-            # Clean the content before processing
+            # Extract metadata before cleaning
+            title, description = self.extract_metadata(soup)
+            
+            # Clean the content
             cleaned_soup = self.clean_content(soup)
-            
-            # Extract title and description
-            title = soup.title.string if soup.title else ''
-            if '|' in title:
-                title = title.split('|')[1].strip()
-            
-            description = soup.find('meta', {'name': 'description'})
-            description = description['content'] if description else ''
             
             # Get main content
             main_content = cleaned_soup.find('main') or cleaned_soup.find('article') or cleaned_soup.body
@@ -430,12 +451,14 @@ updatedAt: {datetime.now().isoformat()}
                 f.write(markdown_content)
                 
             print(f"Successfully saved markdown to: {output_path}")
+            print(f"Title: {title}")
+            print(f"Description: {description}")
             return True
             
         except Exception as e:
             print(f"Error migrating {url}: {e}")
             return False
-               
+            
     def crawl(self, start_url=None, max_pages=None):
         """Crawl the website starting from the given URL."""
         if start_url:
