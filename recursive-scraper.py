@@ -35,9 +35,10 @@ class WebsiteMigrator:
         return text
 
     def download_asset(self, url, link_text=''):
-        """Download an asset and return its local path."""
+        """Download an asset and return its local path. Reuse existing files if present."""
         try:
-            response = requests.get(url, stream=True)
+            # First make a HEAD request to get headers without downloading content
+            response = requests.head(url)
             response.raise_for_status()
             
             # Get content type from response headers
@@ -52,61 +53,102 @@ class WebsiteMigrator:
                 if fname:
                     original_filename = fname[0].strip('"')
             
-            # Determine file extension based on content type or original filename
-            extension = None
-            if original_filename:
-                extension = os.path.splitext(original_filename)[1]
-            if not extension:
-                # Map common content types to extensions
-                content_type_map = {
-                    'application/pdf': '.pdf',
-                    'image/jpeg': '.jpg',
-                    'image/png': '.png',
-                    'image/gif': '.gif',
-                    'image/svg+xml': '.svg',
-                    'application/msword': '.doc',
-                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx',
-                    'application/vnd.ms-excel': '.xls',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': '.xlsx',
-                    'application/zip': '.zip',
-                    'text/plain': '.txt',
-                    'text/csv': '.csv'
-                }
-                extension = content_type_map.get(content_type, '.bin')
+            # Determine file extension based on content type
+            content_type_map = {
+                'application/pdf': '.pdf',
+                'image/jpeg': '.jpg',
+                'image/png': '.png',
+                'image/gif': '.gif',
+                'image/svg+xml': '.svg',
+                'application/msword': '.doc',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx',
+                'application/vnd.ms-excel': '.xls',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': '.xlsx',
+                'application/zip': '.zip',
+                'text/plain': '.txt',
+                'text/csv': '.csv'
+            }
+            extension = content_type_map.get(content_type, '.bin')
             
-            # Generate filename
+            # Generate base filename
             if link_text:
-                # Use link text if available
                 slug = self.slugify(link_text)
                 filename = f"{slug}{extension}"
             elif original_filename:
-                # Use original filename if available
                 filename = self.slugify(os.path.splitext(original_filename)[0]) + extension
             else:
-                # Generate generic filename with timestamp
-                filename = 'asset-' + datetime.now().strftime('%Y%m%d-%H%M%S') + extension
+                # For URLs without names, use a hash of the URL to ensure consistency
+                import hashlib
+                url_hash = hashlib.md5(url.encode()).hexdigest()[:8]
+                filename = f"asset-{url_hash}{extension}"
             
-            # Ensure filename is unique
+            # Check if file already exists
             base_path = os.path.join(self.assets_dir, filename)
-            counter = 1
-            while os.path.exists(base_path):
-                base_name = os.path.splitext(filename)[0]
-                filename = f"{base_name}-{counter}{extension}"
-                base_path = os.path.join(self.assets_dir, filename)
-                counter += 1
+            if os.path.exists(base_path):
+                print(f"Asset already exists: {filename}")
+                return os.path.join('/assets', filename)
             
-            # Save file
+            # If file doesn't exist, download it
+            response = requests.get(url, stream=True)
+            response.raise_for_status()
+            
             with open(base_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
             
-            print(f"Downloaded asset: {filename} (Content-Type: {content_type})")
+            print(f"Downloaded new asset: {filename} (Content-Type: {content_type})")
             return os.path.join('/assets', filename)
             
         except Exception as e:
             print(f"Error downloading {url}: {e}")
             return url
         
+    def process_links(self, content, current_url):
+        """Process and convert links in content."""
+        soup = BeautifulSoup(content, 'html.parser')
+        
+        # First, process <a> tags that contain images
+        for link in soup.find_all('a', href=True):
+            url = link['href']
+            img = link.find('img')
+            link_text = link.get_text(strip=True)
+            
+            if img and img.get('src'):
+                # Handle image inside link
+                img_url = img['src']
+                img_full_url = urljoin(current_url, img_url)
+                
+                if any(pattern in img_url for pattern in ['api/documenti', 'api/files']):
+                    # Download image using the link text as the filename
+                    local_path = self.download_asset(img_full_url, link_text)
+                    img['src'] = local_path
+            
+            # Process the link itself
+            full_url = urljoin(current_url, url)
+            if any(pattern in url for pattern in ['api/documenti', 'api/files']):
+                local_path = self.download_asset(full_url, link_text)
+                link['href'] = local_path
+            elif self.is_same_domain(full_url):
+                markdown_path = self.generate_filename(full_url)
+                link['href'] = f"/{markdown_path.replace('.md', '')}"
+        
+        # Then process standalone images
+        for img in soup.find_all('img', src=True):
+            # Skip images we've already processed (those inside <a> tags)
+            if img.parent.name == 'a':
+                continue
+                
+            url = img['src']
+            full_url = urljoin(current_url, url)
+            
+            if any(pattern in url for pattern in ['api/documenti', 'api/files']):
+                # For standalone images, use alt text if available
+                img_text = img.get('alt', '') or 'image'
+                local_path = self.download_asset(full_url, img_text)
+                img['src'] = local_path
+
+        return str(soup)
+       
     def is_same_domain(self, url):
         """Check if URL belongs to the same domain."""
         if not url:
@@ -128,30 +170,6 @@ class WebsiteMigrator:
         filename = self.slugify(filename)
         return f"{filename}.md"
 
-    def process_links(self, content, current_url):
-        """Process and convert links in content."""
-        soup = BeautifulSoup(content, 'html.parser')
-        
-        for tag in soup.find_all(['a', 'img']):
-            url = tag.get('href') or tag.get('src')
-            if not url:
-                continue
-
-            full_url = urljoin(current_url, url)
-            
-            if any(pattern in url for pattern in ['api/documenti', 'api/files']):
-                link_text = tag.string if tag.name == 'a' else ''
-                local_path = self.download_asset(full_url, link_text)
-                if tag.name == 'a':
-                    tag['href'] = local_path
-                else:
-                    tag['src'] = local_path
-            elif self.is_same_domain(full_url):
-                markdown_path = self.generate_filename(full_url)
-                if tag.name == 'a':
-                    tag['href'] = f"/{markdown_path.replace('.md', '')}"
-
-        return str(soup)
 
     def convert_to_markdown(self, html_content, title='', description='', current_url=''):
         """Convert HTML to Markdown with frontmatter."""
