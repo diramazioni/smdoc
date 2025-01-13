@@ -1,14 +1,6 @@
 ---
-title: menu
-description: ''
-slug: menu
-updatedAt: 2024-11-29T12:25:33.986Z
-
+title: Navigation Menu
+updatedAt: 2025-01-13T22:41:58.309469
 ---
-[Home](/home)
 
-[n-1](/n-1)
-
-[n-2](/n-2)
-
-[n-3](/n-3)
+# Navigation Menu
