@@ -238,15 +238,103 @@ class WebsiteMigrator:
         
         return frontmatter.dumps(post)
 
+    def extract_and_save_menu(self, soup, current_url):
+        """Extract navigation menu and save it as menu.md."""
+        menu_content = []
+        menu_content.append('---\ntitle: Navigation Menu\nupdatedAt: ' + 
+                          datetime.now().isoformat() + '\n---\n\n# Navigation Menu\n')
+        
+        nav_menu = soup.find('div', class_=lambda x: x and 'navbar' in x)
+        if nav_menu:
+            navbar_main = nav_menu.find('div', id='navbar-main')
+            if navbar_main:
+                # Process main menu items
+                for main_item in navbar_main.find_all('li', recursive=False):
+                    # Skip login and similar utility links
+                    if 'navbar-right' in main_item.parent.get('class', []):
+                        continue
+                    
+                    # Check if it's a dropdown menu
+                    dropdown = main_item.find('a', class_='dropdown-toggle')
+                    if dropdown:
+                        # Add dropdown header
+                        menu_title = dropdown.get_text(strip=True).replace('▼', '').strip()
+                        menu_content.append(f"\n## {menu_title}")
+                        
+                        # Add dropdown items
+                        dropdown_menu = main_item.find('ul', class_='dropdown-menu')
+                        if dropdown_menu:
+                            for sub_item in dropdown_menu.find_all('a'):
+                                url = sub_item.get('href', '')
+                                text = sub_item.get_text(strip=True)
+                                if self.is_same_domain(url):
+                                    markdown_path = self.generate_filename(url)
+                                    menu_content.append(f"- [{text}](/{markdown_path.replace('.md', '')})")
+                                else:
+                                    menu_content.append(f"- [{text}]({url})")
+                    else:
+                        # Regular menu item
+                        link = main_item.find('a')
+                        if link and not link.get('data-toggle'):  # Skip dropdown toggles
+                            url = link.get('href', '')
+                            text = link.get_text(strip=True)
+                            if url and text and not url.startswith('#'):
+                                if self.is_same_domain(url):
+                                    markdown_path = self.generate_filename(url)
+                                    menu_content.append(f"- [{text}](/{markdown_path.replace('.md', '')})")
+                                else:
+                                    menu_content.append(f"- [{text}]({url})")
+                
+                # Save menu to file
+                menu_path = os.path.join(self.output_dir, 'menu.md')
+                with open(menu_path, 'w', encoding='utf-8') as f:
+                    f.write('\n'.join(menu_content))
+                print(f"Successfully saved menu to: {menu_path}")
+
+    def clean_content(self, soup):
+        """Remove navigation and other unwanted elements from content."""
+        # Remove the navbar
+        navbar = soup.find('div', class_=lambda x: x and 'navbar' in x)
+        if navbar:
+            navbar.decompose()
+        
+        # Remove login modal
+        login_modal = soup.find('div', id='login-modal')
+        if login_modal:
+            login_modal.decompose()
+        
+        # Remove cookie notice
+        cookie_modal = soup.find('div', id='cookie-modal')
+        if cookie_modal:
+            cookie_modal.decompose()
+        
+        # Remove scripts
+        for script in soup.find_all('script'):
+            script.decompose()
+            
+        # Remove meta tags and other head content
+        head = soup.find('head')
+        if head:
+            head.decompose()
+        
+        return soup
+
     def migrate_page(self, url):
         """Migrate a single page from URL to markdown file."""
         try:
-            print(f"\nMigrating {url}")  # Clear indication of migration start
+            print(f"\nMigrating {url}")
             
             response = requests.get(url, timeout=30)
             response.raise_for_status()
             
             soup = BeautifulSoup(response.text, 'html.parser')
+            
+            # Extract menu from the first page only
+            if url == self.base_url or not os.path.exists(os.path.join(self.output_dir, 'menu.md')):
+                self.extract_and_save_menu(soup, url)
+            
+            # Clean the content before processing
+            cleaned_soup = self.clean_content(soup)
             
             # Extract title and description
             title = soup.title.string if soup.title else ''
@@ -257,11 +345,11 @@ class WebsiteMigrator:
             description = description['content'] if description else ''
             
             # Get main content
-            main_content = soup.find('main') or soup.find('article') or soup.body
+            main_content = cleaned_soup.find('main') or cleaned_soup.find('article') or cleaned_soup.body
             
             if main_content is None:
                 print(f"Warning: Could not find main content in {url}")
-                main_content = soup
+                main_content = cleaned_soup
             
             # Generate output filename
             output_filename = self.generate_filename(url)
@@ -296,7 +384,7 @@ updatedAt: {datetime.now().isoformat()}
         except Exception as e:
             print(f"Error migrating {url}: {e}")
             return False
-
+        
     def crawl(self, start_url=None, max_pages=None):
         """Crawl the website starting from the given URL."""
         if start_url:
