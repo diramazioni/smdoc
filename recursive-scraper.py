@@ -99,7 +99,7 @@ class WebsiteMigrator:
             elif self.is_same_domain(full_url):
                 markdown_path = self.generate_filename(full_url)
                 if tag.name == 'a':
-                    tag['href'] = f"/{markdown_path}"
+                    tag['href'] = f"/{markdown_path.replace('.md', '')}"
 
         return str(soup)
 
@@ -261,7 +261,7 @@ def main():
     migrator = WebsiteMigrator(
         base_url='https://digiteco.it',
         output_dir='mdocs',
-        assets_dir='static/assets'
+        assets_dir='assets'
     )
     
     # Start crawling from the homepage
