@@ -85,7 +85,35 @@ class WebsiteMigrator:
 
         return links
 
-     
+    def generate_output_path(self, url, title=''):
+        """Generate appropriate output path maintaining directory structure."""
+        parsed = urlparse(url)
+        path_parts = parsed.path.strip('/').split('/')
+        
+        # If we have a title, use it for the last part
+        if title:
+            if path_parts:
+                path_parts[-1] = self.slugify(title)
+            else:
+                path_parts = [self.slugify(title)]
+        
+        # Ensure all path parts are slugified
+        path_parts = [self.slugify(part) for part in path_parts]
+        
+        # Handle empty path (homepage)
+        if not path_parts or path_parts == ['']:
+            return os.path.join(self.output_dir, 'index.md')
+        
+        # Create directory structure
+        current_dir = self.output_dir
+        for part in path_parts[:-1]:
+            current_dir = os.path.join(current_dir, part)
+            os.makedirs(current_dir, exist_ok=True)
+        
+        # Add .md extension to final part
+        filename = f"{path_parts[-1]}.md"
+        return os.path.join(current_dir, filename)
+
     def download_asset(self, url, link_text=''):
         """Download an asset and return its local path. Reuse existing files if present."""
         try:
@@ -244,52 +272,73 @@ class WebsiteMigrator:
         menu_content.append('---\ntitle: Navigation Menu\nupdatedAt: ' + 
                           datetime.now().isoformat() + '\n---\n\n# Navigation Menu\n')
         
-        nav_menu = soup.find('div', class_=lambda x: x and 'navbar' in x)
+        nav_menu = soup.find('div', id='navbar-main')
         if nav_menu:
-            navbar_main = nav_menu.find('div', id='navbar-main')
-            if navbar_main:
-                # Process main menu items
-                for main_item in navbar_main.find_all('li', recursive=False):
-                    # Skip login and similar utility links
-                    if 'navbar-right' in main_item.parent.get('class', []):
-                        continue
-                    
-                    # Check if it's a dropdown menu
-                    dropdown = main_item.find('a', class_='dropdown-toggle')
-                    if dropdown:
-                        # Add dropdown header
-                        menu_title = dropdown.get_text(strip=True).replace('▼', '').strip()
-                        menu_content.append(f"\n## {menu_title}")
-                        
-                        # Add dropdown items
-                        dropdown_menu = main_item.find('ul', class_='dropdown-menu')
-                        if dropdown_menu:
-                            for sub_item in dropdown_menu.find_all('a'):
-                                url = sub_item.get('href', '')
-                                text = sub_item.get_text(strip=True)
-                                if self.is_same_domain(url):
-                                    markdown_path = self.generate_filename(url)
-                                    menu_content.append(f"- [{text}](/{markdown_path.replace('.md', '')})")
-                                else:
-                                    menu_content.append(f"- [{text}]({url})")
-                    else:
-                        # Regular menu item
-                        link = main_item.find('a')
-                        if link and not link.get('data-toggle'):  # Skip dropdown toggles
-                            url = link.get('href', '')
-                            text = link.get_text(strip=True)
-                            if url and text and not url.startswith('#'):
-                                if self.is_same_domain(url):
-                                    markdown_path = self.generate_filename(url)
-                                    menu_content.append(f"- [{text}](/{markdown_path.replace('.md', '')})")
-                                else:
-                                    menu_content.append(f"- [{text}]({url})")
+            menu_items = []  # Store menu items for sorting and organizing
+            
+            # Process all top-level menu items
+            for item in nav_menu.find_all('li', recursive=False):
+                # Skip right-aligned items like login
+                if item.parent.get('class') and 'navbar-right' in item.parent['class']:
+                    continue
                 
-                # Save menu to file
-                menu_path = os.path.join(self.output_dir, 'menu.md')
-                with open(menu_path, 'w', encoding='utf-8') as f:
-                    f.write('\n'.join(menu_content))
-                print(f"Successfully saved menu to: {menu_path}")
+                # Check if it's a dropdown
+                dropdown = item.find('a', class_='dropdown-toggle')
+                if dropdown:
+                    section = {
+                        'title': dropdown.get_text(strip=True).split('\n')[0],  # Remove any extra newlines
+                        'items': []
+                    }
+                    
+                    # Get dropdown items
+                    dropdown_menu = item.find('ul', class_='dropdown-menu')
+                    if dropdown_menu:
+                        for subitem in dropdown_menu.find_all('li'):
+                            link = subitem.find('a')
+                            if link and not link.get('data-toggle'):
+                                href = link.get('href', '')
+                                text = link.get_text(strip=True)
+                                if href and text and not href.startswith('#'):
+                                    section['items'].append({
+                                        'text': text,
+                                        'url': href
+                                    })
+                    
+                    menu_items.append(section)
+                else:
+                    # Regular menu item
+                    link = item.find('a')
+                    if link and not link.get('data-toggle'):
+                        href = link.get('href', '')
+                        text = link.get_text(strip=True)
+                        if href and text and not href.startswith('#'):
+                            menu_items.append({
+                                'text': text,
+                                'url': href
+                            })
+
+            # Generate markdown content
+            for item in menu_items:
+                if isinstance(item, dict) and 'title' in item:
+                    # Dropdown section
+                    menu_content.append(f"\n## {item['title']}\n")
+                    for subitem in item['items']:
+                        if self.is_same_domain(subitem['url']):
+                            menu_content.append(f"- [{subitem['text']}]({subitem['url']})")
+                        else:
+                            menu_content.append(f"- [{subitem['text']}]({subitem['url']})")
+                else:
+                    # Regular item
+                    if self.is_same_domain(item['url']):
+                        menu_content.append(f"- [{item['text']}]({item['url']})")
+                    else:
+                        menu_content.append(f"- [{item['text']}]({item['url']})")
+        
+        # Save menu
+        menu_path = os.path.join(self.output_dir, 'menu.md')
+        with open(menu_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(menu_content))
+        print(f"Successfully saved menu to: {menu_path}")
 
     def clean_content(self, soup):
         """Remove navigation and other unwanted elements from content."""
@@ -351,8 +400,8 @@ class WebsiteMigrator:
                 print(f"Warning: Could not find main content in {url}")
                 main_content = cleaned_soup
             
-            # Generate output filename
-            output_filename = self.generate_filename(url)
+            # Generate output path using URL structure and title
+            output_path = self.generate_output_path(url, title)
             
             # Convert to markdown
             try:
@@ -373,8 +422,10 @@ updatedAt: {datetime.now().isoformat()}
 
 # {title}"""
             
+            # Ensure directory exists
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            
             # Save markdown file
-            output_path = os.path.join(self.output_dir, output_filename)
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(markdown_content)
                 
@@ -384,7 +435,7 @@ updatedAt: {datetime.now().isoformat()}
         except Exception as e:
             print(f"Error migrating {url}: {e}")
             return False
-        
+               
     def crawl(self, start_url=None, max_pages=None):
         """Crawl the website starting from the given URL."""
         if start_url:
