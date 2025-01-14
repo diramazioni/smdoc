@@ -10,7 +10,7 @@ url: https://digiteco.it/profilo
 
 Progettiamo e realizziamo soluzioni chiavi in mano per il monitoraggio ambientale e il telecontrollo industriale
 
-![DigitEco](https://digiteco.it/img/logo-digiteco-testo.png)
+![DigitEco](/assets/logo-digiteco-testo.png)
 
 è un'azienda italiana che da 20 anni ha consolidato la sua posizione sul mercato con applicazioni rivolte a tutti quei settori che richiedono l'acquisizione ed il monitoraggio dei dati, con particolare attenzione al settore del monitoraggio ambientale e del telecontrollo industriale. 
 
@@ -22,43 +22,43 @@ L'intero comparto hardware/software, realizzato secondo gli standard del [World 
 
 Da sempre al servizio delle aziende agricole, le sosteniamo nell'attuare un’agricoltura sostenibile (PAN-PSR) attraverso l’uso di sistemi di supporto alle decisioni DSS con l’adozione di modelli agrometeorologici. 
 
-![Sulzano, Lago d'Iseo](https://digiteco.it/img/sulzano_1.jpg)
+![Sulzano, Lago d'Iseo](/assets/sulzano_1.jpg)
 
 ###### Sulzano, Lago d'Iseo
 
 controllo meteo per The Floating Piers
 
-![Sulzano, Lago d'Iseo](https://digiteco.it/img/sulzano_3.jpg)
+![Sulzano, Lago d'Iseo](/assets/sulzano_3.jpg)
 
 ###### Sulzano, Lago d'Iseo
 
 controllo meteo per The Floating Piers
 
-![Telecontrollo](https://digiteco.it/img/telecamera_1.jpg)
+![Telecontrollo](/assets/telecamera_1.jpg)
 
 ###### Telecontrollo
 
 per telecamere IP a pannello fotovoltaico
 
-![Monitoraggio](https://digiteco.it/img/canale_1.jpg)
+![Monitoraggio](/assets/canale_1.jpg)
 
 ###### Monitoraggio
 
 livello acque di un canale
 
-![Centralina Agrometeorologica](https://digiteco.it/img/agro_1.jpg)
+![Centralina Agrometeorologica](/assets/agro_1.jpg)
 
 ###### Centralina Agrometeorologica
 
 per il calcolo di modelli previsionali
 
-![Stazione Meteoorologica](https://digiteco.it/img/monterosa.jpg)
+![Stazione Meteoorologica](/assets/monterosa.jpg)
 
 ###### Stazione Meteoorologica
 
 installata sul Monte Rosa a 4100m slm
 
-![Monitoraggio](https://digiteco.it/img/canale_2.jpg)
+![Monitoraggio](/assets/canale_2.jpg)
 
 ###### Monitoraggio
 
@@ -75,11 +75,11 @@ livello acque di un canale
 
 
 
-![DigitEco Progettazione](https://digiteco.it/img/progettazione.jpg)
+![DigitEco Progettazione](/assets/progettazione.jpg)
 
 #### Progettazione
 
-![DigitEco Personalizzazione](https://digiteco.it/img/personalizzazione.jpg)
+![DigitEco Personalizzazione](/assets/personalizzazione.jpg)
 
 #### Personalizzazione
 

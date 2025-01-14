@@ -9,7 +9,7 @@ url: https://digiteco.it/servizi
 
 la nostra esperienza per rispondere a alle vostre esigenze
 
-![DigitEco Servizi e consulenza](https://digiteco.it/img/consulenza.jpg)
+![DigitEco Servizi e consulenza](/assets/consulenza.jpg)
 
 ## Consulenza e Progettazione
 

@@ -11,7 +11,7 @@ digiteco.it usa i cookies. Proseguendo nella navigazione acconsenti al loro uso.
 
 Accetta [Maggiori Informazioni](/privacy-policy)
 
-![DigitEco](https://digiteco.it/img/logo-digiteco.png)
+![DigitEco](/assets/logo-digiteco.png)
 
 # DigitEco s.r.l.
 

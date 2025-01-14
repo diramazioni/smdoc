@@ -16,8 +16,8 @@ I nostri sistemi di acquisizione, sono in grado di acquisire dati provenienti da
 
 Per informazioni dettagliate, è possibile consultare le sezioni specifiche [Data Loggers](/prodotti/data-loggers), [Centraline assemblate](/prodotti/centraline-assemblate), [Accessori installazione](/prodotti/accessori-installazione), [Interfacce](/prodotti/interfacce), [Sensori](/prodotti/sensori)
 
-![Stazione Digiteco di Monitoraggio qualità dell'acqua](https://digiteco.it/img/idro_1.jpg) Monitoraggio qualità dell'acqua
+![Stazione Digiteco di Monitoraggio qualità dell'acqua](/assets/idro_1.jpg) Monitoraggio qualità dell'acqua
 
-![Stazione Digiteco Misura livello liquami in pozzi](https://digiteco.it/img/idro_2.jpg) Misura livello liquami in pozzi
+![Stazione Digiteco Misura livello liquami in pozzi](/assets/idro_2.jpg) Misura livello liquami in pozzi
 
-![Stazione Digiteco Misura livello con sensore ultrasonico](https://digiteco.it/img/idro_3.jpg) Misura livello con sensore ultrasonico
+![Stazione Digiteco Misura livello con sensore ultrasonico](/assets/idro_3.jpg) Misura livello con sensore ultrasonico
