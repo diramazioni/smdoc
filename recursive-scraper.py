@@ -170,7 +170,7 @@ class WebsiteMigrator:
                 img_url = img['src']
                 img_full_url = urljoin(current_url, img_url)
                 
-                if any(pattern in img_url for pattern in ['api/documenti', 'api/files']):
+                if any(pattern in img_url for pattern in ['img', 'api/files']):
                     # Download image using the link text as the filename
                     local_path = self.download_asset(img_full_url, link_text)
                     img['src'] = local_path
@@ -195,7 +195,7 @@ class WebsiteMigrator:
             
             if any(pattern in url for pattern in ['api/documenti', 'api/files']):
                 # For standalone images, use alt text if available
-                img_text = img.get('alt', '') or 'image'
+                img_text = img.get('alt', '') or url.split('/')[-1]
                 local_path = self.download_asset(full_url, img_text)
                 img['src'] = local_path
 
@@ -364,6 +364,39 @@ class WebsiteMigrator:
         
         return title, description
 
+    def convert_row_striped_to_table(self, soup):
+        """Convert row-striped div structure to markdown table."""
+        table_rows = []
+        
+        # Add table header separator
+        table_rows.append("| Key | Value |")
+        table_rows.append("| :--- | :--- |")
+        
+        # Find all rows in the row-striped div
+        rows = soup.find_all('div', class_='row')
+        for row in rows:
+            # Get the label (bold text)
+            label_col = row.find('div', class_='col-xs-3')
+            value_col = row.find('div', class_='col-xs-9')
+            
+            if label_col and value_col:
+                # Extract the label text
+                label = label_col.find('p', class_='text-bold')
+                if label:
+                    label_text = label.get_text(strip=True)
+                    
+                    # Extract the value text
+                    value = value_col.find('p')
+                    if value:
+                        # Handle line breaks in value text
+                        value_text = value.get_text(strip=True)
+                        value_text = value_text.replace('\n', '<br>')
+                        
+                        # Add row to table
+                        table_rows.append(f"| {label_text} | {value_text} |")
+        
+        return '\n'.join(table_rows)
+
     def clean_content(self, soup):
         """Remove navigation and other unwanted elements from content."""
         # Create a deep copy to preserve original metadata
@@ -380,7 +413,7 @@ class WebsiteMigrator:
             login_modal.decompose()
         
         # Remove cookie notice
-        cookie_modal = cleaned.find('div', id='cookie-modal')
+        cookie_modal = cleaned.find('div', id='cookie-notice')
         if cookie_modal:
             cookie_modal.decompose()
         
@@ -395,6 +428,25 @@ class WebsiteMigrator:
         # Remove userStyle tags
         for userstyle in cleaned.find_all('userStyle'):
             userstyle.decompose()
+        
+        # Convert row-striped divs to markdown tables
+        row_striped_divs = cleaned.find_all('div', class_='row-striped')
+        for div in row_striped_divs:
+            table_html = self.convert_row_striped_to_table(div)
+            
+            # Create a wrapper div
+            wrapper = cleaned.new_tag('div')
+            
+            # Split the table into lines and create separate tags for each line
+            for line in table_html.split('\n'):
+                # Create a new paragraph tag for each line
+                p = cleaned.new_tag('span')
+                p.string = line
+                wrapper.append(p)
+                # Add a newline after each line
+                wrapper.append(cleaned.new_string('\n'))
+            
+            div.replace_with(wrapper)
         
         return cleaned
 
