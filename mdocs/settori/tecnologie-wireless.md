@@ -2,7 +2,7 @@
 description: 'Tecnologie wireless: dispositivi a basso consumo per il telecontrollo
   wireless'
 title: Tecnologie wireless
-updatedAt: '2025-01-13T22:42:24.204471'
+updatedAt: '2025-01-14T14:24:46.116981'
 url: https://digiteco.it/settori/tecnologie-wireless
 ---
 
@@ -10,9 +10,9 @@ url: https://digiteco.it/settori/tecnologie-wireless
 
 Soluzioni wireless a basso consumo per il telecontrollo di dispositivi remoti
 
-![](/assets/wireless_1.png) Data Logger con sensori wireless
+![](https://digiteco.it/img/wireless_1.png) Data Logger con sensori wireless
 
-![](/assets/wireless_2.png) Rete mesh con Data Logger e sensori wireless
+![](https://digiteco.it/img/wireless_2.png) Rete mesh con Data Logger e sensori wireless
 
 La serie di Data Logger ECO4, ECO4 Mini e DMCS32 possono essere equipaggiate con modulo wireless che, estendendone le funzionalità, permette di fornire un layer di comunicazione wireless tra i Data Logger ed i sensori ad esso collegati. 
 

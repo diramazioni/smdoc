@@ -2,7 +2,7 @@
 description: Data logger professionali per il monitoraggio ed il controllo di processi
   ambientali ed industriali
 title: Data Loggers
-updatedAt: '2025-01-13T22:42:01.146163'
+updatedAt: '2025-01-14T14:24:45.323867'
 url: https://digiteco.it/prodotti/data-loggers
 ---
 

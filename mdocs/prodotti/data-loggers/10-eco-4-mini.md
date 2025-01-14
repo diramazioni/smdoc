@@ -1,7 +1,7 @@
 ---
 description: Data Loggers ECO 4 Mini
 title: Data Loggers ECO 4 Mini
-updatedAt: '2025-01-13T22:42:32.277358'
+updatedAt: '2025-01-14T14:25:32.925791'
 url: https://digiteco.it/prodotti/data-loggers/10-eco-4-mini
 ---
 
@@ -9,7 +9,7 @@ url: https://digiteco.it/prodotti/data-loggers/10-eco-4-mini
 
 [![](/assets/dmcs32.png) DMCS32](/prodotti/data-loggers/1-dmcs32) [![](/assets/eco-4.png) ECO 4](/prodotti/data-loggers/2-eco-4) [![](/assets/eco-4-mini.png) ECO 4 Mini](/prodotti/data-loggers/10-eco-4-mini) [![](/assets/eco-4-micro.png) ECO 4 Micro](/prodotti/data-loggers/17-eco-4-micro)
 
-![](/assets/image.png)
+![](/assets/20.png)
 
 ECO 4 Mini è il modulo ridotto di ECO 4. Analogamente al modulo principale è in grado di acquisire e registrare dati con consumi ancora più ridotti e funzionamento in bassa tensione. Ottimo come data logger per sistemi ambientali nei settori della meteorologia, agrometeorologia e piccoli telecontrolli, ECO 4 può essere alimentato tramite pannello fotovoltaico realizzando un sistema ad-hoc per l'acquisizione di dati in ambienti isolati.
 
@@ -17,98 +17,25 @@ Il sistema è in grado di registrare dati su 8 canali (4 ingressi analogici loca
 
 Tutti i dati memorizzati, possono essere inviati ad un server web tramite modem GPRS e consultati tramite interfaccia web. Con il modulo opzionale LoRa Wireless è possibile collegare altri datalogger e creare un sistema a logica distribuita per collegare sensori e/o comandi remoti all'unità centrale
 
-Acquisizione 
-
-1 ÷ 24 min con step di 5 min 
-
-Alimentazione 
-
-9 ÷ 30 kV 
-
-Canali acquisizione 
-
-8 
-
-Connessioni 
-
-1x Ethernet 10/100 Mbit, 2x RS232, 1x RS485, 1x I2C 
-
-Dimensioni 
-
-104 m; 90 m; 66 m 
-
-EMC 
-
-EN 610000-4-2 Resistenza alla scarica elettrostatica  
-EN 610000-4-3 Resistenza a campi elettromagnetici  
-EN 610000-4-4 Resistenza a tensioni transitorie di disturbo (burst) 
-
-Ingressi 
-
-4x Digitale 0÷24 V  
-4x Analogico Analogico 16 Bit (+/-0÷150mV, 0÷1/2/5/10V, 4÷20mA)   
-1x Digitale Contatto   
-1x Frequenza 0÷1000 Hz 
-
-Ingressi digitali 
-
-4 ; 8 
-
-Manutenzione 
-
-Non necessaria 
-
-Materiali 
-
-NORYL autoestinguente 
-
-Moduli aggiuntivi 
-
-Tastiera e Display Pannello comandi e Display LCD  
-Ethernet Scheda di connessione Ethernet  
-Wireless LoRa Modem Wireless Radio 866 Mhz per connessioni fino a 1.5 Km 
-
-Montaggio 
-
-EN 50022 guida DIN  
-Interno  
-Esterno con quadro stagno 
-
-Protezioni 
-
-Transil 600 VA  
-Inversione di polarità  
-Limitatore di sovratensione 
-
-Protocolli 
-
-Radio VHF/UHF  
-GSM/GPRS Con gestione SMS  
-Modbus Client/Server  
-FTP  
-HTTP  
-UDP 
-
-Taratura 
-
-Non necessaria 
-
-Temperatura di esercizio 
-
--30 ÷ 70 K 
-
-Umidità di esercizio 
-
-0 ÷ 100 % 
-
-Uscite 
-
-2x Digitale Mosfet 0÷2.5 A 
-
-Uscite digitali 
-
-4 ; 8 
-
-Datasheet 
-
-è necessaria l'autenticazione al sito
+| Key | Value |  
+| :--- | :--- |  
+| Acquisizione | 1 ÷ 24 min con step di 5 min |  
+| Alimentazione | 9 ÷ 30 kV |  
+| Canali acquisizione | 8 |  
+| Connessioni | 1x Ethernet 10/100 Mbit, 2x RS232, 1x RS485, 1x I2C |  
+| Dimensioni | 104 m; 90 m; 66 m |  
+| EMC | EN 610000-4-2 Resistenza alla scarica elettrostaticaEN 610000-4-3 Resistenza a campi elettromagneticiEN 610000-4-4 Resistenza a tensioni transitorie di disturbo (burst) |  
+| Ingressi | 4x Digitale 0÷24 V4x Analogico Analogico 16 Bit (+/-0÷150mV, 0÷1/2/5/10V, 4÷20mA)1x Digitale Contatto1x Frequenza 0÷1000 Hz |  
+| Ingressi digitali | 4 ; 8 |  
+| Manutenzione | Non necessaria |  
+| Materiali | NORYL autoestinguente |  
+| Moduli aggiuntivi | Tastiera e Display Pannello comandi e Display LCDEthernet Scheda di connessione EthernetWireless LoRa Modem Wireless Radio 866 Mhz per connessioni fino a 1.5 Km |  
+| Montaggio | EN 50022 guida DINInternoEsterno con quadro stagno |  
+| Protezioni | Transil 600 VAInversione di polaritàLimitatore di sovratensione |  
+| Protocolli | Radio VHF/UHFGSM/GPRS Con gestione SMSModbus Client/ServerFTPHTTPUDP |  
+| Taratura | Non necessaria |  
+| Temperatura di esercizio | -30 ÷ 70 K |  
+| Umidità di esercizio | 0 ÷ 100 % |  
+| Uscite | 2x Digitale Mosfet 0÷2.5 A |  
+| Uscite digitali | 4 ; 8 |  
+| Datasheet | è necessaria l'autenticazione al sito |

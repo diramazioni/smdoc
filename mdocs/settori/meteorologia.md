@@ -2,7 +2,7 @@
 description: 'Meteorologia: Centraline meteo in reti di monitoraggio automatiche per
   il rilevamento di parametri meteorologici e ambientali'
 title: Meteorologia
-updatedAt: '2025-01-13T22:42:23.376393'
+updatedAt: '2025-01-14T14:24:50.935008'
 url: https://digiteco.it/settori/meteorologia
 ---
 
@@ -20,8 +20,8 @@ Tutte le nostre centraline meteo sono dotate delle più comuni interfacce di com
 
 Per informazioni dettagliate, è possibile consultare le sezioni specifiche [Data Loggers](/prodotti/data-loggers), [Centraline assemblate](/prodotti/centraline-assemblate), [Accessori installazione](/prodotti/accessori-installazione), [Interfacce](/prodotti/interfacce), [Sensori](/prodotti/sensori)
 
-![Stazione meteo DigitEco Monte Rosa Cresta Rossa](/assets/monterosa.jpg) Monte Rosa, Cresta Rossa
+![Stazione meteo DigitEco Monte Rosa Cresta Rossa](https://digiteco.it/img/monterosa.jpg) Monte Rosa, Cresta Rossa
 
-![Stazione meteo DigitEco Consorzio di Bonifica della Romagna](/assets/canale_2.jpg) Consorzio di Bonifica della Romagna
+![Stazione meteo DigitEco Consorzio di Bonifica della Romagna](https://digiteco.it/img/canale_2.jpg) Consorzio di Bonifica della Romagna
 
-![Stazione Meteo DigitEco Sulzano lago d'Iseo per The Floating Piers](/assets/sulzano_1.jpg) The Floating Piers, lago d'Iseo
+![Stazione Meteo DigitEco Sulzano lago d'Iseo per The Floating Piers](https://digiteco.it/img/sulzano_1.jpg) The Floating Piers, lago d'Iseo

@@ -1,7 +1,7 @@
 ---
 description: Accessori di installazione e supporti per montaggio strumentazione
 title: Accessori installazione
-updatedAt: '2025-01-13T22:42:21.626605'
+updatedAt: '2025-01-14T14:24:59.955165'
 url: https://digiteco.it/prodotti/accessori-installazione
 ---
 

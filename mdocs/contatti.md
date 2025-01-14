@@ -1,7 +1,7 @@
 ---
 description: 'Contatti: Tel. +39 051 601 33 44 - Email info@digiteco.it'
 title: Contatti
-updatedAt: '2025-01-13T22:42:22.992831'
+updatedAt: '2025-01-14T14:25:00.548360'
 url: https://digiteco.it/contatti
 ---
 

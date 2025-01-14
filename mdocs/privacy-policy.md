@@ -1,7 +1,7 @@
 ---
 description: ''
 title: Privacy Policy
-updatedAt: '2025-01-13T22:42:14.604150'
+updatedAt: '2025-01-14T14:24:48.319413'
 url: https://digiteco.it/privacy-policy
 ---
 

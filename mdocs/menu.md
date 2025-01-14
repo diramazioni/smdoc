@@ -1,6 +1,6 @@
 ---
 title: Navigation Menu
-updatedAt: 2025-01-13T22:41:58.309469
+updatedAt: 2025-01-14T14:24:40.781847
 ---
 
 # Navigation Menu

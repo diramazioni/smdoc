@@ -2,7 +2,7 @@
 description: Quadri assemblati e finiti per il collegamento dei datalogger, della
   sensoristica, dei moduli di comunicazione e dei sistemi di alimentazione.
 title: Centraline assemblate
-updatedAt: '2025-01-13T22:42:12.100186'
+updatedAt: '2025-01-14T14:25:16.241032'
 url: https://digiteco.it/prodotti/centraline-assemblate
 ---
 

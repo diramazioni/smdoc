@@ -2,7 +2,7 @@
 description: 'Automazione e Telecontrollo: Sistemi di controllo PLC e reti automatiche
   per il telecontrollo di sistemi'
 title: Automazione e Telecontrollo
-updatedAt: '2025-01-13T22:42:22.084060'
+updatedAt: '2025-01-14T14:25:11.210398'
 url: https://digiteco.it/settori/automazione-e-telecontrollo
 ---
 
@@ -20,6 +20,6 @@ Per garantire il telecontrollo di sistemi isolati e disclocati in luoghi diffici
 
 Per informazioni dettagliate, è possibile consultare le sezioni specifiche [Data Loggers](/prodotti/data-loggers), [Centraline assemblate](/prodotti/centraline-assemblate), [Accessori installazione](/prodotti/accessori-installazione), [Interfacce](/prodotti/interfacce), [Sensori](/prodotti/sensori)
 
-![DigitEco Sinottico impianto chimico-fisico](/assets/auto_1.jpg) Sinottico impianto chimico-fisico
+![DigitEco Sinottico impianto chimico-fisico](https://digiteco.it/img/auto_1.jpg) Sinottico impianto chimico-fisico
 
-![DigitEco PLC su impianto chimico-fisico](/assets/auto_2.jpg) PLC su impianto chimico-fisico
+![DigitEco PLC su impianto chimico-fisico](https://digiteco.it/img/auto_2.jpg) PLC su impianto chimico-fisico

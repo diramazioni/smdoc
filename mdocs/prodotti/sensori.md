@@ -2,7 +2,7 @@
 description: Sensori robusti e realizzati in materiali idonei, per garantire il massimo
   delle presetazioni in ogni ambito
 title: Sensori
-updatedAt: '2025-01-13T22:42:08.824160'
+updatedAt: '2025-01-14T14:25:10.499094'
 url: https://digiteco.it/prodotti/sensori
 ---
 

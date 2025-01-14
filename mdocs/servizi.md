@@ -1,7 +1,7 @@
 ---
 description: 'Servizi: Consulenza e progettazione, assistenza tecnica e servizi informatici'
 title: Servizi
-updatedAt: '2025-01-13T22:42:22.582477'
+updatedAt: '2025-01-14T14:24:46.579467'
 url: https://digiteco.it/servizi
 ---
 
@@ -9,7 +9,7 @@ url: https://digiteco.it/servizi
 
 la nostra esperienza per rispondere a alle vostre esigenze
 
-![DigitEco Servizi e consulenza](/assets/consulenza.jpg)
+![DigitEco Servizi e consulenza](https://digiteco.it/img/consulenza.jpg)
 
 ## Consulenza e Progettazione
 

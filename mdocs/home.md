@@ -3,11 +3,15 @@ description: "Sistemi automatici e sensori per la meteorologia, l'agrometeorolog
   e l'industria\r\n    con sistemi di monitoraggio professionali e telecontrolli tramite
   web"
 title: Datalogger sensori monitoraggio ambientale industriale
-updatedAt: '2025-01-13T22:42:25.027844'
+updatedAt: '2025-01-14T14:24:47.044117'
 url: https://digiteco.it/home
 ---
 
-![DigitEco](/bg-home.jpg)
+digiteco.it usa i cookies. Proseguendo nella navigazione acconsenti al loro uso.
+
+Accetta [Maggiori Informazioni](/privacy-policy)
+
+![DigitEco](https://digiteco.it/img/logo-digiteco.png)
 
 # DigitEco s.r.l.
 

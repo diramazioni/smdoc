@@ -2,7 +2,7 @@
 description: Schede d'interfaccia per consentire la connessione degli strumenti Digiteco
   ad altri dispositivi
 title: Interfacce
-updatedAt: '2025-01-13T22:42:13.639845'
+updatedAt: '2025-01-14T14:24:50.212272'
 url: https://digiteco.it/prodotti/interfacce
 ---
 

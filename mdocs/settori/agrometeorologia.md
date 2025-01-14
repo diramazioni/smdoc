@@ -2,7 +2,7 @@
 description: 'Agrometeorologia: Stazioni agrometeorologiche complete di modelli di
   previsione e simulazione'
 title: Agrometeorologia
-updatedAt: '2025-01-13T22:42:09.444713'
+updatedAt: '2025-01-14T14:25:17.571810'
 url: https://digiteco.it/settori/agrometeorologia
 ---
 
@@ -16,12 +16,12 @@ L’adozione di modelli agrometeorologici permette l'ottimizzazione e la raziona
 
 In tale contesto, le stazioni agrometeorologiche DigitEco, complete di modelli di previsione e simulazione agrometeorologici, forniscono un supporto completo ed un valido aiuto ai tecnici delle aziende agricole, degli enti preposti alla fornitura di servizi (Regioni, Province, Cooperative, Consorzi, Associazioni, Cantine, ecc.) e degli enti di ricerca (Università, Laboratori, ecc.). 
 
-![Grano](/assets/grano.jpg)
+![Grano](https://digiteco.it/img/grano.jpg)
 
-![uva](/assets/uva.jpg)
+![uva](https://digiteco.it/img/uva.jpg)
 
-![DigitEco Stazione Agrometeorologica](/assets/agro_1.jpg) Centralina Agrometeo
+![DigitEco Stazione Agrometeorologica](https://digiteco.it/img/agro_1.jpg) Centralina Agrometeo
 
-![DigitEco Stazione Agrometeorologica](/assets/agro_2.jpg) Centralina Agrometeo
+![DigitEco Stazione Agrometeorologica](https://digiteco.it/img/agro_2.jpg) Centralina Agrometeo
 
-![DigitEco Stazione Agrometeorologica](/assets/agro_3.jpg) Sensore bagnatura fogliare
+![DigitEco Stazione Agrometeorologica](https://digiteco.it/img/agro_3.jpg) Sensore bagnatura fogliare
