@@ -31,7 +31,10 @@
 <main>
   <Toaster position="top-center"/>
   <nav class="ml-3 flex justify-between items-center ">
-    <h1 class="text-xl font-bold">DigitEco <span class="text-base font-normal">s.r.l.</span></h1> 
+    <div class="ml-3 flex-row flex items-baseline">
+      <img src="/logo.png" alt="logo" class="w-20" />
+      <h1 class="text-xl font-bold ml-3">DigitEco <span class="text-base font-normal">s.r.l.</span></h1> 
+    </div>
     <SidebarNav items={data.items} />  
     <div class="m-3">
       <UserNav/>
