@@ -444,7 +444,8 @@ class WebsiteMigrator:
                 p.string = line
                 wrapper.append(p)
                 # Add a newline after each line
-                wrapper.append(cleaned.new_string('\n'))
+                # wrapper.append(cleaned.new_string('\n'))
+                wrapper.append(cleaned.new_tag('br'))
             
             div.replace_with(wrapper)
         
