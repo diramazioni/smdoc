@@ -4,9 +4,11 @@ import type { LayoutServerLoad } from './$types'
 export const load: LayoutServerLoad = async ({ fetch, locals }) => {
   return {
     user: locals.user,
-    items: await fetch('/api/links/menu')
-    .then((res) => res.json())
-    .then((data) => data)
-    .catch((err) => console.log(err))
+    items: await fetch('/api/nav/menu')
+      .then((res) => res.json())
+      .catch((err) => {
+        console.error('Error fetching navigation:', err);
+        return [];
+      })
   }
 }
