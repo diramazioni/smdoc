@@ -23,16 +23,33 @@ Promise.all([
 
 export async function getMD(slug: string) {
   try {
-    const filePath = path.resolve(`${DOCS_DIR}/${slug}.md`);
+    // Ensure the slug is properly sanitized and normalized
+    const normalizedSlug = path.normalize(slug).replace(/^(\.\.[/\\])+/, '');
+    const filePath = path.resolve(DOCS_DIR, `${normalizedSlug}.md`);
+
+    // Verify the resolved path is still within DOCS_DIR
+    const realPath = await fs.realpath(filePath);
+    if (!realPath.startsWith(await fs.realpath(DOCS_DIR))) {
+      throw new Error('Invalid path');
+    }
+
     return await fs.readFile(filePath, 'utf-8');
   } catch (error: any) {
-    return undefined;
+    if (error.code === 'ENOENT') {
+      return undefined;
+    }
+    throw error;
   }
 }
 
 export async function copyTemplate(slug: string) {
-  const filePath = path.resolve(`${DOCS_DIR}/${slug}.md`);
-  const templatePath = path.resolve(`${DOCS_DIR}/_templates/new.md`);
+  const normalizedSlug = path.normalize(slug).replace(/^(\.\.[/\\])+/, '');
+  const filePath = path.resolve(DOCS_DIR, `${normalizedSlug}.md`);
+  const templatePath = path.resolve(DOCS_DIR, '_templates/new.md');
+
+  // Create directory structure if it doesn't exist
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
+
   console.log('File not found, copying from template');
   await fs.copyFile(templatePath, filePath);
   return await fs.readFile(filePath, 'utf-8');
@@ -40,40 +57,67 @@ export async function copyTemplate(slug: string) {
 
 export async function setMD(slug: string, content: string) {
   try {
-    const file = path.resolve(`${DOCS_DIR}/${slug}.md`);
-    console.debug('Writing to file:', file);
-    await fs.writeFile(file, content, 'utf-8');
+    const normalizedSlug = path.normalize(slug).replace(/^(\.\.[/\\])+/, '');
+    const filePath = path.resolve(DOCS_DIR, `${normalizedSlug}.md`);
+
+    // Create directory structure if it doesn't exist
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
+
+    // Verify the resolved path is still within DOCS_DIR
+    const realPath = await fs.realpath(path.dirname(filePath));
+    if (!realPath.startsWith(await fs.realpath(DOCS_DIR))) {
+      throw new Error('Invalid path');
+    }
+
+    await fs.writeFile(filePath, content, 'utf-8');
   } catch (error: any) {
-    throw error(500, error);
+    console.error('Error writing file:', error);
+    throw error;
   }
 }
 
 export async function getFileList(type: FileType): Promise<string[]> {
   try {
     const directory = getDirectoryForType(type);
-    const files = await fs.readdir(directory);
-    
-    return files.filter(file => {
-      const mimeType = getMimeTypeFromFilename(file);
-      if (!mimeType) return false;
+    const files: string[] = [];
+
+    // Recursive function to get all files in directory and subdirectories
+    async function getFiles(dir: string, baseDir: string) {
+      const entries = await fs.readdir(dir, { withFileTypes: true });
       
-      switch(type) {
-        case 'md':
-          return file.endsWith('.md');
-        case 'pdf':
-          return file.endsWith('.pdf');
-        case 'img':
-          return mimeType.startsWith('image/');
-        default:
-          return false;
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        const relativePath = path.relative(baseDir, fullPath);
+
+        if (entry.isDirectory()) {
+          await getFiles(fullPath, baseDir);
+        } else {
+          const mimeType = getMimeTypeFromFilename(entry.name);
+          if (!mimeType) continue;
+
+          switch(type) {
+            case 'md':
+              if (entry.name.endsWith('.md')) files.push(relativePath);
+              break;
+            case 'pdf':
+              if (entry.name.endsWith('.pdf')) files.push(relativePath);
+              break;
+            case 'img':
+              if (mimeType.startsWith('image/')) files.push(relativePath);
+              break;
+          }
+        }
       }
-    });
+    }
+
+    await getFiles(directory, directory);
+    return files;
+
   } catch (error: any) {
     console.error('Error reading directory:', error);
     return [];
   }
 }
-
 
 export async function deleteFile(filename: string): Promise<boolean> {
   try {

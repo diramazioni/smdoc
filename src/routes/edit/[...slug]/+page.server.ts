@@ -10,6 +10,7 @@ import {
 import yaml from 'js-yaml';
 
 export async function load({ params, depends }) {
+	
   const { children, frontmatter, md_only } = await loadMD(params.slug);
   depends('page')
   console.log("load slug", params.slug)
