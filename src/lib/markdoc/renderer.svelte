@@ -1,18 +1,23 @@
 <script lang="ts">
 	import { Accordion } from 'bits-ui';
-    import Renderer from './renderer.svelte';
-    import type { ComponentType } from 'svelte'
-    import Callout from './components/callout.svelte'
-    import Drop from './components/accordion.svelte'
-    import Spacer from './components/spacer.svelte'
+  import Renderer from './renderer.svelte';
+  import type { ComponentType } from 'svelte'
+
+  import Callout from './components/callout.svelte'
+  import Drop from './components/accordion.svelte'
+  import Spacer from './components/spacer.svelte'
+  import Columns from './components/columns.svelte'
+  import Column from './components/column.svelte'
 
     let { children }: any = $props()
     
 
     const components: Record<string, ComponentType> = {
-        Callout: Callout,
-        Spacer: Spacer,
-        Drop: Drop
+        Callout,
+        Spacer,
+        Drop,
+        Columns,
+        Column
     }
 </script>
 

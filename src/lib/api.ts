@@ -186,7 +186,30 @@ export async function markdoc(ast: any) {
             default: false,
           }
         },
-      },      
+      },
+      cols: {
+        render: 'Columns',
+        attributes: {
+          gap: {
+            type: String,
+            default: '4'
+          }
+        }
+      },
+      col: {
+        render: 'Column',
+        attributes: {
+          w: {
+            type: String,
+            default: '100'
+          },
+          align: {
+            type: String,
+            default: 'left',
+            matches: ['left', 'center', 'right']
+          }
+        }
+      },
       spacer: {
         render: 'Spacer',
         attributes: {
