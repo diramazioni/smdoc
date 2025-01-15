@@ -8,6 +8,9 @@ import {
   getContent
 } from '$lib/api'
 import yaml from 'js-yaml';
+import path from 'path';
+import fs from 'fs/promises';
+import { DOCS_DIR } from '$lib/config/files.server';
 
 export async function load({ params, depends }) {
 	
@@ -36,57 +39,73 @@ export async function load({ params, depends }) {
 }
 
 export const actions = {
-	frontmatter: async ({ url, request }) => {
+	frontmatter: async ({ request }) => {
 		try {
-			console.debug('save frontmatter')
-			const data = await request.formData();
-			// Extract new frontmatter data from the form
-			const updatedFrontmatter = {
-				title: data.get('title'),
-				description: data.get('description'),
-				slug:  data.get('slug'),
-				updatedAt: new Date(),
-			};
-      		const slug = data.get('slug')
-			// console.log("updatedFrontmatter", updatedFrontmatter)
-			let md = await getMD(slug)
-			if (!md) {
-				md = await copyTemplate(slug)
-			}
-			const { content } = getContent(md);
-			const newYaml = yaml.dump(updatedFrontmatter);
-			console.debug("newYaml", newYaml)
-			const updatedMd = `---\n${newYaml}\n---\n${content}`;
-			
-			await setMD(slug, updatedMd)
-			return { success: true };
+		  const data = await request.formData();
+		  const title = data.get('title') as string;
+		  const description = data.get('description') as string;
+		  const slug = data.get('slug') as string;
+		  const directory = data.get('directory') as string;
+	
+		  const updatedFrontmatter = {
+			title,
+			description,
+			slug,
+			updatedAt: new Date(),
+		  };
+	
+		  // Ensure directory exists
+		  if (directory) {
+			const dirPath = path.join(DOCS_DIR, directory);
+			await fs.mkdir(dirPath, { recursive: true });
+		  }
+	
+		  let md = await getMD(slug);
+		  if (!md) {
+			md = await copyTemplate(slug);
+		  }
+	
+		  const { content } = getContent(md);
+		  const newYaml = yaml.dump(updatedFrontmatter);
+		  const updatedMd = `---\n${newYaml}\n---\n${content}`;
+		  
+		  await setMD(slug, updatedMd);
+		  
+		  return { type: 'success' };
 		} catch (error) {
-			return {
-				success: false,
-				error: error instanceof Error ? error.message : 'An unknown error occurred'
-			};
+		  console.error('Error saving frontmatter:', error);
+		  return { 
+			type: 'error',
+			message: error instanceof Error ? error.message : 'An unknown error occurred'
+		  };
 		}
-	},
-	save: async ({ params, request }) => {
+	  },
+	
+	save: async ({ request }) => {
 		try {
-			console.debug('save md')
-			const data = await request.formData();
-			const updatedContent = data.get('updatedContent')
-			const slug = data.get('slug')
-			console.log('s1')
-			const md = await getMD(slug)
-			console.log('s2')
-			const { frontmatter } = getContent(md);
-			// console.debug("updatedContent", updatedContent)
-			const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
-			console.log('save lenght', updatedMd.length)
-			await setMD(slug, updatedMd)
-			return { success: true };
+		  const data = await request.formData();
+		  const updatedContent = data.get('updatedContent') as string;
+		  const slug = data.get('slug') as string;
+		  const directory = data.get('directory') as string;
+	
+		  // Ensure directory exists
+		  if (directory) {
+			const dirPath = path.join(DOCS_DIR, directory);
+			await fs.mkdir(dirPath, { recursive: true });
+		  }
+	
+		  const md = await getMD(slug);
+		  const { frontmatter } = getContent(md);
+		  const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
+		  
+		  await setMD(slug, updatedMd);
+		  return { type: 'success' };
 		} catch (error) {
-			return {
-				success: false,
-				error: error instanceof Error ? error.message : 'An unknown error occurred'
-			};
+		  console.error('Error saving content:', error);
+		  return {
+			type: 'error',
+			message: error instanceof Error ? error.message : 'An unknown error occurred'
+		  };
 		}
 	},
 	upload: async ({ request }) => {

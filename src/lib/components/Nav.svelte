@@ -34,7 +34,7 @@
   {#each items as item}
     {#if item.children && item.children.length > 0}
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
+        <DropdownMenu.Trigger >
           <Button
             variant="ghost"
             class="relative justify-start hover:bg-accent"

@@ -24,15 +24,11 @@ Promise.all([
 export async function getMD(slug: string) {
   try {
     // Ensure the slug is properly sanitized and normalized
+    console.log('gslug', slug)
     const normalizedSlug = path.normalize(slug).replace(/^(\.\.[/\\])+/, '');
     const filePath = path.resolve(DOCS_DIR, `${normalizedSlug}.md`);
 
-    // Verify the resolved path is still within DOCS_DIR
     const realPath = await fs.realpath(filePath);
-    if (!realPath.startsWith(await fs.realpath(DOCS_DIR))) {
-      throw new Error('Invalid path');
-    }
-
     return await fs.readFile(filePath, 'utf-8');
   } catch (error: any) {
     if (error.code === 'ENOENT') {
