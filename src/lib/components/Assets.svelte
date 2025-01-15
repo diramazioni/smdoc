@@ -118,8 +118,8 @@
   {@const isPdf = asset.endsWith('.pdf')}
   {@const isTemplate = (asset === '_templates/new.md')} 
   
+  {#if !isTemplate }
   <div class="flex items-center border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
-    {#if !isTemplate }
     <button 
       use:copy={assetUrl}
       onclick={() => insertAsset(asset)}
@@ -138,7 +138,6 @@
     <button onclick={() => fileToDelete = asset}>
       <Trash2 size={15} class="cursor-pointer m-1" />
     </button>
-    {/if}
 
     {#if !isMarkdown && !isPdf}
       <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
@@ -153,6 +152,8 @@
       </a>
     </div>
   </div>
+  {/if}
+
 {/snippet}
 
 <!-- Delete Confirmation Dialog -->

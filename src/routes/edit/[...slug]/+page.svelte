@@ -118,7 +118,7 @@
 </script>
 
 <Dialog bind:open={autoSaveDialog}>
-  {#snippet trigger()}Save
+  {#snippet trigger()}
   {/snippet}
   {#snippet title()}
     Save ?

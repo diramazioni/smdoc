@@ -8,7 +8,9 @@
   import Spacer from './components/spacer.svelte'
   import Columns from './components/columns.svelte'
   import Column from './components/column.svelte'
-
+  import ImageWrapper from './components/image-wrapper.svelte'
+  import ImageGallery from './components/image-gallery.svelte'
+  
     let { children }: any = $props()
     
 
@@ -17,38 +19,34 @@
         Spacer,
         Drop,
         Columns,
-        Column
+        Column,
+        ImageWrapper,
+        ImageGallery
     }
 </script>
 
 {#each children as child}
-    {#if components[child.name]}
-        {@const SvelteComponent = components[child.name]}
-        <SvelteComponent {...child.attributes}>
-            <Renderer children={child.children} />
-        </SvelteComponent>
-    {:else}
-
-      {#if child.children}
-      <svelte:element this={child.name} {...child.attributes}>
+  {#if components[child.name]}
+      {@const SvelteComponent = components[child.name]}
+      <SvelteComponent {...child.attributes}>
           <Renderer children={child.children} />
-      </svelte:element>
-      {/if}
-
+      </SvelteComponent>
+  {:else}
+    {#if child.children}
+    <svelte:element this={child.name} {...child.attributes}>
+        <Renderer children={child.children} />
+    </svelte:element>
     {/if}
-
-    {#if typeof child === 'string'}
-      {@const childSplit = child.split('"')}
-      {#each childSplit as str}
-        {#if str.trim().length > 0}
-          {str}
-        <!-- {:else}
-          <br /> -->
-        {/if}
-      {/each}
-      
+  {/if}
+  {#if typeof child === 'string'}
+    {@const childSplit = child.split('"')}
+    {#each childSplit as str}
+      {#if str.trim().length > 0}
+        {str}
+      {/if}
+    {/each}
+  {/if}      
+{/each}
       <!-- {JSON.stringify(child.split('"'))} -->
 
         <!-- {child} -->
-    {/if}
-{/each}

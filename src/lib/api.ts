@@ -215,6 +215,31 @@ export async function markdoc(ast: any) {
           },
         }
       },
+      image: {
+        render: 'ImageWrapper',
+        attributes: {
+          width: { type: String },
+          height: { type: String },
+          align: { 
+            type: String,
+            default: 'left',
+            matches: ['left', 'center', 'right']
+          }
+        }
+      },
+      gallery: {
+        render: 'ImageGallery',
+        attributes: {
+          delay: { 
+            type: Number,
+            default: 5000
+          },
+          height: {
+            type: String,
+            default: '400px'
+          }
+        }
+      }      
     },
     variables: {
       frontmatter: getFrontmatter(ast.attributes.frontmatter),
