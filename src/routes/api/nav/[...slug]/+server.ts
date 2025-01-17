@@ -6,6 +6,7 @@ import { join } from 'path';
 interface NavItem {
   href?: string;
   title: string;
+  img?: string;
   children?: NavItem[];
 }
 
@@ -16,34 +17,43 @@ function parseMarkdownToNavItems(markdown: string): NavItem[] {
   let levels = [currentLevel];
 
   for (const line of lines) {
-    // Count leading spaces to determine nesting level
     const indent = line.search(/\S/);
     const level = indent > 0 ? Math.floor(indent / 2) : 0;
     
-    // Extract title and href from markdown link if present
+    // Match line with image and link: * ![title](/img/path) [title](/link)
+    const imageAndLinkMatch = line.trim().match(/^\* !\[([^\]]+)\]\(([^)]+)\)\s*\[([^\]]+)\]\(([^)]+)\)/);
+    // Match normal link: * [title](/link)
     const linkMatch = line.trim().match(/^\* \[([^\]]+)\]\(([^)]+)\)/);
+    // Match plain text: * Text
     const plainTextMatch = line.trim().match(/^\* (.+)/);
     
     let newItem: NavItem;
     
-    if (linkMatch) {
-      // Line contains a link
+    if (imageAndLinkMatch) {
+      // If we have both image and link
+      newItem = {
+        title: imageAndLinkMatch[3],
+        href: imageAndLinkMatch[4],
+        img: imageAndLinkMatch[2],
+        children: []
+      };
+    } else if (linkMatch) {
+      // If we only have a link
       newItem = {
         title: linkMatch[1],
         href: linkMatch[2],
         children: []
       };
     } else if (plainTextMatch) {
-      // Line contains plain text (category)
+      // If we just have text
       newItem = {
         title: plainTextMatch[1],
         children: []
       };
     } else {
-      continue; // Skip invalid lines
+      continue;
     }
 
-    // Adjust the levels array based on current indent level
     while (level < levels.length - 1) {
       levels.pop();
     }
@@ -62,17 +72,14 @@ function parseMarkdownToNavItems(markdown: string): NavItem[] {
 }
 
 export const GET: RequestHandler = async ({ params }) => {
-  try {
-    const slug = params.slug;
-    const navigationPath = join(process.cwd(), 'mdocs', `${slug}.md`);
-    const navListData = await readFile(navigationPath, 'utf8');
-    const navItems = parseMarkdownToNavItems(navListData);
+    const slugParts = params.slug.split('/');
+    const filePath = join(process.cwd(), 'mdocs', ...slugParts) + '.md';
 
+    const navListData = await readFile(filePath, 'utf8');
+    const navItems = parseMarkdownToNavItems(navListData);
+    
     return new Response(JSON.stringify(navItems), {
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (err) {
-    console.error('Error reading navigation file:', err);
-    throw error(500, 'Unable to read the Markdown file');
-  }
+
 };

@@ -6,8 +6,9 @@
   import { Separator } from "$lib/components/ui/separator/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
   import { Switch } from "$lib/components/ui/switch/index.js";
-
-  import SidebarNav from "$lib/components/Nav.svelte";
+  
+  import MenuNav from "$lib/components/Nav.svelte";
+  import SideNav from '$lib/components/SideNav.svelte';
   import UserNav from "$lib/components/User-nav.svelte";
   import { Toaster } from "$lib/components/ui/sonner/index.js";
 	import MarkdocRenderer from '$lib/markdoc/renderer.svelte'
@@ -21,8 +22,8 @@
       return 'Welcome'
     }
   }
-
 </script>
+
   <svelte:head>
     <title>{title()}</title>
   </svelte:head>
@@ -35,7 +36,7 @@
       <img src="/logo.png" alt="logo" class="w-20" />
       <h1 class="text-xl font-bold ml-3">DigitEco <span class="text-base font-normal">s.r.l.</span></h1> 
     </div>
-    <SidebarNav items={data.items} />  
+    <MenuNav items={data.navmenu} />  
     <div class="m-3">
       <UserNav/>
     </div>
@@ -46,7 +47,16 @@
 
   </article> -->
 
-    {@render children()}
+  {#if data.sidenav}
+    <SideNav items={data.sidenav} />  
+  {/if}	
+  {@render children()}
+
+      <!-- {#each $page.data.sidenav as item}
+        <div class="flex flex-col gap-2">
+          <a href={item.url} class="menu">{item.title}</a>
+        </div>
+      {/each} -->
 
 
 </main>
