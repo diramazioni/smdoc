@@ -189,6 +189,15 @@ export async function markdoc(ast: any) {
           gap: {
             type: String,
             default: '4'
+          },
+          align: {
+            type: String,
+            default: 'left',
+            matches: ['left', 'center', 'right']
+          },
+          cl: {
+            type: String,
+            default: ''
           }
         }
       },

@@ -13,28 +13,47 @@
 
     let style = $derived.by(() => {
         const styles = [];
-        if (width) styles.push(`width: ${width}`); else styles.push('width: auto');
-        if (height) styles.push(`height: ${height}`); else styles.push('height: auto');
+        if (width) styles.push(`--img-width: ${width}`);
+        if (height) styles.push(`--img-height: ${height}`);
         return styles.join(';');
     });
 
     let alignClass = $derived.by(() => {
         switch(align) {
-            case 'center': return 'mx-auto block';
-            case 'right': return 'ml-auto block';
-            default: return 'block';
+            case 'center': return 'mx-auto';
+            case 'right': return 'ml-auto';
+            default: return '';
         }
     });
 </script>
 
-<div class={alignClass} {style}>
+<!-- Add image-container class for easier targeting -->
+<div class="image-container {alignClass}" {style}>
     {@render children()}
 </div>
 
 <style>
-    div :global(img) {
-        width: 100%;
-        height: 100%;
+    .image-container {
+        display: inline-block;
+    }
+    
+    /* Try multiple selector approaches */
+    :global(.image-container > img) {
+        width: var(--img-width, auto);
+        height: var(--img-height, auto);
         object-fit: contain;
+        display: block;
+    }
+
+    :global(.image-container p > img) {
+        width: var(--img-width, auto);
+        height: var(--img-height, auto);
+        object-fit: contain;
+        display: block;
+    }
+
+    /* Debug style to make it obvious when selector works */
+    :global(.image-container img) {
+        border: 2px solid #eee;
     }
 </style>
