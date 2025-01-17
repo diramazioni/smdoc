@@ -32,7 +32,7 @@
     }
 </script>
 
-<nav class={cn("flex flex-col gap-2 p-4", className)}>
+<nav class={cn("flex flex-col gap-2 p-4 w-full", className)}>
     {#each items as item}
         {#if item.children && item.children.length > 0}
             <div class="ml-4">

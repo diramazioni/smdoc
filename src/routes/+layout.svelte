@@ -46,11 +46,16 @@
   {@render children()}
 
   </article> -->
-
-  {#if data.sidenav}
+  {#if data.sidenav.length > 0}
+  <div class="flex gap-2">
+    <div class="flex w-2/5">
     <SideNav items={data.sidenav} />  
-  {/if}	
+    </div>
+    {@render children()}
+  </div>
+  {:else}
   {@render children()}
+  {/if}	
 
       <!-- {#each $page.data.sidenav as item}
         <div class="flex flex-col gap-2">
