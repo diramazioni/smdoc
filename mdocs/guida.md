@@ -2,7 +2,7 @@
 title: guida
 description: Un riferimento per le operazioni più comuni
 slug: guida
-updatedAt: 2024-12-20T09:56:17.097Z
+updatedAt: 2025-01-15T12:58:49.430Z
 ---
 # {% $frontmatter.title %}
 
@@ -34,14 +34,14 @@ Testo evidenziato in viola [con un link](/home)
 
 # drop
 
-{% drop color="blue" title="Titolo del drop"  %}
+{% drop color="blue" title="Titolo del drop" %}
 
 Contenuto
 
 * A
-  * B
-  * C
-    * D
+    * B
+    * C
+        * D
 
 {% /drop %}
 
@@ -50,9 +50,9 @@ Contenuto
 Contenuto
 
 * A
-  * B
-  * C
-    * D
+    * B
+    * C
+        * D
 
 {% /drop %}
 
@@ -69,7 +69,47 @@ Riga sotto
 {% /spacer %}
 spazio sotto 100
 
-## Altro Titolo (livello 1)
+# Columns
+
+## Organizza ill contenuto in più colonne
+
+{% cols %}
+{% col w="20" %}
+
+### Sidebar
+
+Navigation content here
+{% /col %}
+
+{% col w="70" %}
+
+### Main Content
+
+Main content goes here
+{% /col %}
+{% /cols %}
+
+***
+
+# Image
+
+## cambia le dimensione dell'immagine
+
+si può specificare la larghezza e/o l'altezza in maniera opzionale
+{% image width="500px" align="center" %}
+![1.00](/assets/telecamera_1.jpg)
+{% /image %}
+
+# Gallery
+
+## mostra più immagini in una galleria
+
+{% gallery delay=2000 height="600px" %}
+![1.00](/assets/sulzano_1.jpg)
+![1.00](/assets/sulzano_3.jpg)
+{% /gallery %}
+
+## Titolo e Sottotitoli (livello 1)
 
 ## sottotitolo (livello 2)
 
@@ -91,9 +131,9 @@ Testo normale
 
 # Tabella
 
-| colonna 1   | colonna 2                 |
-| ----------- | ------------------------- |
+| colonna 1 | colonna 2 |
+| --------- | --------- |
 | contenuto 1 | ![logo](/assets/logo.png) |
-| Contenuto 2 | [Link](/link)             |
+| Contenuto 2 | [Link](/link) |
 
 Updated at {% $frontmatter.updatedAt %}

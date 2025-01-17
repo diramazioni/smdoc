@@ -116,15 +116,18 @@
     @apply w-full border-2;
   }
   thead {
-    @apply w-full border-2 text-left  bg-muted text-muted-foreground;
+    @apply hidden;
   }
   td {
     @apply border-2 p-1;
   }
+  tr:nth-child(even) {
+    background-color: #f3f4f6; /* Tailwind's gray-100 */
+  }
   a[href$=".pdf"] {
     color: #59645c; 
     text-decoration: underline;
-    display: inline-flex;
+    /* display: inline-flex; */
     align-items: center;
     position: relative;
   }   

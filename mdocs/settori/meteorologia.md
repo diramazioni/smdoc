@@ -19,9 +19,19 @@ Tutti i dati fondamentali per il monitoraggio di processi metereologici, sono ac
 Tutte le nostre centraline meteo sono dotate delle più comuni interfacce di comunicazione che permettono l'integrazione con sensori e sistemi di terze parti, permettendo la totale apertura e scalabilità del sistema. 
 
 Per informazioni dettagliate, è possibile consultare le sezioni specifiche [Data Loggers](/prodotti/data-loggers), [Centraline assemblate](/prodotti/centraline-assemblate), [Accessori installazione](/prodotti/accessori-installazione), [Interfacce](/prodotti/interfacce), [Sensori](/prodotti/sensori)
+{% spacer h="100"%}
+{% /spacer %}
 
-![Stazione meteo DigitEco Monte Rosa Cresta Rossa](/assets/monterosa.jpg) Monte Rosa, Cresta Rossa
+{% cols align="center"%}
+{% col w="25" align="center" %}
+![Stazione meteo DigitEco Monte Rosa Cresta Rossa](/assets/monterosa.jpg) **Monte Rosa, Cresta Rossa**
+{% /col %}
 
-![Stazione meteo DigitEco Consorzio di Bonifica della Romagna](/assets/canale_2.jpg) Consorzio di Bonifica della Romagna
+{% col w="25" align="center" %}
+![Stazione meteo DigitEco Consorzio di Bonifica della Romagna](/assets/canale_2.jpg) **Consorzio di Bonifica della Romagna**
+{% /col %}
+{% col w="25" align="center" %}
+![Stazione Meteo DigitEco Sulzano lago d'Iseo per The Floating Piers](/assets/sulzano_1.jpg) **The Floating Piers, lago d'Iseo**
+{% /col %}
+{% /cols %}
 
-![Stazione Meteo DigitEco Sulzano lago d'Iseo per The Floating Piers](/assets/sulzano_1.jpg) The Floating Piers, lago d'Iseo

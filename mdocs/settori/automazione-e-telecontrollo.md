@@ -20,6 +20,15 @@ Per garantire il telecontrollo di sistemi isolati e disclocati in luoghi diffici
 
 Per informazioni dettagliate, è possibile consultare le sezioni specifiche [Data Loggers](/prodotti/data-loggers), [Centraline assemblate](/prodotti/centraline-assemblate), [Accessori installazione](/prodotti/accessori-installazione), [Interfacce](/prodotti/interfacce), [Sensori](/prodotti/sensori)
 
-![DigitEco Sinottico impianto chimico-fisico](/assets/auto_1.jpg) Sinottico impianto chimico-fisico
 
-![DigitEco PLC su impianto chimico-fisico](/assets/auto_2.jpg) PLC su impianto chimico-fisico
+{% cols align="center"%}
+
+{% col w="40"  %}
+![DigitEco Sinottico impianto chimico-fisico](/assets/auto_1.jpg) **Sinottico impianto chimico-fisico**
+{% /col %}
+
+{% col w="40"%}
+![DigitEco PLC su impianto chimico-fisico](/assets/auto_2.jpg) **PLC su impianto chimico-fisico**
+{% /col %}
+{% /cols %}
+
