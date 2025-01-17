@@ -7,8 +7,6 @@ url: https://digiteco.it/prodotti/centraline-assemblate/37-dmcs32-cpca
 
 # DMCS32 CPCA
 
-[![](/assets/dmcs32-cpca.png) DMCS32 CPCA](/prodotti/centraline-assemblate/37-dmcs32-cpca) [![](/assets/eco4-cpca.png) ECO4 CPCA](/prodotti/centraline-assemblate/38-eco4-cpca) [![](/assets/eco4m-cpca.png) ECO4M CPCA](/prodotti/centraline-assemblate/33-eco4m-cpca) [![](/assets/eco4u-cpca.png) ECO4U CPCA](/prodotti/centraline-assemblate/39-eco4u-cpca)
-
 ![](/assets/106.png)
 
 ![](/assets/107.png)

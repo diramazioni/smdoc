@@ -1,16 +1,15 @@
 ---
-description: Quadri assemblati e finiti per il collegamento dei datalogger, della
-  sensoristica, dei moduli di comunicazione e dei sistemi di alimentazione.
 title: Centraline assemblate
-updatedAt: '2025-01-14T14:25:16.241032'
-url: https://digiteco.it/prodotti/centraline-assemblate
+description: >-
+  Quadri assemblati e finiti per il collegamento dei datalogger, della
+  sensoristica, dei moduli di comunicazione e dei sistemi di alimentazione.
+slug: prodotti/centraline-assemblate
+updatedAt: 2025-01-17T15:01:53.095Z
 ---
-
 # Centraline assemblate
 
-Quadri assemblati e finiti per il collegamento dei datalogger, della sensoristica, dei moduli di comunicazione e dei sistemi di alimentazione.
+### Quadri assemblati e finiti per il collegamento dei datalogger, della sensoristica, dei moduli di comunicazione e dei sistemi di alimentazione.
 
-[![](/assets/dmcs32-cpca.png) DMCS32 CPCA](/prodotti/centraline-assemblate/37-dmcs32-cpca) [![](/assets/eco4-cpca.png) ECO4 CPCA](/prodotti/centraline-assemblate/38-eco4-cpca) [![](/assets/eco4m-cpca.png) ECO4M CPCA](/prodotti/centraline-assemblate/33-eco4m-cpca) [![](/assets/eco4u-cpca.png) ECO4U CPCA](/prodotti/centraline-assemblate/39-eco4u-cpca)
 
 In questa sezione sono rappresentate le centraline assemblate e finite pronte all'installazione per i datalogger DigitEco DMCS32 ed ECO4x
 

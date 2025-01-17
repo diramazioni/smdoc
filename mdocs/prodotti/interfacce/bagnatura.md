@@ -1,13 +1,12 @@
 ---
 description: Interfacce Bagnatura
-title: Interfacce Bagnatura
+title: Bagnatura
 updatedAt: '2025-01-14T14:25:44.994139'
 url: https://digiteco.it/prodotti/interfacce/28-bagnatura
 ---
 
 # Bagnatura
 
-[![](/assets/cvi-4-20.png) CVI 4-20](/prodotti/interfacce/18-cvi-4-20) [![](/assets/bagnatura.png) Bagnatura](/prodotti/interfacce/28-bagnatura)
 
 ![](/assets/73.png)
 

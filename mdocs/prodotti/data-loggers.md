@@ -1,16 +1,15 @@
 ---
-description: Data logger professionali per il monitoraggio ed il controllo di processi
-  ambientali ed industriali
 title: Data Loggers
-updatedAt: '2025-01-14T14:24:45.323867'
-url: https://digiteco.it/prodotti/data-loggers
+description: >-
+  Data logger professionali per il monitoraggio ed il controllo di processi
+  ambientali ed industriali
+slug: prodotti/data-loggers
+updatedAt: 2025-01-17T11:15:32.480Z
 ---
-
 # Data Loggers
 
-Data logger professionali per il monitoraggio ed il controllo di processi ambientali ed industriali
+## Data logger professionali per il monitoraggio ed il controllo di processi ambientali ed industriali
 
-[![](/assets/dmcs32.png) DMCS32](/prodotti/data-loggers/1-dmcs32) [![](/assets/eco-4.png) ECO 4](/prodotti/data-loggers/2-eco-4) [![](/assets/eco-4-mini.png) ECO 4 Mini](/prodotti/data-loggers/10-eco-4-mini) [![](/assets/eco-4-micro.png) ECO 4 Micro](/prodotti/data-loggers/17-eco-4-micro)
 
 Le centraline DigitEco DMCS32 ed ECO4 rappresentano le soluzioni top di gamma per il monitoraggio di parametri in contesti ambientali e di controllo. Offrono un"ampia flessibilità per varie tipologie di applicazioni e sono particolarmente adatte in tutti i casi in cui sia indispensabile la funzione di acquisizione dati abbinata ad operazioni di comando e allarme.
 
