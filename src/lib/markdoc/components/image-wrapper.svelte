@@ -13,13 +13,19 @@
         children: any;
     } = $props();
 
-    let showMagnifier = $state(false);
-    let magnifierPosition = $state({ x: 0, y: 0 });
+    let showMagnifier = $state<{[key: string]: boolean}>({});
+    let magnifierPosition = $state<{[key: string]: {x: number, y: number}}>({});
     let containerRef = $state<HTMLDivElement | null>(null);
-    let magnifierSize = $state(200); // Size of the magnifier lens
-    let zoomLevel = $state(2); // Zoom magnification level
-    let imageWidth = $state(0);
-    let imageSrc = $state(0);
+    let magnifierSize = $state(200);
+    let zoomLevel = $state(2);
+    let imageDetails = $state<{[key: string]: {
+        width: number,
+        height: number,
+        src: string,
+        rect: DOMRect,
+        offsetX: number,
+        offsetY: number
+    }}>({});
 
     let style = $derived.by(() => {
         const styles = [];
@@ -30,94 +36,134 @@
 
     let alignClass = $derived.by(() => {
         switch(align) {
-            case 'center': return 'mx-auto';
-            case 'right': return 'ml-auto';
-            default: return '';
+            case 'center': return 'items-center justify-center text-center';
+            case 'right': return 'items-end justify-start text-right';
+            default: return 'items-center justify-around ';
         }
     });
 
     $effect(() => {
         if (containerRef) {
-            const img = containerRef.querySelector('img');
-            if (img) {
-                // If image is already loaded, get its width
+            const images = containerRef.querySelectorAll('img');
+            const containerRect = containerRef.getBoundingClientRect();
+            
+            images.forEach((img, index) => {
                 if (img.complete) {
-                    imageWidth = img.width;
-                    imageSrc = img.src;
-                }
+                    const imgRect = img.getBoundingClientRect();
+                    const offsetX = imgRect.left - containerRect.left;
+                    const offsetY = imgRect.top - containerRect.top;
+                    
+                    imageDetails[index] = {
+                        width: img.width,
+                        height: img.height,
+                        src: img.src,
+                        rect: imgRect,
+                        offsetX,
+                        offsetY
+                    };
+                    magnifierPosition[index] = { x: 0, y: 0 };
+                    showMagnifier[index] = false;
 
-            }
+                    img.onmouseenter = () => handleMouseEnter(index);
+                    img.onmouseleave = () => handleMouseLeave(index);
+                    img.onmousemove = (e) => updateMagnifierPosition(e, index);
+
+                    // img.onload = () => {
+                        const updatedRect = img.getBoundingClientRect();
+                        const updatedOffsetX = updatedRect.left - containerRect.left;
+                        const updatedOffsetY = updatedRect.top - containerRect.top;
+                        imageDetails[index] = {
+                            width: img.width,
+                            height: img.height,
+                            src: img.src,
+                            rect: updatedRect,
+                            offsetX: updatedOffsetX,
+                            offsetY: updatedOffsetY
+                        };
+                    // };
+                }
+            });
         }
     });
 
-    function updateMagnifierPosition(event: MouseEvent) {
-        if (!containerRef) return;
+    function updateMagnifierPosition(event: MouseEvent, imageIndex: number) {
+        const details = imageDetails[imageIndex];
+        if (!details) return;
 
-        const rect = containerRef.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const containerRect = containerRef?.getBoundingClientRect();
+        if (!containerRect) return;
 
-        // Calculate magnifier position, ensuring it stays within bounds
-        const magnifierHalf = magnifierSize / 2;
-        magnifierPosition = {
-            x: Math.max(magnifierHalf, Math.min(x, rect.width - magnifierHalf)),
-            y: Math.max(magnifierHalf, Math.min(y, rect.height - magnifierHalf))
+        // Get mouse position relative to the container
+        const containerX = event.clientX - containerRect.left;
+        const containerY = event.clientY - containerRect.top;
+
+        magnifierPosition[imageIndex] = { 
+            x: containerX, 
+            y: containerY 
         };
     }
 
-    function handleMouseEnter() {
+    function handleMouseEnter(imageIndex: number) {
         if (magnifier) {
-            showMagnifier = true;
+            showMagnifier[imageIndex] = true;
         }
     }
 
-    function handleMouseLeave() {
-        showMagnifier = false;
+    function handleMouseLeave(imageIndex: number) {
+        showMagnifier[imageIndex] = false;
     }
 
+    function getMagnifierStyle(index: string) {
+        const details = imageDetails[index];
+        const pos = magnifierPosition[index];
+        if (!details || !pos) return '';
+
+        // Calculate the relative position within the image
+        const relativeX = pos.x - details.offsetX;
+        const relativeY = pos.y - details.offsetY;
+
+        return `
+            width: ${magnifierSize}px; 
+            height: ${magnifierSize}px;
+            left: ${pos.x - magnifierSize/2}px;
+            top: ${pos.y - magnifierSize/2}px;
+            background-position: 
+                ${-relativeX * zoomLevel + magnifierSize/2}px 
+                ${-relativeY * zoomLevel + magnifierSize/2}px;
+            background-image: url('${details.src}');
+            background-size: ${details.rect.width * zoomLevel}px ${details.rect.height * zoomLevel}px;
+        `;
+    }
 </script>
 
 <div 
-    class="image-container {alignClass}" 
+    class="images-container flex flex-wrap gap-4 {alignClass}"
     {style}
-    role="img"
     bind:this={containerRef}
-    onmouseenter={handleMouseEnter}
-    onmouseleave={handleMouseLeave}
-    onmousemove={updateMagnifierPosition}
 >
-    <div class="relative">
-        {@render children()}
-        {#if showMagnifier}
+    {@render children()}
+    {#each Object.entries(showMagnifier) as [index, show]}
+        {#if show && imageDetails[index]}
             <div 
                 class="magnifier"
-                style="
-                    width: {magnifierSize}px; 
-                    height: {magnifierSize}px;
-                    left: {magnifierPosition.x - magnifierSize/2}px;
-                    top: {magnifierPosition.y - magnifierSize/2}px;
-                    background-position: 
-                        {-magnifierPosition.x * zoomLevel + magnifierSize/2}px 
-                        {-magnifierPosition.y * zoomLevel + magnifierSize/2}px;
-                    background-size: {imageWidth * zoomLevel}px;
-                    background-image: url('{imageSrc}');
-                "
+                style={getMagnifierStyle(index)}
             ></div>
         {/if}
-    </div>
+    {/each}
 </div>
 
 <style>
-    .image-container {
-        display: inline-block;
+    .images-container {
+        width: 100%;
         position: relative;
     }
 
-    :global(.image-container img) {
+    :global(.images-container img) {
         width: var(--img-width, auto);
         height: var(--img-height, auto);
         object-fit: contain;
         display: block;
+        cursor: zoom-in;
     }
 
     .magnifier {
@@ -130,9 +176,5 @@
                     0 4px 10px rgba(0,0,0,0.15);
         pointer-events: none;
         z-index: 10;
-    }
-
-    .relative {
-        position: relative;
     }
 </style>
