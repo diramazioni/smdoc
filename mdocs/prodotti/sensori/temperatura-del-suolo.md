@@ -7,8 +7,8 @@ url: https://digiteco.it/prodotti/sensori/13-temperatura-del-suolo
 
 # Temperatura del suolo
 
-
-![](/assets/23.png)
+{% image width="500px" magnifier=true %} ![Temperatura del suolo](/assets/23.png)
+{% /image %}
 
 | Key | Value |  
 | :--- | :--- |  

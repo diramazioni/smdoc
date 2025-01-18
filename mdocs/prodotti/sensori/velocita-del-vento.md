@@ -6,10 +6,11 @@ url: https://digiteco.it/prodotti/sensori/4-velocita-del-vento
 ---
 
 # Velocità del vento
+{% image width="500px" magnifier=true %} ![Velocità del vento 1](/assets/11.png) ![Velocità del vento 2](/assets/12.png)
+{% /image %}
 
-![](/assets/11.png)
 
-![](/assets/12.png)
+
 
 Utile per monitorare la velocità del vento, questo sensore è realizzato interamente in lega di alluminio anodizzato con viteria in acciaio inox e cuscinetti di alta qualità a basso coefficiente di attrito. Ogni singolo elemento è stato progettato per resistere ad ambienti marini o di alta montagna, garantendo l'accuratezza nella misurazione nel tempo.
 

@@ -7,7 +7,8 @@ url: https://digiteco.it/prodotti/sensori/15-pressione-atmosferica
 
 # Pressione atmosferica
 
-![](/assets/45.png)
+{% image width="500px" magnifier=true %} ![Pressione atmosferica](/assets/45.png)
+{% /image %}
 
 | Key | Value |  
 | :--- | :--- |  

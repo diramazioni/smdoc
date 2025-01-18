@@ -6,8 +6,9 @@ updatedAt: 2025-01-17T14:15:04.702Z
 ---
 # ECO 4
 
+{% image width="500px" align="center" magnifier=true %}![ECO 4](/assets/5.png)
+{% /image %}
 
-![](/assets/5.png)
 
 ECO 4 è in grado di acquisire e registrare dati con consumi ridotti e funzionamento in bassa tensione. Ottimo come data logger per sistemi ambientali nei settori della meteorologia e dei telecontrolli, ECO 4 può essere alimentato tramite pannello fotovoltaico realizzando un sistema ad-hoc per l'acquisizione di dati in ambienti isolati.
 

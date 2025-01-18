@@ -6,8 +6,10 @@ url: https://digiteco.it/prodotti/sensori/14-umidita-del-suolo
 ---
 
 # Umidità del suolo
+{% image width="500px" magnifier=true %} ![Umidità del suolo](/assets/37.png)
+{% /image %}
 
-![](/assets/37.png)
+
 
 | Key | Value |  
 | :--- | :--- |  

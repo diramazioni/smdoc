@@ -9,7 +9,9 @@ url: https://digiteco.it/prodotti/accessori-installazione/19-palo-porta-strument
 
 
 
-![](/assets/64.png)
+{% image width="500px" magnifier=true %} ![Palo porta strumenti](/assets/64.png)
+{% /image %}
+
 
 Il palo viene ancorato tramite base, normalmente fissata a un plinto in calcestruzzo 40x40x40
 

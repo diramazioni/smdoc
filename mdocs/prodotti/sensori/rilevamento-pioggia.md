@@ -7,7 +7,8 @@ url: https://digiteco.it/prodotti/sensori/8-rilevamento-pioggia
 
 # Rilevamento pioggia
 
-![](/assets/17.png)
+{% image width="500px" magnifier=true %} ![Rilevamento pioggia](/assets/17.png)
+{% /image %}
 
 | Key | Value |  
 | :--- | :--- |  

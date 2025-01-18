@@ -96,8 +96,7 @@ Main content goes here
 ## cambia le dimensione dell'immagine
 
 si può specificare la larghezza e/o l'altezza in maniera opzionale
-{% image width="500px" align="center" %}
-![1.00](/assets/telecamera_1.jpg)
+{% image width="500px" align="center"  magnifier=true %} ![telecamera_1](/assets/telecamera_1.jpg)
 {% /image %}
 
 # Gallery

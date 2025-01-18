@@ -7,11 +7,8 @@ url: https://digiteco.it/prodotti/centraline-assemblate/33-eco4m-cpca
 
 # ECO4M CPCA
 
-
-![](/assets/83.png)
-
-![](/assets/86.png)
-
+{% image width="500px" magnifier=true %} ![ECO4M CPCA ](/assets/83.png) ![ECO4M CPCA interno](/assets/86.png)
+{% /image %}
 ECO4M CP/CA (alimentazione da pannello fotovoltaico o da alimentatore di rete) sono le soluzioni preassemblate per il datalogger ECO4 Mini, utilizzato per il monitoraggio di sistemi ambientali (agrometeorologia, piccoli telecontrolli). Il quadro standard utilizzato è il contenitore Gewiss GW46002 IP66, completo di serratura a chiave e piastra di fondo per fissaggio della strumentazione.
 
 Il sistema è in grado di registrare dati su 8 canali (datalogger ECO4M), con cadenza temporale personalizzabile e di svolgere una serie di operazioni sul raggiungimento di soglie di minimo e massimo o sul risultato di algoritmi programmabili. Tali operazioni consistono, ad esempio, nell'invio di SMS o nell'attivazione di una o più uscite digitali (comandi) su diversi algoritmi programmabili. Tutti i dati memorizzati, possono essere inviati ad un server web tramite modem GPRS e consultati tramite interfaccia web. Con il modulo opzionale LoRa Wireless è possibile collegare altri sensori e datalogger della serie ECOx per creare un sistema a logica distribuita e collegare sensori e/o comandi remoti all'unità centrale

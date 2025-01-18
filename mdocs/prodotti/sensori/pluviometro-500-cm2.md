@@ -6,8 +6,8 @@ url: https://digiteco.it/prodotti/sensori/9-pluviometro-500-cm2
 ---
 
 # Pluviometro 500 cm²
-
-![](/assets/36.png)
+{% image width="500px" magnifier=true %} ![ Pluviometro 500 cm²](/assets/36.png)
+{% /image %}
 
 Il pluviometro con doppia bascula anti rimbalzo, presenta una bocca tarata a norma WMO.
 

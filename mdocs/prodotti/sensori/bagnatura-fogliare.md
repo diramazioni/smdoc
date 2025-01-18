@@ -6,8 +6,8 @@ url: https://digiteco.it/prodotti/sensori/7-bagnatura-fogliare
 ---
 
 # Bagnatura fogliare
-
-![](/assets/46.png)
+{% image width="500px" magnifier=true %}![Bagnatura fogliare](/assets/46.png)
+{% /image %}
 
 | Key | Value |  
 | :--- | :--- |  

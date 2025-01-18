@@ -6,9 +6,8 @@ url: https://digiteco.it/prodotti/centraline-assemblate/38-eco4-cpca
 ---
 
 # ECO4 CPCA
-![](/assets/91.png)
-
-![](/assets/108.png)
+{% image width="500px" magnifier=true %} ![ECO4 CPCA](/assets/91.png) ![ECO4 CPCA Interno](/assets/108.png)
+{% /image %}
 
 ECO4 CP/CA (alimentazione da pannello fotovoltaico o da alimentatore di rete) sono le soluzioni preassemblate per il datalogger ECO4, utilizzato per il monitoraggio di sistemi ambientali (meteorologia, agrometeorologia, telecontrolli. Il quadro standard utilizzato è il contenitore Gewiss GW46003 IP66, completo di serratura a chiave e piastra di fondo per fissaggio della strumentazione.
 

@@ -6,8 +6,8 @@ updatedAt: 2025-01-17T14:15:47.060Z
 ---
 # ECO 4 Micro
 
-
-![](/assets/50.png)
+{% image width="500px" align="center" magnifier=true %}![ECO 4 Micro](/assets/50.png)
+{% /image %}
 
 ECO 4 Micro è il datalogger più piccolo della famiglia ECOx. Il modulo è dotato di sistema per la connessione Wireless con consumi ridottissimi e funzionamento in bassa tensione. Il datalogger può essere alimentato direttamente tramite piccolissimo pannello fotovoltaico 5W (regolatore di carica e uscita per batteria sono già integrati nel datalogger) realizzando un sistema ad-hoc per l'acquisizione di dati in ambienti isolati. Per queste caratteristiche è ideale come data logger per sistemi ambientali come quello agrometeorologico o per micro reti/sistemi di telecontrollo come ad. es. rilevatore di livelli piezometrici.
 

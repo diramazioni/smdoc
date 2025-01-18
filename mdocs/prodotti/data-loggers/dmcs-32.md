@@ -6,8 +6,8 @@ updatedAt: 2025-01-17T14:14:17.315Z
 ---
 # DMCS32
 
-![](/assets/3.png)
-
+{% image width="500px" align="center" magnifier=true %}![DMCS32](/assets/3.png)
+{% /image %}
 L’unità DMCS32 è un sistema di acquisizione e registrazione dati per sistemi ambientali e industriali con funzionamento in bassa tensione e consumi ridotti che la rendono adatta ad essere alimentata tramite pannello fotovoltaico.
 
 Il sistema è in grado di registrare dati su 16 canali con cadenza personalizzabile e di svolgere una serie di operazioni sul raggiungimento di soglie di minimo e massimo o sul risultato di algoritmi programmabili e personalizzabili. Tali operazioni consistono, ad esempio, nell'invio di SMS o nell'attivazione di una o più uscite digitali (comandi).

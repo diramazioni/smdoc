@@ -6,8 +6,9 @@ url: https://digiteco.it/prodotti/sensori/12-radiazione-solare-globale
 ---
 
 # Radiazione solare globale
+{% image width="500px" magnifier=true %} ![Radiazione solare globale](/assets/22.png)
+{% /image %}
 
-![](/assets/22.png)
 
 | Key | Value |  
 | :--- | :--- |  

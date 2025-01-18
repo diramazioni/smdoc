@@ -7,8 +7,9 @@ url: https://digiteco.it/prodotti/sensori/11-pluviometro-1000-cm2
 
 # Pluviometro 1000 cm²
 
+{% image width="500px" magnifier=true %} ![Pluviometro 1000 cm²](/assets/21.png)
+{% /image %}
 
-![](/assets/21.png)
 
 Il pluviometro con doppia bascula anti rimbalzo, presenta una bocca tarata a norma WMO.
 

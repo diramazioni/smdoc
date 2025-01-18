@@ -6,10 +6,8 @@ url: https://digiteco.it/prodotti/sensori/16-radiazione-netta
 ---
 
 # Radiazione netta
-
-![](/assets/48.png)
-
-![](/assets/49.png)
+{% image width="500px" magnifier=true %} ![Radiazione netta 1](/assets/48.png) ![Radiazione netta 2](/assets/49.png)
+{% /image %}
 
 Il sensore di radiazione netta si basa su un sensore a termopila in cui giunti caldi (superiore) e freddi (inferiore) sono in contatto termico. La differenza di temperatura tra i due ricevitori è proporzionale all’irradiamento netto e viene convertito in un segnale analogico proporzionale. La forma dei due ricevitori garantisce una corretta risposta secondo la legge del coseno.
 

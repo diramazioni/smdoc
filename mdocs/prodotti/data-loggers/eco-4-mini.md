@@ -6,8 +6,9 @@ updatedAt: 2025-01-17T14:16:41.399Z
 ---
 # ECO 4 Mini
 
+{% image width="500px" align="center" magnifier=true %}![ECO 4 Mini](/assets/20.png)
+{% /image %}
 
-![](/assets/20.png)
 
 ECO 4 Mini è il modulo ridotto di ECO 4. Analogamente al modulo principale è in grado di acquisire e registrare dati con consumi ancora più ridotti e funzionamento in bassa tensione. Ottimo come data logger per sistemi ambientali nei settori della meteorologia, agrometeorologia e piccoli telecontrolli, ECO 4 può essere alimentato tramite pannello fotovoltaico realizzando un sistema ad-hoc per l'acquisizione di dati in ambienti isolati.
 

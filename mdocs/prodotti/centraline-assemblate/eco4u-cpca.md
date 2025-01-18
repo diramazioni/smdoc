@@ -7,10 +7,9 @@ url: https://digiteco.it/prodotti/centraline-assemblate/39-eco4u-cpca
 
 # ECO4U CPCA
 
+{% image width="500px" magnifier=true %} ![ECO4U CPCA](/assets/98.png) ![ECO4U CPCA interno](/assets/99.png)
+{% /image %}
 
-![](/assets/98.png)
-
-![](/assets/99.png)
 
 ECO4U CP/CA (alimentazione da pannello fotovoltaico o da alimentatore di rete) sono le soluzioni preassemblate per il datalogger ECO4 Micro ed ECO4 Micro LoRa, utilizzati per il monitoraggio di sistemi ambientali (agrometeorologia, rilevamento livelli ecc.). Il quadro standard utilizzato è il contenitore Gewiss GW46001 IP66, completo di serratura a chiave e piastra di fondo per fissaggio della strumentazione.
 

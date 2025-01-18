@@ -6,8 +6,8 @@ url: https://digiteco.it/prodotti/sensori/5-direzione-del-vento
 ---
 
 # Direzione del vento
-
-![](/assets/34.png)
+{% image width="500px" magnifier=true %} ![Direzione del vento](/assets/34.png)
+{% /image %}
 
 Utile per monitorare la direzione del vento, questo sensore è realizzato interamente in lega di alluminio anodizzato con viteria in acciaio inox e cuscinetti di alta qualità a basso coefficiente di attrito. Ogni singolo elemento è stato progettato per resistere ad ambienti marini o di alta montagna, garantendo l'accuratezza nella misurazione nel tempo.
 

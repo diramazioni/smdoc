@@ -6,10 +6,8 @@ url: https://digiteco.it/prodotti/centraline-assemblate/37-dmcs32-cpca
 ---
 
 # DMCS32 CPCA
-
-![](/assets/106.png)
-
-![](/assets/107.png)
+{% image width="500px" magnifier=true %} ![DMCS32 CPCA](/assets/106.png) ![DMCS32 CPCA interno](/assets/107.png)
+{% /image %}
 
 DMCS32 CP/CA (alimentazione da pannello fotovoltaico o da alimentatore di rete) sono le soluzioni preassemblate per il datalogger DMCS32, utilizzato per il monitoraggio di sistemi ambientali (meteorologia, telecontrolli). Il quadro standard utilizzato è il contenitore Gewiss GW46004 IP66, completo di serratura a chiave e piastra di fondo per fissaggio della strumentazione.
 
