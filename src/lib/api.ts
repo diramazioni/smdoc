@@ -233,7 +233,11 @@ export async function markdoc(ast: any) {
             type: String,
             default: 'left',
             matches: ['left', 'center', 'right']
-          }
+          },
+          magnifier: {    
+            type: Boolean,
+            default: false
+          },
         }
       },
       gallery: {
