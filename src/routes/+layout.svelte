@@ -48,10 +48,12 @@
   </article> -->
   {#if data.sidenav.length > 0}
   <div class="flex gap-2">
-    <div class="flex w-2/5">
+    <div class="">
     <SideNav items={data.sidenav} />  
     </div>
-    {@render children()}
+    <div class="w-full">
+      {@render children()}
+    </div>
   </div>
   {:else}
   {@render children()}

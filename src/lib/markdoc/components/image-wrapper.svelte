@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { page } from '$app/stores';
     let { 
         width = undefined,
         height = undefined,
@@ -43,45 +44,42 @@
     });
 
     $effect(() => {
-        if (containerRef) {
+        if (containerRef && $page.url.pathname) {  
             const images = containerRef.querySelectorAll('img');
             const containerRect = containerRef.getBoundingClientRect();
             
             images.forEach((img, index) => {
-                if (img.complete) {
-                    const imgRect = img.getBoundingClientRect();
-                    const offsetX = imgRect.left - containerRect.left;
-                    const offsetY = imgRect.top - containerRect.top;
-                    
-                    imageDetails[index] = {
-                        width: img.width,
-                        height: img.height,
-                        src: img.src,
-                        rect: imgRect,
-                        offsetX,
-                        offsetY
-                    };
-                    magnifierPosition[index] = { x: 0, y: 0 };
-                    showMagnifier[index] = false;
+                // console.log('image-wrapper: ', img.src);
+                const imgRect = img.getBoundingClientRect();
+                const offsetX = imgRect.left - containerRect.left;
+                const offsetY = imgRect.top - containerRect.top;
+                
+                imageDetails[index] = {
+                    width: img.width,
+                    height: img.height,
+                    src: img.src,
+                    rect: imgRect,
+                    offsetX,
+                    offsetY
+                };
+                magnifierPosition[index] = { x: 0, y: 0 };
+                showMagnifier[index] = false;
 
-                    img.onmouseenter = () => handleMouseEnter(index);
-                    img.onmouseleave = () => handleMouseLeave(index);
-                    img.onmousemove = (e) => updateMagnifierPosition(e, index);
+                img.onmouseenter = () => handleMouseEnter(index);
+                img.onmouseleave = () => handleMouseLeave(index);
+                img.onmousemove = (e) => updateMagnifierPosition(e, index);
 
-                    // img.onload = () => {
-                        const updatedRect = img.getBoundingClientRect();
-                        const updatedOffsetX = updatedRect.left - containerRect.left;
-                        const updatedOffsetY = updatedRect.top - containerRect.top;
-                        imageDetails[index] = {
-                            width: img.width,
-                            height: img.height,
-                            src: img.src,
-                            rect: updatedRect,
-                            offsetX: updatedOffsetX,
-                            offsetY: updatedOffsetY
-                        };
-                    // };
-                }
+                const updatedRect = img.getBoundingClientRect();
+                const updatedOffsetX = updatedRect.left - containerRect.left;
+                const updatedOffsetY = updatedRect.top - containerRect.top;
+                imageDetails[index] = {
+                    width: img.width,
+                    height: img.height,
+                    src: img.src,
+                    rect: updatedRect,
+                    offsetX: updatedOffsetX,
+                    offsetY: updatedOffsetY
+                };
             });
         }
     });
