@@ -96,17 +96,13 @@ Main content goes here
 ## cambia le dimensione dell'immagine
 
 si può specificare la larghezza e/o l'altezza in maniera opzionale
-{% image width="500px" align="center"  magnifier=true %} ![telecamera_1](/assets/telecamera_1.jpg)
+{% image width="500px"  magnifier=true %} ![telecamera_1](/assets/telecamera_1.jpg)
 {% /image %}
 
 # Gallery
 
 ## mostra più immagini in una galleria
 
-{% gallery delay=2000 height="600px" %}
-![1.00](/assets/sulzano_1.jpg)
-![1.00](/assets/sulzano_3.jpg)
-{% /gallery %}
 
 ## Titolo e Sottotitoli (livello 1)
 

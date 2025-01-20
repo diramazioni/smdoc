@@ -7,9 +7,6 @@ updatedAt: '2025-01-14T14:24:47.044117'
 url: https://digiteco.it/home
 ---
 
-digiteco.it usa i cookies. Proseguendo nella navigazione acconsenti al loro uso.
-
-Accetta [Maggiori Informazioni](/privacy-policy)
 
 ![DigitEco](/assets/logo-digiteco.png)
 
