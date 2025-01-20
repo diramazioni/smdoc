@@ -1,93 +1,90 @@
 <script lang="ts">
   import "../app.css";
-  import { MediaQuery } from 'svelte/reactivity';
+  import { MediaQuery } from "svelte/reactivity";
 
-  import '@fontsource-variable/manrope';
-  import { page } from '$app/stores';
+  import "@fontsource-variable/manrope";
+  import { page } from "$app/stores";
   import { Button } from "$lib/components/ui/button/index.js";
   import { Separator } from "$lib/components/ui/separator/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
   import { Switch } from "$lib/components/ui/switch/index.js";
-  
+
   import MenuNav from "$lib/components/Nav.svelte";
-  import SideNav from '$lib/components/SideNav.svelte';
+  import SideNav from "$lib/components/SideNav.svelte";
   import UserNav from "$lib/components/UserNav.svelte";
   import { Toaster } from "$lib/components/ui/sonner/index.js";
-	import MarkdocRenderer from '$lib/markdoc/renderer.svelte'
-  
-  let { children, data } = $props()
-  
-  const sd = new MediaQuery('min-width: 440px');
+  import MarkdocRenderer from "$lib/markdoc/renderer.svelte";
 
-  const title = function() {
-    if($page.data.frontmatter) {
-      return $page.data.frontmatter.title
+  let { children, data } = $props();
+
+  const sd = new MediaQuery("min-width: 440px");
+
+  const title = function () {
+    if ($page.data.frontmatter) {
+      return $page.data.frontmatter.title;
     } else {
-      return 'Welcome'
+      return "Welcome";
     }
-  }
-
+  };
 </script>
 
-  <svelte:head>
-    <title>{title()}</title>
-  </svelte:head>
-
+<svelte:head>
+  <title>{title()}</title>
+</svelte:head>
 
 <main>
-  <Toaster position="top-center"/>
-  <nav class="ml-3 flex justify-between items-center ">
-    {#if !sd.current}
-      <MenuNav items={data.navmenu} />  
-    {/if}
-    
-    <div class="m-3 flex-row flex items-baseline">
-      <img src="/logo.png" alt="logo" class="w-20" />
-      <h1 class="text-xl font-bold ml-3">DigitEco <span class="text-base font-normal">s.r.l.</span></h1> 
-    </div>
-    {#if sd.current}
-    <MenuNav items={data.navmenu} />  
-    {/if}
-    <div class="m-3">
-      <UserNav/>
-    </div>
-  </nav>
-  <Separator class="" />
 
-  {#if data.sidenav.length > 0}
-  <div class="flex gap-2">
-    <div class="">
-    <SideNav items={data.sidenav} />  
-    </div>
-    <div class="w-full">
+    <Toaster position="top-center" />
+    <MenuNav items={data.navmenu}>
+      {#snippet logo()}
+        <img src="/logo-digiteco-testo.png" alt="logo" class="w-48" />
+        <!-- <h1 class="text-xl font-bold ml-3 mr-3">DigitEco</h1>
+        <span class="text-base font-normal">s.r.l.</span> -->
+      {/snippet}
+      {#snippet userNav()}
+        <div class="m-3">
+          <UserNav />
+        </div>
+      {/snippet}
+    </MenuNav>
+
+    <Separator class="" />
+
+    {#if data.sidenav.length > 0}
+      <div class="flex gap-2">
+        <div class="">
+          <SideNav items={data.sidenav} />
+        </div>
+        <div class="w-full">
+          {@render children()}
+        </div>
+      </div>
+    {:else}
       {@render children()}
-    </div>
-  </div>
-  {:else}
-    {@render children()}
-  {/if}	
+    {/if}
 
-      <!-- {#each $page.data.sidenav as item}
+    <!-- {#each $page.data.sidenav as item}
         <div class="flex flex-col gap-2">
           <a href={item.url} class="menu">{item.title}</a>
         </div>
       {/each} -->
-
-
+  
 </main>
 {#if $page.data.footer}
-<div style="margin-top: 100px">
-</div>
-<div id="footer" class="p-2 w-full space-y-0.5 justify-center items-center text-center bg-gradient-to-b from-transparent to-white" >
-  <MarkdocRenderer children={JSON.parse($page.data.footer)} />
-</div>
-{/if}	
+  <div style="margin-top: 100px"></div>
+  <div
+    id="footer"
+    class="p-2 w-full space-y-0.5 justify-center items-center text-center bg-gradient-to-b from-transparent to-white"
+  >
+    <MarkdocRenderer children={JSON.parse($page.data.footer)} />
+  </div>
+{/if}
+
 <style>
   /* .menu {
     @apply bg-slate-100 text-foreground hover:text-accent-foreground transition-colors ;
   } */
 
-  
   /* :global(body) {
     height: 100svh;
     display: grid;
@@ -107,5 +104,4 @@
     max-width: 60ch;
     margin-inline: auto;
   } */
-
 </style>

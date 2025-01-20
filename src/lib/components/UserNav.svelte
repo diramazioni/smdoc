@@ -11,17 +11,10 @@
     let loginUrL = $derived("/login?/login&redirectTo=/edit" + $page.url.pathname);
     let logoutUrL = $derived("/logout?/logout&redirectTo=/edit" + $page.url.pathname);
 
-    // const response = await fetch(logoutUrL, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(formData)
-    // });
 </script>
-
+<div class="hidden md:flex">
 {#if !user}
-<div class="bg-slate-200 rounded-sm">
+<div class="hover:bg-slate-200 rounded-sm">
   <a href={loginUrL} >
     <User size={32} color="#c52020"/>
   </a>
@@ -79,3 +72,4 @@
   </DropdownMenu.Root>
 </form>
 {/if}
+</div>
