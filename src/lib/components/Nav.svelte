@@ -48,7 +48,8 @@
     isMobileMenuOpen = false;
   }
 </script>
-<nav class="flex justify-between items-start  bg-gradient-to-t from-transparent to-white">
+<nav class={cn("flex items-start  bg-gradient-to-t from-transparent to-white",
+!isMobileMenuOpen && "justify-between")}>
 
 <!-- <div class="relative"> -->
   <!-- Mobile menu button -->
@@ -57,9 +58,9 @@
     onclick={toggleMobileMenu}
   >
     {#if isMobileMenuOpen}
-      <CircleX class="h-8 w-8" />
+      <CircleX class="h-8 w-8 ml-3 mt-3" />
     {:else}
-      <Menu class="h-8 w-8" />
+      <Menu class="h-8 w-8 ml-3 mt-3" />
     {/if}
   </button>
 

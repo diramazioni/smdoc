@@ -49,17 +49,22 @@
   
 <div class="relative">
   <!-- Mobile toggle button -->
-  <div 
+  <Button 
     variant="ghost"
-    class="lg:hidden fixed top-4 right-4 z-50"
+    class="lg:hidden fixed top-24 z-30"
     onclick={toggleSidebar}
+    onkeydown={(e) => e.key === 'Enter' && toggleSidebar()}
   >
     {#if isSidebarOpen}
       <CircleX class="h-6 w-6" />
     {:else}
-      <Menu class="h-6 w-6" />
+      <!-- <Menu class="h-6 w-6" /> -->
+    <div class="bg-green-500 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-300">
+      Open {$page.url.pathname.split('/')[2]}
+    </div>
     {/if}
-  </div>
+  </Button>
+
   
   <!-- Sidebar -->
   <nav class={cn(
@@ -67,7 +72,7 @@
     !isSidebarOpen && "-translate-x-full lg:translate-x-0",
     "w-64 lg:w-auto",
     "border-r lg:border-none",
-    "z-40",
+    "z-50",
     className
   )}>
     <div class="flex flex-col gap-2 p-4">
@@ -138,10 +143,10 @@
   
   <!-- Overlay for mobile -->
   {#if isSidebarOpen}
-    <div 
+    <button id="overlay" 
       class="fixed inset-0 bg-black/50 lg:hidden z-30"
       onclick={toggleSidebar}
-    />
+    >s</button>
   {/if}
 </div>
   
