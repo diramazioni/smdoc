@@ -8,6 +8,7 @@ node_modules
 .env.*
 .venv
 .aider*
+.llm
 !.env.example
 vite.config.js.timestamp-*
 prisma/users.db

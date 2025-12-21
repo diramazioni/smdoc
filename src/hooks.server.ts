@@ -22,9 +22,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const session = event.cookies.get('session')
 
 	if (!session) {
-        if (event.url.pathname.startsWith('/edit') ) {
-            redirect(302, '/login')
-        }
+//        if (event.url.pathname.startsWith('/edit') ) {
+        redirect(302, '/login')
+//        }
 		// if there is no session load page as normal and is not loading a reserved page
 		return await resolve(event)
 	}
