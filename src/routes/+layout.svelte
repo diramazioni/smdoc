@@ -1,65 +1,80 @@
 <script lang="ts">
   import "../app.css";
-  import '@fontsource-variable/manrope';
-  import { page } from '$app/stores';
-  import { Button } from "$lib/components/ui/button/index.js";
-  import { Separator } from "$lib/components/ui/separator/index.js";
-  import { Label } from "$lib/components/ui/label/index.js";
-  import { Switch } from "$lib/components/ui/switch/index.js";
+  import "@fontsource-variable/manrope";
+  import { page } from "$app/stores";
 
-  import SidebarNav from "$lib/components/Nav.svelte";
-  import UserNav from "$lib/components/User-nav.svelte";
+  import MenuNav from "$lib/components/Nav.svelte";
+  import SideNav from "$lib/components/SideNav.svelte";
+  import UserNav from "$lib/components/UserNav.svelte";
   import { Toaster } from "$lib/components/ui/sonner/index.js";
-	import MarkdocRenderer from '$lib/markdoc/renderer.svelte'
-  
-  let { children, data } = $props()
+  import MarkdocRenderer from "$lib/markdoc/renderer.svelte";
 
-  const title = function() {
-    if($page.data.frontmatter) {
-      return $page.data.frontmatter.title
+  let { children, data } = $props();
+
+  const title = function () {
+    if ($page.data.frontmatter) {
+      return $page.data.frontmatter.title;
     } else {
-      return 'Welcome'
+      return "Welcome";
     }
-  }
-
+  };
 </script>
-  <svelte:head>
-    <title>{title()}</title>
-  </svelte:head>
 
+<svelte:head>
+  <title>{title()}</title>
+</svelte:head>
 
 <main>
-  <Toaster position="top-center"/>
-  <nav class="ml-3 flex justify-between items-center ">
-    <img src="/logo.png" alt="logo"/>
-    <SidebarNav items={data.items} />  
-    <div class="m-3">
-      <UserNav/>
+  <Toaster position="top-center" />
+  <MenuNav
+    items={data.items}
+    class="relative bg-white shadow-sm border-b"
+  >
+    {#snippet logo()}
+      <img src="/logo.png" alt="logo" class="w-24" />
+    {/snippet}
+    {#snippet userNav()}
+      <div class="m-3">
+        <UserNav />
+      </div>
+    {/snippet}
+  </MenuNav>
+
+  {#if data.sideNav && data.sideNav.length > 0}
+    <div class="lg:hidden mt-5 block">&nbsp;</div>
+    <div class="flex gap-2">
+      <div class="">
+        <SideNav items={data.sideNav} />
+      </div>
+      <div class="w-full">
+        {@render children()}
+      </div>
     </div>
-  </nav>
-  <Separator class="" />
-  <!-- <article class="prose prose-slate dark:prose-invert prose-headings:font-display prose-headings:font-normal mx-auto my-12">
-  {@render children()}
-
-  </article> -->
-
+  {:else}
     {@render children()}
+  {/if}
 
-
+  <!-- {#each $page.data.sidenav as item}
+        <div class="flex flex-col gap-2">
+          <a href={item.url} class="menu">{item.title}</a>
+        </div>
+      {/each} -->
 </main>
 {#if $page.data.footer}
-<div style="margin-top: 100px">
-</div>
-<div id="footer" class="fixed bottom-0 left-0 right-0 ml-4 mr-4 p-2 w-full space-y-0.5 justify-center items-center text-center bg-gradient-to-b from-transparent to-white" >
-  <MarkdocRenderer children={JSON.parse($page.data.footer)} />
-</div>
-{/if}	
+  <div style="margin-top: 100px"></div>
+  <div
+    id="footer"
+    class="p-2 w-full space-y-0.5 justify-center items-center text-center bg-gradient-to-b from-transparent to-white"
+  >
+    <MarkdocRenderer children={JSON.parse($page.data.footer)} />
+  </div>
+{/if}
+
 <style>
   /* .menu {
     @apply bg-slate-100 text-foreground hover:text-accent-foreground transition-colors ;
   } */
 
-  
   /* :global(body) {
     height: 100svh;
     display: grid;
@@ -79,5 +94,4 @@
     max-width: 60ch;
     margin-inline: auto;
   } */
-
 </style>
