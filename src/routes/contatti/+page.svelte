@@ -48,7 +48,7 @@
   <div id="map" class="m-4" >
     <MapLibre
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-    class=" aspect-[9/16] max-h-[600px] w-full"
+    class=" aspect-9/16 max-h-[600px] w-full"
     standardControls
     zoom={15}
     center={lngLat}

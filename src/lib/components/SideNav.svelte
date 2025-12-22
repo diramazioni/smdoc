@@ -59,7 +59,7 @@
       <CircleX class="h-6 w-6" />
     {:else}
       <!-- <Menu class="h-6 w-6" /> -->
-    <div class="bg-green-500 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-300">
+    <div class="bg-green-500 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-sm focus:outline-hidden focus:ring-2 focus:ring-green-300">
       Open {$page.url.pathname.split('/')[2]}
     </div>
     {/if}

@@ -1,6 +1,3 @@
-[submodule "packages/svelte-ux"]
-	path = packages/svelte-ux
-	url = https://github.com/diramazioni/svelte-ux.git
 [submodule "packages/tui-editor-svelte"]
 	path = packages/tui-editor-svelte
 	url = https://github.com/diramazioni/tui-editor-svelte.git

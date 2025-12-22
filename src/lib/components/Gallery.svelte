@@ -18,7 +18,7 @@
 <div class="justify-center flex">    
 <Carousel.Root
 plugins={[plugin]}
-class="w-full max-w-screen-xl"
+class="w-full max-w-(--breakpoint-xl)"
 onmouseenter={plugin.stop}
 onmouseleave={plugin.reset} 
 >
