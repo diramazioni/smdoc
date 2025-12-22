@@ -7,12 +7,12 @@
 </script>
 	<Accordion.Root value={accordionOpen} type="single" >
 		<Accordion.Item value={title} >
-			<div class="accordion {color}">
+			<div class="text-lg font-semibold  p-2 m-3 rounded-lg border border-border {color}">
 				<Accordion.Trigger >
 					{title}
 				</Accordion.Trigger>
       </div>
-			<div class="accordion-content">
+			<div class="m-3 shadow-md">
 				<Accordion.Content>
 					{@render children()}
 				</Accordion.Content>
@@ -21,12 +21,8 @@
 	</Accordion.Root>
 
 <style>
-	.accordion {
-		@apply text-lg font-semibold  p-2 m-3 rounded-lg border border-border ;
-	}
-	.accordion-content {
-		@apply m-3  shadow-md;
-	}
+
+
 	.default {
 		background-color: oklch(95% 0.03 200);
 		color: oklch(30% 0.03 200);

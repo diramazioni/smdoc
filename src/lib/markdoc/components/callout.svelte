@@ -2,15 +2,12 @@
 	let { children, color = 'default' }: any = $props()
 </script>
 
-<div class="callout {color}">
+<div class="text-lg font-semibold p-4 m-3 rounded-lg border border-border shadow-md {color}">
 	{@render children()}
 </div>
 
 
 <style>
-	.callout {
-		@apply text-lg font-semibold p-4 m-3 rounded-lg border border-border shadow-md;
-	}
 
 	.default {
 		background-color: oklch(95% 0.03 200);

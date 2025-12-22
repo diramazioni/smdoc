@@ -97,7 +97,7 @@
     type="text"
     placeholder="Search assets"
     bind:value={searchQuery}
-    class="w-full px-4 py-2 ml-4 mb-2 border bg-slate-200 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    class="w-full px-4 py-2 ml-4 mb-2 border bg-slate-200 border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500"
   />
   {#if assetList.length > 0}
     <ScrollArea class="h-[600px] w-full rounded-md border p-4">
