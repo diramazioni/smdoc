@@ -31,7 +31,7 @@
     class="relative bg-white shadow-sm border-b"
   >
     {#snippet logo()}
-      <img src="/logo.png" alt="logo" class="w-24" />
+      <img src="/logo.png" alt="logo" class="w-48" />
     {/snippet}
     {#snippet userNav()}
       <div class="m-3">
