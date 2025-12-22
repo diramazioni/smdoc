@@ -28,7 +28,7 @@
   <Toaster position="top-center" />
   <MenuNav
     items={data.navmenu}
-    class="relative bg-white shadow-sm border-b"
+    class="relative bg-white shadow-xs border-b"
   >
     {#snippet logo()}
       <img src="/logo.png" alt="logo" class="w-48" />
@@ -64,7 +64,7 @@
   <div style="margin-top: 100px"></div>
   <div
     id="footer"
-    class="p-2 w-full space-y-0.5 justify-center items-center text-center bg-gradient-to-b from-transparent to-white"
+    class="p-2 w-full space-y-0.5 justify-center items-center text-center bg-linear-to-b from-transparent to-white"
   >
     <MarkdocRenderer children={JSON.parse($page.data.footer)} />
   </div>
