@@ -72,14 +72,22 @@ function parseMarkdownToNavItems(markdown: string): NavItem[] {
 }
 
 export const GET: RequestHandler = async ({ params }) => {
-    const slugParts = params.slug.split('/');
-    const filePath = join(process.cwd(), 'mdocs', ...slugParts) + '.md';
+    try {
+        const slugParts = params.slug.split('/');
+        const filePath = join(process.cwd(), 'mdocs', ...slugParts) + '.md';
 
-    const navListData = await readFile(filePath, 'utf8');
-    const navItems = parseMarkdownToNavItems(navListData);
-    
-    return new Response(JSON.stringify(navItems), {
-      headers: { 'Content-Type': 'application/json' }
-    });
-
+        const navListData = await readFile(filePath, 'utf8');
+        const navItems = parseMarkdownToNavItems(navListData);
+        
+        return new Response(JSON.stringify(navItems), {
+          headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (err) {
+        console.error('Error in nav API:', err);
+        // Return empty array instead of crashing
+        return new Response(JSON.stringify([]), {
+          headers: { 'Content-Type': 'application/json' },
+          status: 200
+        });
+    }
 };

@@ -13,3 +13,6 @@ node_modules
 vite.config.js.timestamp-*
 prisma/users.db
 assets/*
+prisma/users.db
+.letta
+letta-code.sh

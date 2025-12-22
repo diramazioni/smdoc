@@ -17,8 +17,8 @@ export const load: LayoutServerLoad = async ({ fetch, locals, url }) => {
     // If we're on a product page (3 or more segments), get the category path
     currentPath = pathParts.slice(0, 2).join('/');
   }
-  // Don't load sidenav for edit pages
-  if (currentPath.startsWith('edit')) {
+  // Don't load sidenav for edit pages or single pages
+  if (currentPath.startsWith('edit') || !currentPath.includes('/')) {
     currentPath = undefined;
   } 
 

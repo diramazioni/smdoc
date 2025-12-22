@@ -18,14 +18,25 @@ export const handle: Handle = async ({ event, resolve }) => {
 }
 */
 export const handle: Handle = async ({ event, resolve }) => {
+	// Redirect .md URLs to clean URLs
+	if (event.url.pathname.endsWith('.md')) {
+		const cleanPath = event.url.pathname.slice(0, -3);
+		redirect(301, cleanPath);
+	}
+
 	// get cookies from browser
 	const session = event.cookies.get('session')
+	
+	// Define public routes that don't require authentication
+	const publicRoutes = ['/login', '/logout', '/register', '/api'];
+	const isPublicRoute = publicRoutes.some(route => event.url.pathname.startsWith(route));
 
 	if (!session) {
-//        if (event.url.pathname.startsWith('/edit') ) {
-        redirect(302, '/login')
-//        }
-		// if there is no session load page as normal and is not loading a reserved page
+		// If trying to access protected content (anything non-public), redirect to login
+		if (!isPublicRoute) {
+			redirect(302, `/login?redirectTo=${encodeURIComponent(event.url.pathname)}`)
+		}
+		// For public routes, continue normally
 		return await resolve(event)
 	}
 
