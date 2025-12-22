@@ -27,7 +27,7 @@
 <main>
   <Toaster position="top-center" />
   <MenuNav
-    items={data.items}
+    items={data.navmenu}
     class="relative bg-white shadow-sm border-b"
   >
     {#snippet logo()}
@@ -40,11 +40,11 @@
     {/snippet}
   </MenuNav>
 
-  {#if data.sideNav && data.sideNav.length > 0}
+  {#if data.sidenav && data.sidenav.length > 0}
     <div class="lg:hidden mt-5 block">&nbsp;</div>
     <div class="flex gap-2">
       <div class="">
-        <SideNav items={data.sideNav} />
+        <SideNav items={data.sidenav} />
       </div>
       <div class="w-full">
         {@render children()}
