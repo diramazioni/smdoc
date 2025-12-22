@@ -2,6 +2,7 @@
   import "../app.css";
   import { MediaQuery } from "svelte/reactivity";
 
+  import { cn } from "$lib/utils.js";
   import "@fontsource-variable/manrope";
   import { page } from "$app/stores";
   import { Button } from "$lib/components/ui/button/index.js";
@@ -26,6 +27,8 @@
       return "Welcome";
     }
   };
+
+  let isHome = $derived(["/home", "/home/", "/"].includes($page.url.pathname));
 </script>
 
 <svelte:head>
@@ -33,43 +36,52 @@
 </svelte:head>
 
 <main>
-
-    <Toaster position="top-center" />
-    <MenuNav items={data.navmenu}>
-      {#snippet logo()}
-        <img src="/logo-digiteco-testo.png" alt="logo" class="w-48" />
-        <!-- <h1 class="text-xl font-bold ml-3 mr-3">DigitEco</h1>
-        <span class="text-base font-normal">s.r.l.</span> -->
-      {/snippet}
-      {#snippet userNav()}
-        <div class="m-3">
-          <UserNav />
-        </div>
-      {/snippet}
-    </MenuNav>
-
-    <Separator class="" />
-
-    {#if data.sidenav.length > 0}
-    <div class="lg:hidden mt-5 block">&nbsp;</div>
-      <div class="flex gap-2">
-        <div class="">
-          <SideNav items={data.sidenav} />
-        </div>
-        <div class="w-full">
-          {@render children()}
-        </div>
+  <Toaster position="top-center" />
+  <MenuNav
+    items={data.navmenu}
+    class={cn(
+      "z-50 transition-all duration-500",
+      isHome
+        ? "absolute top-0 left-0 right-0 bg-transparent text-white border-transparent"
+        : "relative bg-white shadow-sm border-b",
+    )}
+  >
+    {#snippet logo()}
+      <img
+        src="/logo-digiteco-testo.png"
+        alt="logo"
+        class={cn(
+          "w-48 transition-all duration-500",
+          isHome && "brightness-0 invert",
+        )}
+      />
+    {/snippet}
+    {#snippet userNav()}
+      <div class="m-3">
+        <UserNav class={isHome ? "text-white" : ""} />
       </div>
-    {:else}
-      {@render children()}
-    {/if}
+    {/snippet}
+  </MenuNav>
 
-    <!-- {#each $page.data.sidenav as item}
+  {#if data.sidenav.length > 0}
+    <div class="lg:hidden mt-5 block">&nbsp;</div>
+    <div class="flex gap-2">
+      <div class="">
+        <SideNav items={data.sidenav} />
+      </div>
+      <div class="w-full">
+        {@render children()}
+      </div>
+    </div>
+  {:else}
+    {@render children()}
+  {/if}
+
+  <!-- {#each $page.data.sidenav as item}
         <div class="flex flex-col gap-2">
           <a href={item.url} class="menu">{item.title}</a>
         </div>
       {/each} -->
-  
 </main>
 {#if $page.data.footer}
   <div style="margin-top: 100px"></div>

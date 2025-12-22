@@ -85,11 +85,11 @@
     @apply scroll-m-20 text-xl font-semibold tracking-tight;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family:'Arial', Cambria, 'Times New Roman', Times, serif;
+    font-family: 'Manrope Variable', sans-serif;
     @apply mt-4 
   }
   p {
-    font-family:'Arial', Cambria, 'Times New Roman', Times, serif;
+    font-family: 'Manrope Variable', sans-serif;
     @apply leading-7 [&:not(:first-child)]:mt-6;
   }  
   ul {
