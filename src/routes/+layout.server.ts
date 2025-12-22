@@ -33,11 +33,7 @@ export const load: LayoutServerLoad = async ({ fetch, locals, url }) => {
   }
   return {
     user: locals.user,
-    items: await fetch('/api/links/menu')
-    .then((res) => res.json())
-    .then((data) => data)
-    .catch((err) => console.log(err)),
-    mainNav,
-    sideNav
-  }
-}
+    navmenu: mainNav,
+    sidenav: sideNav
+  };
+};
