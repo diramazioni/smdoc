@@ -6,10 +6,13 @@ node_modules
 .env
 .venv
 .env.*
+.venv
+.aider*
 !.env.example
 vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
 prisma/users.db
-#deploy/pm2/ecosystem.config.js
-.aider*
 assets/*
+prisma/users.db
+.letta
+letta-code.sh
+mdocs/*

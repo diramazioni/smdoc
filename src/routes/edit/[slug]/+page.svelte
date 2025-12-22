@@ -27,7 +27,7 @@
 
 	let { data } = $props()
   
-  let useTuiEditor = $state(false);
+  let useTuiEditor = $state(true);
   let editorRef = $state(); // Reference to store the editor instance
   let titleValue = $state(data.frontmatter.title)
   let descriptionValue = $state(data.frontmatter.description)
@@ -39,12 +39,15 @@
 	onMount(() => {
   });
 
+  onDestroy(() => {
+    clearInterval(interval);
+  });
+
   $effect(() => {
     interval = setInterval(() => {
       autoSaveDialog = true
     console.log('save-e')
     }, 300000) // 5 min in milliseconds
-    return () => clearInterval(interval); // Cleanup function to clear the interval on component unmount
   });
 
   async function handleSave(event) {
@@ -113,19 +116,7 @@
       }
     };
   }  
-  
-  function beforeUnload(event) {
-    // Cancel the event as stated by the standard.
-    event.preventDefault();
-    // Chrome requires returnValue to be set.
-    //event.returnValue = '';
-    // more compatibility
-    //autoSaveDialog = true
-    handleSave(e)
-    //return '...';
-  }
 </script>
-<svelte:window onbeforeunload={beforeUnload}/>
   <!-- <a href="/edit/home" class="hover:underline">go home</a>
 <a href="/home" class="hover:underline">go home</a>
  -->
