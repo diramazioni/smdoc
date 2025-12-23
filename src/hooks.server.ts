@@ -1,57 +1,59 @@
-import type { Handle } from "@sveltejs/kit"
-import { redirect } from "@sveltejs/kit"
-//import { authenticateUser } from "$lib/server/auth"
-import { db } from '$lib/server/database'
-/*
-export const handle: Handle = async ({ event, resolve }) => {
-    event.locals.user = await authenticateUser(event)
-    if (event.url.pathname.startsWith('/edit') ) {
-        console.log('protected')
-        if (!event.locals.user) {
-            console.log('not authenticated')
-            throw redirect(302, '/')
-        }
-    }
+import type { Handle } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
+import { db } from '$lib/server/database';
+import { getAuthMode, type AuthMode } from '$lib/config';
 
-	const response = await resolve(event);
-	return response;
-}
-*/
 export const handle: Handle = async ({ event, resolve }) => {
-	// Redirect .md URLs to clean URLs
-	if (event.url.pathname.endsWith('.md')) {
-		const cleanPath = event.url.pathname.slice(0, -3);
-		redirect(301, cleanPath);
-	}
-
+	const authMode = getAuthMode();
 	// get cookies from browser
 	const session = event.cookies.get('session')
-	
-	// Define public routes that don't require authentication
-	const publicRoutes = ['/login', '/logout', '/register', '/api'];
-	const isPublicRoute = publicRoutes.some(route => event.url.pathname.startsWith(route));
-
-	if (!session) {
-		// If trying to access protected content (anything non-public), redirect to login
-		if (!isPublicRoute) {
-			redirect(302, `/login?redirectTo=${encodeURIComponent(event.url.pathname)}`)
-		}
-		// For public routes, continue normally
-		return await resolve(event)
-	}
-
-	// find the user based on the session
+	let isAuthenticated = false;
+	// find user based on session
 	const user = await db.user.findUnique({
 		where: { userAuthToken: session },
 		select: { username: true, role: true },
 	})
 
-	// if `user` exists set `events.local`
+	// if `user` exists set `events.local` and is authenticated
 	if (user) {
 		event.locals.user = {
 			name: user.username,
 			role: user.role.name,
 		}
+		isAuthenticated = true;
+	} else {
+		isAuthenticated = false;
+	}
+	// Apply protection based on AUTH_MODE
+	if (authMode === 'edit-only') {
+		// Current behavior: protect only /edit routes
+		if (event.url.pathname.startsWith('/edit')) {
+			// console.log('protected (edit-only mode)')
+			if (!isAuthenticated) {
+				// console.log('not authenticated')
+				throw redirect(302, '/login')
+			}
+		}
+	} else if (authMode === 'all-protected') {
+		// New behavior: protect all routes except publicRoutes
+		const publicRoutes = ['/login', '/logout', '/register', '/api'];
+		const isPublicRoute = publicRoutes.some(route => event.url.pathname.startsWith(route));
+
+		if (!isPublicRoute && !isAuthenticated) {
+			// console.log('protected (all-protected mode)')
+			throw redirect(302, `/login?redirectTo=${encodeURIComponent(event.url.pathname)}`)
+		}
+	}
+
+	const response = await resolve(event);
+	return response;
+}
+
+export const handleRedirect: Handle = async ({ event, resolve }) => {
+	// Redirect .md URLs to clean URLs
+	if (event.url.pathname.endsWith('.md')) {
+		const cleanPath = event.url.pathname.slice(0, -3);
+		redirect(301, cleanPath);
 	}
 
 	// load page as normal
