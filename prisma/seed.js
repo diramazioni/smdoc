@@ -28,7 +28,7 @@ async function main() {
     update: {},
     create: {
       username: 'admin',
-      passwordHash: await bcrypt.hash('demo', 10),
+      passwordHash: await bcrypt.hash('letmein>', 10),
       userAuthToken: '01010101010101010101',
       roleId: adminRole.id,
     },

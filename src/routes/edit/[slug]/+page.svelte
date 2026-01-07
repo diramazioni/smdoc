@@ -25,23 +25,28 @@
   import { page } from "$app/stores";
   import { goto, invalidate, invalidateAll } from "$app/navigation";
 
-  let { data } = $props();
+  let { data }: { data: any } = $props();
 
   let useTuiEditor = $state(true);
-  let editorRef = $state(); // Reference to store the editor instance
-  let titleValue = $state(data.frontmatter.title);
-  let descriptionValue = $state(data.frontmatter.description);
+  let editorRef = $state<any>(); // Reference to store the editor instance
+  let titleValue = $state(data.frontmatter?.title ?? "");
+  let descriptionValue = $state(data.frontmatter?.description ?? "");
   let slug = $derived(slugify(titleValue));
+
+  $effect(() => {
+    titleValue = data.frontmatter?.title ?? "";
+    descriptionValue = data.frontmatter?.description ?? "";
+  });
 
   let showChat = $state(false);
 
   let autoSaveDialog = $state(false);
 
-  let interval = $state(); // 30 seconds
+  let interval: ReturnType<typeof setInterval>; // 30 seconds
   onMount(() => {});
 
   onDestroy(() => {
-    clearInterval(interval);
+    if (interval) clearInterval(interval);
   });
 
   $effect(() => {
@@ -49,9 +54,11 @@
       autoSaveDialog = true;
       console.log("save-e");
     }, 300000); // 5 min in milliseconds
+
+    return () => clearInterval(interval);
   });
 
-  async function handleSave(event) {
+  async function handleSave(event: Event) {
     event.preventDefault(); // Prevent the default form submission
     // ?/frontmatter
     autoSaveDialog = false;
