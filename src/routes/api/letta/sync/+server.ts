@@ -1,13 +1,18 @@
 import { json } from '@sveltejs/kit';
 import { uploadFileToLetta, updateSharedMemoryWithFile } from '$lib/letta/filesystem-service';
+import { DOCS_DIR } from '$lib/config/files.server';
+import path from 'node:path';
 
 export async function POST({ request }) {
   try {
-    const { projectId, filePath, action, metadata } = await request.json();
+    const { projectId, slug, action, metadata } = await request.json();
 
-    if (!projectId || !filePath) {
-      return json({ success: false, error: 'Project ID and file path are required' }, { status: 400 });
+    if (!projectId || !slug) {
+      return json({ success: false, error: 'Project ID and slug are required' }, { status: 400 });
     }
+
+    // Risolvi il path del file markdown
+    const filePath = path.resolve(DOCS_DIR, `${slug}.md`);
 
     // Carica file nel filesystem Letta
     await uploadFileToLetta(projectId, filePath, 'markdown');

@@ -136,7 +136,9 @@
         >
           {msg.role}
         </div>
-        <div class="text-sm leading-relaxed whitespace-pre-wrap break-words">
+        <div
+          class="text-sm leading-relaxed whitespace-pre-wrap wrap-break-word"
+        >
           {msg.content}
         </div>
       </div>
