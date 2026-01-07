@@ -9,13 +9,28 @@ const prisma = new PrismaClient();
 // 	USER = 'USER',
 // }
 async function main() {
+  // Crea i ruoli necessari
+  const adminRole = await prisma.roles.upsert({
+    where: { name: 'ADMIN' },
+    update: {},
+    create: { name: 'ADMIN' },
+  });
 
-  await prisma.user.create({
-    data: {
-        username: 'admin',
-        passwordHash: await bcrypt.hash('demo', 10),
-        userAuthToken: '01010101010101010101',
-        role: { connect: { name: 'ADMIN' } },
+  await prisma.roles.upsert({
+    where: { name: 'USER' },
+    update: {},
+    create: { name: 'USER' },
+  });
+
+  // Crea l'utente admin
+  await prisma.user.upsert({
+    where: { username: 'admin' },
+    update: {},
+    create: {
+      username: 'admin',
+      passwordHash: await bcrypt.hash('demo', 10),
+      userAuthToken: '01010101010101010101',
+      roleId: adminRole.id,
     },
   })
 }
