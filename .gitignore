@@ -15,3 +15,5 @@ assets/*
 prisma/users.db
 .letta
 letta-code.sh
+.env
+letta-agent.sh

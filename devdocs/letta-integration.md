@@ -46,9 +46,9 @@
 ### 1.1 Installazione Dipendenze
 
 ```bash
-npm install @letta-ai/letta-client
+pnpm install @letta-ai/letta-client
 # O per integrazione con Vercel AI SDK (opzionale):
-npm install @letta-ai/vercel-ai-sdk-provider ai
+pnpm install @letta-ai/vercel-ai-sdk-provider ai
 ```
 
 ### 1.2 Variabili d'Ambiente

@@ -14,6 +14,9 @@ importers:
       '@internationalized/date':
         specifier: ^3.10.1
         version: 3.10.1
+      '@letta-ai/letta-client':
+        specifier: ^1.6.5
+        version: 1.6.5
       '@markdoc/markdoc':
         specifier: ^0.4.0
         version: 0.4.0
@@ -666,6 +669,9 @@ packages:
 
   '@layerstack/utils@2.0.0-next.14':
     resolution: {integrity: sha512-1I2CS0Cwgs53W35qVg1eBdYhB/CiPvL3s0XE61b8jWkTHxgjBF65yYNgXjW74kv7WI7GsJcWMNBufPd0rnu9kA==}
+
+  '@letta-ai/letta-client@1.6.5':
+    resolution: {integrity: sha512-LrJz7xqqYXaoAC6XXUZ/K+YgrCLzoEIRwPCXoOsiN/ehl7hl9kiz1Mw/iYSCK7ZpXS6fnyaIbIwGfxWeCl8z5g==}
 
   '@lezer/common@1.2.3':
     resolution: {integrity: sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==}
@@ -3361,6 +3367,8 @@ snapshots:
       d3-time: 3.1.0
       d3-time-format: 4.1.0
       lodash-es: 4.17.22
+
+  '@letta-ai/letta-client@1.6.5': {}
 
   '@lezer/common@1.2.3': {}
 
