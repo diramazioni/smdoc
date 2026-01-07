@@ -412,8 +412,9 @@ Creare il file `src/lib/components/LettaChat.svelte`:
   // Svelte 5 Runes - NO $effect per side effects!
   let messages = $state<Array<{role: 'user' | 'assistant', content: string}>>([]);
   let inputMessage = $state('');
-  let isLoading = $derived(messages.length > 0 &&
-    messages[messages.length - 1].role === 'user');
+  let isLoading = $derived.by(() =>
+    messages.length > 0 && messages[messages.length - 1].role === 'user'
+  );
   let chatContainer: HTMLElement;
 
   // Props
@@ -479,141 +480,44 @@ Creare il file `src/lib/components/LettaChat.svelte`:
   }
 </script>
 
-<div class="letta-chat-container">
-  <div bind:this={chatContainer} class="chat-messages">
+<div class="flex flex-col h-full max-h-[600px] border border-gray-200 rounded-lg overflow-hidden">
+  <div bind:this={chatContainer} class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
     {#each messages as msg (messages.indexOf(msg))}
-      <div class="message {msg.role}">
-        <div class="message-role">{msg.role}</div>
-        <div class="message-content">
+      <div class="flex flex-col gap-1 p-3 rounded-lg max-w-[80%] {msg.role === 'user' ? 'self-end bg-blue-500 text-white' : 'self-start bg-gray-100 text-gray-800'}">
+        <div class="text-xs font-semibold opacity-80 uppercase">{msg.role}</div>
+        <div class="whitespace-pre-wrap break-words">
           {msg.content}
         </div>
       </div>
     {/each}
 
     {#if isLoading}
-      <div class="message assistant loading">
-        <div class="message-role">assistant</div>
-        <div class="message-content">
-          <span class="typing-indicator">Thinking...</span>
+      <div class="flex flex-col gap-1 p-3 rounded-lg max-w-[80%] self-start bg-gray-100 text-gray-800 opacity-70">
+        <div class="text-xs font-semibold opacity-80 uppercase">assistant</div>
+        <div class="whitespace-pre-wrap break-words">
+          <span class="animate-pulse">Thinking...</span>
         </div>
       </div>
     {/if}
   </div>
 
-  <div class="chat-input">
+  <div class="flex gap-2 p-4 border-t border-gray-200 bg-white">
     <textarea
       bind:value={inputMessage}
       placeholder="Ask about your content..."
       onkeydown={handleKeydown}
       rows={3}
+      class="flex-1 resize-none border border-gray-300 rounded-md p-2 font-inherit"
     />
     <button
       onclick={sendMessage}
       disabled={isLoading || !inputMessage.trim()}
+      class="px-4 py-2 bg-blue-500 text-white border-none rounded-md cursor-pointer font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
     >
       Send
     </button>
   </div>
 </div>
-
-<style>
-  .letta-chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    max-height: 600px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .message {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 0.75rem;
-    border-radius: 8px;
-    max-width: 80%;
-  }
-
-  .message.user {
-    align-self: flex-end;
-    background-color: #3b82f6;
-    color: white;
-  }
-
-  .message.assistant {
-    align-self: flex-start;
-    background-color: #f3f4f6;
-    color: #1f2937;
-  }
-
-  .message.loading {
-    opacity: 0.7;
-  }
-
-  .message-role {
-    font-size: 0.75rem;
-    font-weight: 600;
-    opacity: 0.8;
-    text-transform: uppercase;
-  }
-
-  .message-content {
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-
-  .typing-indicator {
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-
-  .chat-input {
-    display: flex;
-    gap: 0.5rem;
-    padding: 1rem;
-    border-top: 1px solid #e5e7eb;
-    background-color: white;
-  }
-
-  .chat-input textarea {
-    flex: 1;
-    resize: none;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 0.5rem;
-    font-family: inherit;
-  }
-
-  .chat-input button {
-    padding: 0.5rem 1rem;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .chat-input button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-</style>
 ```
 
 ### 3.2 Integrazione nella Edit Page
@@ -670,14 +574,14 @@ Modificare il file `src/routes/edit/[...slug]/+page.svelte`:
   <!-- ... contenuto esistente ... -->
 
   <!-- Aggiungi chat panel -->
-  <div class="chat-toggle">
-    <button onclick={() => showChat = !showChat}>
+  <div class="fixed bottom-8 right-8 z-[1000]">
+    <button onclick={() => showChat = !showChat} class="px-6 py-3 bg-purple-500 text-white border-none rounded-full cursor-pointer font-semibold shadow-md">
       {showChat ? 'Hide AI Chat' : 'Show AI Chat'}
     </button>
   </div>
 
   {#if showChat}
-    <div class="chat-panel">
+    <div class="fixed bottom-20 right-8 w-[500px] h-[600px] z-[999] shadow-lg rounded-xl overflow-hidden">
       <LettaChat
         userId={currentUserId}
         projectId="smdr-main"
@@ -685,40 +589,6 @@ Modificare il file `src/routes/edit/[...slug]/+page.svelte`:
     </div>
   {/if}
 </div>
-
-<style>
-  /* ... stili esistenti ... */
-
-  .chat-toggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 1000;
-  }
-
-  .chat-toggle button {
-    padding: 0.75rem 1.5rem;
-    background-color: #8b5cf6;
-    color: white;
-    border: none;
-    border-radius: 9999px;
-    cursor: pointer;
-    font-weight: 600;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-
-  .chat-panel {
-    position: fixed;
-    bottom: 5rem;
-    right: 2rem;
-    width: 500px;
-    height: 600px;
-    z-index: 999;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-</style>
 ```
 
 ---
@@ -815,66 +685,32 @@ Creare il file `src/lib/components/LettaStatus.svelte`:
   });
 </script>
 
-<div class="letta-status">
-  <h3>Letta Integration Status</h3>
+<div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+  <h3 class="text-lg font-bold mb-4">Letta Integration Status</h3>
 
   {#if loading}
     <p>Loading...</p>
   {:else}
-    <div class="stat-grid">
-      <div class="stat-item">
-        <span class="stat-label">Agent ID</span>
-        <span class="stat-value">{stats.agentId || 'Not connected'}</span>
+    <div class="grid grid-cols-2 gap-4 mt-4">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs text-gray-500 font-semibold uppercase">Agent ID</span>
+        <span class="text-sm text-gray-800 break-all">{stats.agentId || 'Not connected'}</span>
       </div>
-      <div class="stat-item">
-        <span class="stat-label">Shared Memory</span>
-        <span class="stat-value">{stats.blockId || 'Not created'}</span>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs text-gray-500 font-semibold uppercase">Shared Memory</span>
+        <span class="text-sm text-gray-800 break-all">{stats.blockId || 'Not created'}</span>
       </div>
-      <div class="stat-item">
-        <span class="stat-label">Total Files</span>
-        <span class="stat-value">{stats.totalFiles || 0}</span>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs text-gray-500 font-semibold uppercase">Total Files</span>
+        <span class="text-sm text-gray-800 break-all">{stats.totalFiles || 0}</span>
       </div>
-      <div class="stat-item">
-        <span class="stat-label">Last Sync</span>
-        <span class="stat-value">{stats.lastSync || 'Never'}</span>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs text-gray-500 font-semibold uppercase">Last Sync</span>
+        <span class="text-sm text-gray-800 break-all">{stats.lastSync || 'Never'}</span>
       </div>
     </div>
   {/if}
 </div>
-
-<style>
-  .letta-status {
-    padding: 1rem;
-    background-color: #f9fafb;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-  }
-
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .stat-label {
-    font-size: 0.75rem;
-    color: #6b7280;
-    font-weight: 600;
-  }
-
-  .stat-value {
-    font-size: 0.875rem;
-    color: #1f2937;
-    word-break: break-all;
-  }
-</style>
 ```
 
 ### 5.2 API Route: Stats
@@ -1007,10 +843,10 @@ $effect(() => {
   }
 });
 
-// ✅ CORRETTO - $byderived per calcoli con dipendenze multiple
-let canSendMessage = $byderived(() =>
-  inputMessage.trim().length > 0 && !isLoading
-);
+// ✅ CORRETTO - $derived.by per calcoli complessi
+let canSendMessage = $derived.by(() => {
+  return inputMessage.trim().length > 0 && !isLoading;
+});
 ```
 
 ### 7.2 Gestione Errori
