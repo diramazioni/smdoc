@@ -49,6 +49,17 @@ export async function setMD(slug: string, content: string) {
   }
 }
 
+export async function renameMD(oldSlug: string, newSlug: string) {
+  try {
+    const oldPath = path.resolve(`${DOCS_DIR}/${oldSlug}.md`);
+    const newPath = path.resolve(`${DOCS_DIR}/${newSlug}.md`);
+    await fs.rename(oldPath, newPath);
+  } catch (error: any) {
+    throw error(500, error);
+  }
+}
+
+
 export interface AssetInfo {
   name: string;
   isDir: boolean;

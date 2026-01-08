@@ -39,6 +39,62 @@ export async function load({ params, depends }) {
 }
 
 export const actions = {
+	create: async ({ request }) => {
+		try {
+			console.debug('Unified create action');
+			const data = await request.formData();
+			
+			// Optional: Save current document
+			const saveCurrent = data.get('saveCurrent') === 'true';
+			if (saveCurrent) {
+				const currentSlug = data.get('currentSlug') as string;
+				const currentTitle = data.get('currentTitle') as string;
+				const currentDescription = data.get('currentDescription') as string;
+				const currentContent = data.get('currentContent') as string;
+
+				if (currentSlug) {
+					console.log('Saving current doc before creation:', currentSlug);
+					const md = await getMD(currentSlug);
+					if (md) {
+						const updatedFrontmatter = {
+							title: currentTitle,
+							description: currentDescription,
+							slug: currentSlug,
+							updatedAt: new Date(),
+						};
+						const newYaml = yaml.dump(updatedFrontmatter);
+						const finalMd = `---\n${newYaml}\n---\n${currentContent}`;
+						await setMD(currentSlug, finalMd);
+					}
+				}
+			}
+
+			// Create new document
+			const newTitle = data.get('newTitle') as string;
+			const newSlug = data.get('newSlug') as string;
+			const newDescription = (data.get('newDescription') as string) || '';
+
+			console.log('Creating new document:', newSlug);
+			const initialContent = '# ' + newTitle + '\n\nNuovo documento.';
+			const yamlFrontmatter = {
+				title: newTitle,
+				description: newDescription,
+				slug: newSlug,
+				createdAt: new Date(),
+				updatedAt: new Date()
+			};
+			const newMd = `---\n${yaml.dump(yamlFrontmatter)}\n---\n${initialContent}`;
+			await setMD(newSlug, newMd);
+
+			return { success: true, newSlug };
+		} catch (error) {
+			console.error('Create action error:', error);
+			return {
+				success: false,
+				error: error instanceof Error ? error.message : 'An unknown error occurred'
+			};
+		}
+	},
 	frontmatter: async ({ url, request }) => {
 		try {
 			console.debug('save frontmatter')
@@ -58,7 +114,6 @@ export const actions = {
 			}
 			const { content } = getContent(md);
 			const newYaml = yaml.dump(updatedFrontmatter);
-			console.debug("newYaml", newYaml)
 			const updatedMd = `---\n${newYaml}\n---\n${content}`;
 			
 			await setMD(slug, updatedMd)
@@ -72,23 +127,40 @@ export const actions = {
 	},
 	save: async ({ params, request }) => {
 		try {
-			console.debug('save md')
+			console.debug('Unified save action');
 			const data = await request.formData();
-			const updatedContent = data.get('updatedContent') as string
-			const slug = data.get('slug') as string
-			console.log('s1')
-			const md = await getMD(slug)
+			const slug = data.get('slug') as string;
+			const updatedContent = data.get('updatedContent') as string;
+			const title = data.get('title') as string;
+			const description = data.get('description') as string;
+
+			const md = await getMD(slug);
 			if (!md) {
 				return { success: false, error: 'File not found' };
 			}
-			console.log('s2')
-			const { frontmatter } = getContent(md);
-			// console.debug("updatedContent", updatedContent)
-			const updatedMd = `---\n${frontmatter}\n---\n${updatedContent}`;
-			console.log('save lenght', updatedMd.length)
-			await setMD(slug, updatedMd)
+
+			// If title or description are provided, we update frontmatter
+			let finalMd = '';
+			if (title !== null || description !== null) {
+				const { content } = getContent(md);
+				const updatedFrontmatter = {
+					title: title ?? (data.get('title') as string),
+					description: description ?? (data.get('description') as string),
+					slug: slug,
+					updatedAt: new Date(),
+				};
+				const newYaml = yaml.dump(updatedFrontmatter);
+				finalMd = `---\n${newYaml}\n---\n${updatedContent ?? content}`;
+			} else {
+				const { frontmatter } = getContent(md);
+				finalMd = `---\n${frontmatter}\n---\n${updatedContent}`;
+			}
+
+			console.log('Saving document:', slug, 'Length:', finalMd.length);
+			await setMD(slug, finalMd);
 			return { success: true };
 		} catch (error) {
+			console.error('Save action error:', error);
 			return {
 				success: false,
 				error: error instanceof Error ? error.message : 'An unknown error occurred'
@@ -145,7 +217,47 @@ export const actions = {
     }
 	},
 
+	rename: async ({ request }) => {
+		try {
+			const data = await request.formData();
+			const oldSlug = data.get('oldSlug') as string;
+			const newSlug = data.get('newSlug') as string;
+			const title = data.get('title') as string;
+			const description = data.get('description') as string;
+			const content = data.get('content') as string;
+
+			if (!oldSlug || !newSlug) {
+				return { success: false, error: 'Slugs are required' };
+			}
+
+			const { renameMD, setMD } = await import('$lib/api');
+			await renameMD(oldSlug, newSlug);
+
+			// Update frontmatter in the renamed file
+			const updatedFrontmatter = {
+				title,
+				description,
+				slug: newSlug,
+				updatedAt: new Date(),
+			};
+			const yaml = await import('js-yaml');
+			const newYaml = yaml.dump(updatedFrontmatter);
+			const updatedMd = `---\n${newYaml}\n---\n${content}`;
+			
+			await setMD(newSlug, updatedMd);
+
+			return { success: true, newSlug };
+		} catch (error) {
+			console.error('Error renaming file:', error);
+			return {
+				success: false,
+				error: error instanceof Error ? error.message : 'Failed to rename file'
+			};
+		}
+	},
+
 	createDirectory: async ({ request }) => {
+
 		try {
 			const data = await request.formData();
 			const directoryName = data.get('directoryName') as string;

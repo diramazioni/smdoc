@@ -78,6 +78,10 @@
   export function getEditor() {
     return editor;
   }
+  export function setMarkdown(value: string): void {
+    editor?.setMarkdown(value);
+  }
+
   export function getMarkdown() {
     return editor?.getMarkdown();
   }
