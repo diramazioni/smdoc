@@ -150,6 +150,7 @@ export const actions = {
 			const data = await request.formData();
 			const directoryName = data.get('directoryName') as string;
 			const parentPath = data.get('parentPath') as string | null;
+			const baseType = (data.get('baseType') as 'md' | 'asset' | null) || 'md';
 
 			if (!directoryName || directoryName.trim() === '') {
 				return {
@@ -158,8 +159,19 @@ export const actions = {
 				};
 			}
 
+			if (baseType !== 'md' && baseType !== 'asset') {
+				return {
+					success: false,
+					error: 'Invalid directory type'
+				};
+			}
+
 			const { createDirectory } = await import('$lib/api');
-			const fullPath = await createDirectory(directoryName.trim(), parentPath || undefined);
+			const fullPath = await createDirectory(
+        directoryName.trim(), 
+        parentPath || undefined,
+        baseType
+      );
 
 			return {
 				success: true,

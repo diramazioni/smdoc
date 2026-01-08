@@ -9,6 +9,7 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import Dialog from "$lib/components/Dialog.svelte";
   import CreateDirectoryDialog from "$lib/components/CreateDirectoryDialog.svelte";
+  import UploadFileDialog from "$lib/components/UploadFileDialog.svelte";
   import IndexFileDialog from "$lib/components/IndexFileDialog.svelte";
   import IndexDirectoryDialog from "$lib/components/IndexDirectoryDialog.svelte";
 
@@ -57,6 +58,7 @@
   let autoSaveDialog = $state(false);
   let confirmClearDialog = $state(false);
   let showCreateDirectoryDialog = $state(false);
+  let showUploadFileDialog = $state(false);
   let showIndexFileDialog = $state(false);
   let showIndexDirectoryDialog = $state(false);
 
@@ -280,6 +282,11 @@
 <!-- Create Directory Dialog -->
 <CreateDirectoryDialog bind:open={showCreateDirectoryDialog} />
 
+<UploadFileDialog
+  bind:open={showUploadFileDialog}
+  folder={data.slug.split("/").slice(0, -1).join("/")}
+/>
+
 <!-- Index Dialogs -->
 <IndexFileDialog bind:open={showIndexFileDialog} />
 <IndexDirectoryDialog bind:open={showIndexDirectoryDialog} />
@@ -378,6 +385,10 @@
           <DropdownMenu.Item onclick={handleCreateDirectory}>
             <FolderPlus class="mr-2 h-4 w-4" />
             Nuova directory
+          </DropdownMenu.Item>
+          <DropdownMenu.Item onclick={() => (showUploadFileDialog = true)}>
+            <FileUp class="mr-2 h-4 w-4" />
+            Carica documento o Asset
           </DropdownMenu.Item>
           <DropdownMenu.Separator />
           <DropdownMenu.Item onclick={handleIndexFile}>

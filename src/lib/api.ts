@@ -136,12 +136,17 @@ export async function deleteFile(filename: string): Promise<boolean> {
 }
 
 /**
- * Creates a new directory in the DOCS_DIR
+ * Creates a new directory in the DOCS_DIR or ASSETS_DIR
  * @param dirName - Name of the directory to create
- * @param parentPath - Optional parent path relative to DOCS_DIR
+ * @param parentPath - Optional parent path relative to the base directory
+ * @param baseType - The type of directory to create ('md' for docs, 'asset' for assets)
  * @returns The full path of the created directory
  */
-export async function createDirectory(dirName: string, parentPath?: string): Promise<string> {
+export async function createDirectory(
+  dirName: string, 
+  parentPath?: string, 
+  baseType: 'md' | 'asset' = 'md'
+): Promise<string> {
   // Validate directory name
   const invalidChars = /[<>:"|?*\x00-\x1F]/;
   if (invalidChars.test(dirName)) {
@@ -154,13 +159,16 @@ export async function createDirectory(dirName: string, parentPath?: string): Pro
   }
 
   // Build the full path
+  const baseDirectory = baseType === 'md' ? DOCS_DIR : ASSETS_DIR;
   const basePath = parentPath 
-    ? path.resolve(DOCS_DIR, parentPath)
-    : DOCS_DIR;
+    ? path.resolve(baseDirectory, parentPath)
+    : baseDirectory;
 
-  // Ensure the base path is within DOCS_DIR
+  // Ensure the base path is within the target base directory
   const resolvedBase = path.resolve(basePath);
-  if (!resolvedBase.startsWith(path.resolve(DOCS_DIR))) {
+  const resolvedTargetBase = path.resolve(baseDirectory);
+  
+  if (!resolvedBase.startsWith(resolvedTargetBase)) {
     throw new Error('Invalid parent path');
   }
 

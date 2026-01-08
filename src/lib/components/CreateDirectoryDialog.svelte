@@ -2,10 +2,12 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
+  import * as RadioGroup from "$lib/components/ui/radio-group/index.js";
   import Dialog from "$lib/components/Dialog.svelte";
   import { toast } from "svelte-sonner";
-  import { FolderPlus } from "lucide-svelte";
+  import { FolderPlus, FileText, ImageUp } from "lucide-svelte";
   import { deserialize } from "$app/forms";
+  import { invalidateAll } from "$app/navigation";
   import type { ActionResult } from "@sveltejs/kit";
 
   interface Props {
@@ -16,6 +18,7 @@
   let { open = $bindable(false), onSuccess }: Props = $props();
 
   let directoryName = $state("");
+  let baseType = $state<"md" | "asset">("md");
   let isCreating = $state(false);
   let error = $state("");
 
@@ -48,6 +51,7 @@
     try {
       const formData = new FormData();
       formData.append("directoryName", directoryName.trim());
+      formData.append("baseType", baseType);
 
       const response = await fetch("?/createDirectory", {
         method: "POST",
@@ -68,7 +72,9 @@
         };
 
         if (data.success && data.path) {
-          toast.success(`Directory "${directoryName}" creata con successo`);
+          toast.success(
+            `Directory "${directoryName}" creata con successo in ${baseType === "md" ? "Docs" : "Assets"}`,
+          );
 
           // Sincronizza con Letta
           try {
@@ -87,6 +93,7 @@
 
           directoryName = "";
           open = false;
+          await invalidateAll();
           onSuccess?.(data.path);
         } else {
           error = data.error || "Errore durante la creazione della directory";
@@ -136,13 +143,39 @@
   {/snippet}
 
   {#snippet description()}
-    <div class="space-y-4 py-4">
+    <div class="space-y-6 py-4">
+      <div class="space-y-3">
+        <Label>Tipo di Directory</Label>
+        <RadioGroup.Root bind:value={baseType} class="flex gap-4">
+          <div class="flex items-center space-x-2">
+            <RadioGroup.Item value="md" id="type-md" />
+            <Label
+              for="type-md"
+              class="flex items-center gap-1.5 cursor-pointer font-normal"
+            >
+              <FileText size={16} class="text-blue-500" />
+              Documenti (Docs)
+            </Label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <RadioGroup.Item value="asset" id="type-asset" />
+            <Label
+              for="type-asset"
+              class="flex items-center gap-1.5 cursor-pointer font-normal"
+            >
+              <ImageUp size={16} class="text-orange-500" />
+              Risorse (Assets)
+            </Label>
+          </div>
+        </RadioGroup.Root>
+      </div>
+
       <div class="space-y-2">
         <Label for="directoryName">Nome Directory</Label>
         <Input
           id="directoryName"
           bind:value={directoryName}
-          placeholder="es: documentazione"
+          placeholder="es: immagini_progetto"
           disabled={isCreating}
           onkeydown={(e) => {
             if (e.key === "Enter") {
@@ -155,14 +188,14 @@
         {/if}
       </div>
 
-      <div class="flex justify-end gap-2">
+      <div class="flex justify-end gap-2 pt-2">
         <Button variant="outline" onclick={handleCancel} disabled={isCreating}>
           Annulla
         </Button>
         <Button
           onclick={handleCreate}
           disabled={isCreating}
-          class="bg-green-600 hover:bg-green-700"
+          class="bg-blue-600 hover:bg-blue-700 min-w-[100px]"
         >
           {isCreating ? "Creazione..." : "Crea"}
         </Button>
