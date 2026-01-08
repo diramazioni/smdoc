@@ -121,6 +121,22 @@
 
             <div class="space-y-2">
               <label
+                for="folderName"
+                class="block text-sm font-semibold text-gray-700"
+                >LETTA_FOLDER_NAME</label
+              >
+              <input
+                type="text"
+                id="folderName"
+                name="folderName"
+                value={data.folderName}
+                placeholder="project-smdr-main"
+                class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm font-mono"
+              />
+            </div>
+
+            <div class="space-y-2">
+              <label
                 for="openaiKey"
                 class="block text-sm font-semibold text-gray-700"
                 >OPENAI_API_KEY (Optional)</label

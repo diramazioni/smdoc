@@ -4,6 +4,10 @@ export function getLettaProjectId(): string {
   return process.env.LETTA_PROJECT_ID || import.meta.env.VITE_LETTA_PROJECT_ID || 'smdr-main';
 }
 
+export function getLettaFolderName(): string {
+  return process.env.LETTA_FOLDER_NAME || import.meta.env.VITE_LETTA_FOLDER_NAME || `project-${getLettaProjectId()}`;
+}
+
 // Configurazione costanti
 export const LETTA_CONFIG = {
   model: 'openai/gpt-4o',
@@ -127,11 +131,12 @@ export async function attachSharedMemory(
  */
 export async function getOrCreateProjectFolder(projectId?: string) {
   const finalProjectId = projectId || getLettaProjectId();
+  const folderName = getLettaFolderName();
   const client = getLettaClient();
 
   const foldersPage = await client.folders.list();
   const folder = foldersPage.items.find(f =>
-    f.name === `project-${finalProjectId}`
+    f.name === folderName
   );
 
   if (folder) {
@@ -139,7 +144,7 @@ export async function getOrCreateProjectFolder(projectId?: string) {
   }
 
   return await client.folders.create({
-    name: `project-${finalProjectId}`,
+    name: folderName,
     ...(isSelfHosted() ? {
       embedding_config: {
         embedding_model: 'text-embedding-3-small',
@@ -170,4 +175,28 @@ export async function attachProjectFolder(
   }
 
   return folder;
+}
+
+/**
+ * Sincronizza l'attaccamento del folder per tutti gli agenti del progetto
+ */
+export async function syncAllAgentsFolders(projectId?: string) {
+  const finalProjectId = projectId || getLettaProjectId();
+  const client = getLettaClient();
+  
+  // Cerca tutti gli agenti del progetto
+  const agentsPage = await client.agents.list({
+    tags: ['smdr-cms']
+  });
+
+  console.log(`Syncing folders for ${agentsPage.items.length} agents...`);
+
+  for (const agent of agentsPage.items) {
+    try {
+      await attachProjectFolder(agent.id, finalProjectId);
+      console.log(`Folder sync successful for agent ${agent.name} (${agent.id})`);
+    } catch (err) {
+      console.error(`Failed to sync folder for agent ${agent.name}:`, err);
+    }
+  }
 }

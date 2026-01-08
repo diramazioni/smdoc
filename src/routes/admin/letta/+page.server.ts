@@ -5,7 +5,7 @@ import { uploadFileToLetta, updateSharedMemoryWithFile } from '$lib/letta/filesy
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { getOrCreateProjectFolder, getLettaProjectId } from '$lib/letta/letta-service';
+import { getOrCreateProjectFolder, getLettaProjectId, syncAllAgentsFolders } from '$lib/letta/letta-service';
 
 export const load = async () => {
   const projectId = getEnvVariable('LETTA_PROJECT_ID') || 'smdr-main';
@@ -23,6 +23,7 @@ export const load = async () => {
     baseUrl: getEnvVariable('LETTA_BASE_URL') || 'https://api.letta.com',
     projectId: projectId,
     openaiKey: getEnvVariable('OPENAI_API_KEY') || '',
+    folderName: getEnvVariable('LETTA_FOLDER_NAME') || `project-${projectId}`,
     folderInfo
   };
 };
@@ -33,15 +34,20 @@ export const actions = {
     const apiKey = data.get('apiKey') as string;
     const baseUrl = data.get('baseUrl') as string;
     const projectId = data.get('projectId') as string;
+    const folderName = data.get('folderName') as string;
     const openaiKey = data.get('openaiKey') as string;
 
     try {
       if (apiKey) updateEnvVariable('LETTA_API_KEY', apiKey);
       if (baseUrl) updateEnvVariable('LETTA_BASE_URL', baseUrl);
       if (projectId) updateEnvVariable('LETTA_PROJECT_ID', projectId);
+      if (folderName) updateEnvVariable('LETTA_FOLDER_NAME', folderName);
       if (openaiKey) updateEnvVariable('OPENAI_API_KEY', openaiKey);
       
-      return { success: true, message: 'Configurazione salvata correttamente. Riavviare il server se necessario.' };
+      // Sincronizza subito gli agenti con la nuova configurazione
+      await syncAllAgentsFolders(projectId);
+
+      return { success: true, message: 'Configurazione salvata correttamente e agenti sincronizzati.' };
     } catch (err: any) {
       return fail(500, { error: err.message });
     }

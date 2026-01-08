@@ -37,6 +37,40 @@ export async function uploadFileToLetta(
 }
 
 /**
+ * Rimuove un file dalla folder del progetto in Letta
+ */
+export async function deleteFileFromLetta(
+  projectId: string,
+  fileName: string
+) {
+  const client = getLettaClient();
+  const folder = await getOrCreateProjectFolder(projectId);
+
+  try {
+    // Recupera la lista dei file nella folder
+    const filesPage = await (client.folders as any).files.list(folder.id);
+    // Letta uses snake_case for file properties: file_name, original_file_name, etc.
+    const file = filesPage.items.find((f: any) => 
+      f.file_name === fileName || 
+      f.original_file_name === fileName ||
+      f.id === fileName
+    );
+
+    if (file) {
+      console.log(`Deleting file ${fileName} (${file.id}) from Letta folder ${folder.id}...`);
+      await (client.folders as any).files.delete(file.id, { folder_id: folder.id });
+      return { success: true, fileId: file.id };
+    } else {
+      console.warn(`File ${fileName} not found in Letta folder ${folder.id}`);
+      return { success: false, message: 'File not found' };
+    }
+  } catch (err) {
+    console.error('Letta delete error:', err);
+    throw err;
+  }
+}
+
+/**
  * Aggiorna la memoria condivisa con info sul file
  */
 export async function updateSharedMemoryWithFile(

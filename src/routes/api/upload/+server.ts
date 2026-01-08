@@ -14,6 +14,8 @@ import {
   ASSETS_DIR,
   getFileDirectory
 } from '$lib/config/files.server';
+import { deleteFileFromLetta } from '$lib/letta/filesystem-service';
+import { getLettaProjectId } from '$lib/letta/letta-service';
 
 // Ensure directories exist
 [DOCS_DIR, ASSETS_DIR].forEach(dir => {
@@ -101,6 +103,14 @@ export const DELETE: RequestHandler = async ({ request }) => {
 
     if (!fs.existsSync(filePath)) {
       return error(404, 'File not found');
+    }
+
+    // Rimuovi da Letta se possibile
+    try {
+      const projectId = getLettaProjectId();
+      await deleteFileFromLetta(projectId, fileName);
+    } catch (err) {
+      console.warn('Failed to delete file from Letta, proceeding with local deletion:', err);
     }
 
     await fs.promises.unlink(filePath);
