@@ -247,7 +247,49 @@
 
     <!-- Sidebar Info -->
     <div class="space-y-8">
-      <LettaStatus userId="admin" projectId="smdr-main" />
+      <LettaStatus userId="admin" projectId={data.projectId} />
+
+      {#if data.folderInfo}
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+          <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-green-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+              />
+            </svg>
+            Cartella Progetto
+          </h3>
+          <div class="space-y-2">
+            <p class="text-xs text-gray-400 font-medium uppercase">
+              Nome Folder
+            </p>
+            <p
+              class="text-sm font-mono bg-gray-50 p-2 rounded border border-gray-100"
+            >
+              {data.folderInfo.name}
+            </p>
+
+            <p class="text-xs text-gray-400 font-medium uppercase mt-4">
+              Folder ID
+            </p>
+            <p
+              class="text-sm font-mono bg-gray-50 p-2 rounded border border-gray-100 truncate"
+              title={data.folderInfo.id}
+            >
+              {data.folderInfo.id}
+            </p>
+          </div>
+        </div>
+      {/if}
 
       <div
         class="bg-linear-to-br from-gray-900 to-gray-800 p-6 rounded-2xl text-white shadow-xl ring-1 ring-white/10"

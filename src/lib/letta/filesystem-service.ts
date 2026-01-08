@@ -1,34 +1,7 @@
 import { getLettaClient, isSelfHosted } from './client';
 import { readFileSync } from 'fs';
-import { getOrCreateSharedMemory } from './letta-service';
+import { getOrCreateSharedMemory, getOrCreateProjectFolder } from './letta-service';
 import type { LettaFileType, LettaSyncAction, LettaSyncMetadata } from './types';
-
-/**
- * Crea o recupera una folder per un progetto
- */
-export async function getOrCreateProjectFolder(projectId: string) {
-  const client = getLettaClient();
-
-  const foldersPage = await client.folders.list();
-  const folder = foldersPage.items.find(f =>
-    f.name === `project-${projectId}`
-  );
-
-  if (folder) {
-    return folder;
-  }
-
-  return await client.folders.create({
-    name: `project-${projectId}`,
-    ...(isSelfHosted() ? {
-      embedding_config: {
-        embedding_model: 'text-embedding-3-small',
-        embedding_endpoint_type: 'openai',
-        embedding_dim: 1536
-      }
-    } : {})
-  });
-}
 
 /**
  * Carica un file nella folder del progetto

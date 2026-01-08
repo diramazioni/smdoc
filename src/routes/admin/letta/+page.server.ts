@@ -5,12 +5,25 @@ import { uploadFileToLetta, updateSharedMemoryWithFile } from '$lib/letta/filesy
 import fs from 'node:fs';
 import path from 'node:path';
 
+import { getOrCreateProjectFolder, getLettaProjectId } from '$lib/letta/letta-service';
+
 export const load = async () => {
+  const projectId = getEnvVariable('LETTA_PROJECT_ID') || 'smdr-main';
+  let folderInfo = null;
+
+  try {
+    const folder = await getOrCreateProjectFolder(projectId);
+    folderInfo = { id: folder.id, name: folder.name };
+  } catch (err) {
+    console.warn('Could not fetch project folder info:', err);
+  }
+
   return {
     apiKey: getEnvVariable('LETTA_API_KEY') || '',
     baseUrl: getEnvVariable('LETTA_BASE_URL') || 'https://api.letta.com',
-    projectId: getEnvVariable('LETTA_PROJECT_ID') || 'smdr-main',
-    openaiKey: getEnvVariable('OPENAI_API_KEY') || ''
+    projectId: projectId,
+    openaiKey: getEnvVariable('OPENAI_API_KEY') || '',
+    folderInfo
   };
 };
 
@@ -35,6 +48,7 @@ export const actions = {
   },
 
   syncMemory: async () => {
+    const projectId = getLettaProjectId();
     try {
       const files = fs.readdirSync(DOCS_DIR).filter(f => f.endsWith('.md'));
       const results = [];
@@ -44,9 +58,9 @@ export const actions = {
         const slug = file.replace('.md', '');
 
         try {
-          await uploadFileToLetta('smdr-main', filePath, 'markdown');
+          await uploadFileToLetta(projectId, filePath, 'markdown');
           await updateSharedMemoryWithFile(
-            'smdr-main',
+            projectId,
             filePath,
             'updated',
             { title: slug, slug: slug }
@@ -60,7 +74,7 @@ export const actions = {
       // Aggiorna statistiche progetto a fine sincronizzazione
       try {
         const { logChangeAndRefreshStats } = await import('$lib/letta/memory-manager');
-        await logChangeAndRefreshStats('smdr-main', 'ALL_FILES', 'RE-SYNC', DOCS_DIR);
+        await logChangeAndRefreshStats(projectId, 'ALL_FILES', 'RE-SYNC', DOCS_DIR);
       } catch (err) {
         console.error('Failed to update project memory after sync:', err);
       }

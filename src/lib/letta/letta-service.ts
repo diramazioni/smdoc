@@ -45,12 +45,12 @@ export async function getOrCreateUserAgent(userId: string) {
       },
       {
         label: 'persona',
-        value: 'You are a helpful assistant for the SMDR CMS. You help users manage and understand their content.',
+        value: 'You are a helpful assistant for the SMDR CMS. You help users manage and understand their content. Use semantic_search_files or grep_files to find information in documents when asked about content.',
         limit: 2000
       },
       {
         label: 'project_context',
-        value: 'SMDR is a markdown-based CMS. Users create/edit markdown, PDF, and image files.',
+        value: `SMDR is a markdown-based CMS. Project ID: ${getLettaProjectId()}. You have access to the project files via semantic_search_files, open_files, and grep_files.`,
         description: 'Stores context about the SMDR CMS project',
         limit: 2000
       }
@@ -58,6 +58,9 @@ export async function getOrCreateUserAgent(userId: string) {
     tools: LETTA_CONFIG.tools as any,
     tags: [`user:${userId}`, 'smdr-cms']
   });
+
+  // Collega cartella progetto
+  await attachProjectFolder(agent.id);
 
   return agent;
 }
@@ -117,4 +120,54 @@ export async function attachSharedMemory(
   }
 
   return sharedBlock;
+}
+
+/**
+ * Crea o recupera una folder per un progetto
+ */
+export async function getOrCreateProjectFolder(projectId?: string) {
+  const finalProjectId = projectId || getLettaProjectId();
+  const client = getLettaClient();
+
+  const foldersPage = await client.folders.list();
+  const folder = foldersPage.items.find(f =>
+    f.name === `project-${finalProjectId}`
+  );
+
+  if (folder) {
+    return folder;
+  }
+
+  return await client.folders.create({
+    name: `project-${finalProjectId}`,
+    ...(isSelfHosted() ? {
+      embedding_config: {
+        embedding_model: 'text-embedding-3-small',
+        embedding_endpoint_type: 'openai',
+        embedding_dim: 1536
+      }
+    } : {})
+  });
+}
+
+/**
+ * Collega un agente alla cartella del progetto
+ */
+export async function attachProjectFolder(
+  agentId: string,
+  projectId?: string
+) {
+  const finalProjectId = projectId || getLettaProjectId();
+  const client = getLettaClient();
+  const folder = await getOrCreateProjectFolder(finalProjectId);
+
+  // Ottieni cartelle attualmente collegate all'agente
+  const attachedFolders = await client.agents.folders.list(agentId);
+  
+  // Se non già collegata, collega la cartella
+  if (!attachedFolders.items.some(f => f.id === folder.id)) {
+    await client.agents.folders.attach(folder.id, { agent_id: agentId });
+  }
+
+  return folder;
 }

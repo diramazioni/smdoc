@@ -19,6 +19,21 @@ async function syncAgentTools() {
   });
 
   try {
+    console.log('Fetching available tools from platform...');
+    const allTools = await client.tools.list();
+    const toolMap = new Map();
+    allTools.items.forEach(t => toolMap.set(t.name, t.id));
+
+    const toolIdsToAttach = LETTA_CONFIG_TOOLS
+      .map(name => {
+        const id = toolMap.get(name);
+        if (!id) console.warn(`Warning: Tool "${name}" not found on platform.`);
+        return id;
+      })
+      .filter(id => !!id);
+
+    console.log('Tool IDs to attach:', toolIdsToAttach);
+
     console.log('Fetching agents...');
     const agentsPage = await client.agents.list({
       tags: ['smdr-cms']
@@ -29,11 +44,31 @@ async function syncAgentTools() {
     for (const agent of agentsPage.items) {
       console.log(`Updating agent: ${agent.name} (${agent.id})...`);
       
-      await client.agents.update(agent.id, {
-        tools: LETTA_CONFIG_TOOLS
-      });
+      // Get currently attached tools to avoid duplicates if necessary, 
+      // though attach might be idempotent
+      const currentToolsPage = await client.agents.tools.list(agent.id);
+      const currentToolIds = currentToolsPage.items.map(t => t.id);
+
+      for (const toolId of toolIdsToAttach) {
+        if (!currentToolIds.includes(toolId)) {
+          console.log(`Attaching tool ID ${toolId} to agent ${agent.id}...`);
+          await client.agents.tools.attach(toolId, { agent_id: agent.id });
+        } else {
+          console.log(`Tool ID ${toolId} already attached.`);
+        }
+      }
       
-      console.log(`Successfully updated ${agent.name}.`);
+      // Final check
+      const finalToolsPage = await client.agents.tools.list(agent.id);
+      const finalToolNames = finalToolsPage.items.map(t => t.name);
+      console.log(`Final tools for ${agent.name}:`, finalToolNames);
+      
+      const missing = LETTA_CONFIG_TOOLS.filter(name => !finalToolNames.includes(name));
+      if (missing.length > 0) {
+        console.error(`ERROR: Some tools were NOT attached to ${agent.name}:`, missing);
+      } else {
+        console.log(`Successfully updated ${agent.name} with all tools.`);
+      }
     }
 
     console.log('All agents updated.');

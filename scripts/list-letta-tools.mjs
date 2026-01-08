@@ -13,11 +13,8 @@ async function listTools() {
     const tools = await client.tools.list();
     console.log('Available tools:');
     tools.items.forEach(t => {
-      if (t.name === 'semantic_search_files') {
-        console.log(`Tool: ${t.name}`);
-        console.log(`Description: ${t.description}`);
-        // Letta SDK v2 tool items have a .json_schema or similar
-        console.log(`Schema: ${JSON.stringify((t as any).json_schema || {}, null, 2)}`);
+      if (t.name.includes('search_file')) {
+        console.log(`- ${t.name}: ${t.description}`);
       }
     });
   } catch (err) {

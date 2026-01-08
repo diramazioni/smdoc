@@ -1,7 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { getLettaClient } from '$lib/letta/client';
-import { getOrCreateSharedMemory } from '$lib/letta/letta-service';
-import { getOrCreateProjectFolder } from '$lib/letta/filesystem-service';
+import { getOrCreateSharedMemory, getOrCreateProjectFolder } from '$lib/letta/letta-service';
 
 export async function GET({ url }) {
   try {

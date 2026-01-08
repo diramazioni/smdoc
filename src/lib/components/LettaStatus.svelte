@@ -107,6 +107,18 @@
         <div
           class="flex items-center justify-between border-b border-gray-50 pb-2"
         >
+          <span class="text-xs text-gray-400 font-medium">Folder ID</span>
+          <span
+            class="text-xs font-mono text-gray-600 bg-gray-50 px-2 py-0.5 rounded truncate max-w-[180px]"
+            title={stats.folderId}
+          >
+            {stats.folderId || "None"}
+          </span>
+        </div>
+
+        <div
+          class="flex items-center justify-between border-b border-gray-50 pb-2"
+        >
           <span class="text-xs text-gray-400 font-medium">Shared Block</span>
           <span
             class="text-xs font-mono text-gray-600 bg-gray-50 px-2 py-0.5 rounded truncate max-w-[180px]"
