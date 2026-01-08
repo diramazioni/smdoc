@@ -49,17 +49,6 @@ export async function setMD(slug: string, content: string) {
   }
 }
 
-export async function renameMD(oldSlug: string, newSlug: string) {
-  try {
-    const oldPath = path.resolve(`${DOCS_DIR}/${oldSlug}.md`);
-    const newPath = path.resolve(`${DOCS_DIR}/${newSlug}.md`);
-    await fs.rename(oldPath, newPath);
-  } catch (error: any) {
-    throw error(500, error);
-  }
-}
-
-
 export interface AssetInfo {
   name: string;
   isDir: boolean;
@@ -147,17 +136,12 @@ export async function deleteFile(filename: string): Promise<boolean> {
 }
 
 /**
- * Creates a new directory in the DOCS_DIR or ASSETS_DIR
+ * Creates a new directory in the DOCS_DIR
  * @param dirName - Name of the directory to create
- * @param parentPath - Optional parent path relative to the base directory
- * @param baseType - The type of directory to create ('md' for docs, 'asset' for assets)
+ * @param parentPath - Optional parent path relative to DOCS_DIR
  * @returns The full path of the created directory
  */
-export async function createDirectory(
-  dirName: string, 
-  parentPath?: string, 
-  baseType: 'md' | 'asset' = 'md'
-): Promise<string> {
+export async function createDirectory(dirName: string, parentPath?: string): Promise<string> {
   // Validate directory name
   const invalidChars = /[<>:"|?*\x00-\x1F]/;
   if (invalidChars.test(dirName)) {
@@ -170,16 +154,13 @@ export async function createDirectory(
   }
 
   // Build the full path
-  const baseDirectory = baseType === 'md' ? DOCS_DIR : ASSETS_DIR;
   const basePath = parentPath 
-    ? path.resolve(baseDirectory, parentPath)
-    : baseDirectory;
+    ? path.resolve(DOCS_DIR, parentPath)
+    : DOCS_DIR;
 
-  // Ensure the base path is within the target base directory
+  // Ensure the base path is within DOCS_DIR
   const resolvedBase = path.resolve(basePath);
-  const resolvedTargetBase = path.resolve(baseDirectory);
-  
-  if (!resolvedBase.startsWith(resolvedTargetBase)) {
+  if (!resolvedBase.startsWith(path.resolve(DOCS_DIR))) {
     throw new Error('Invalid parent path');
   }
 

@@ -15,6 +15,7 @@
   } from "lucide-svelte";
   import * as Tabs from "$lib/components/ui/tabs/index.js";
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
+  import UploadForm from "$lib/components/UploadForm.svelte";
   import Dialog from "$lib/components/Dialog.svelte";
   import type { AssetInfo } from "$lib/api";
 
@@ -67,8 +68,11 @@
   });
 
   $effect(() => {
-    // Re-run whenever tabState, currentPath OR page data refreshes
-    const _data = $page.data;
+    // Detect tab switch or loading
+    if (tabState === "md" && $page.data.slug) {
+      // We already handled synchronization in effect.pre for the initial load
+      // But we need to make sure listAssets is updated if currentPaths changes
+    }
     fetchAssets(tabState, currentPaths[tabState]);
   });
 
@@ -161,6 +165,8 @@
 </Tabs.Root>
 
 {#snippet assetList(items: AssetInfo[])}
+  <UploadForm folder={currentPaths[tabState]} />
+
   <div class="px-4 py-2 mt-2">
     <input
       type="text"
