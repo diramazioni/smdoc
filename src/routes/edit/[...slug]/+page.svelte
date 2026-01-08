@@ -9,7 +9,6 @@
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import Dialog from "$lib/components/Dialog.svelte";
   import CreateDirectoryDialog from "$lib/components/CreateDirectoryDialog.svelte";
-  import CreateFileDialog from "$lib/components/CreateFileDialog.svelte";
   import UploadFileDialog from "$lib/components/UploadFileDialog.svelte";
   import IndexFileDialog from "$lib/components/IndexFileDialog.svelte";
   import IndexDirectoryDialog from "$lib/components/IndexDirectoryDialog.svelte";
@@ -40,7 +39,6 @@
   import { onDestroy, onMount, setContext } from "svelte";
   import { page } from "$app/stores";
   import { goto, invalidate, invalidateAll } from "$app/navigation";
-  import { deserialize, enhance } from "$app/forms";
 
   let { data }: { data: any } = $props();
 
@@ -49,34 +47,30 @@
   let titleValue = $state("");
   let descriptionValue = $state("");
   let slug = $derived(slugify(titleValue));
-  let originalSlug = $state("");
 
   $effect(() => {
     titleValue = data.frontmatter?.title ?? "";
     descriptionValue = data.frontmatter?.description ?? "";
-    originalSlug = data.slug;
-  });
-
-  $effect(() => {
-    if (editorRef && data.md_only !== undefined) {
-      editorRef.setMarkdown(data.md_only);
-    }
   });
 
   let showChat = $state(false);
 
   let autoSaveDialog = $state(false);
+  let confirmClearDialog = $state(false);
   let showCreateDirectoryDialog = $state(false);
-  let showCreateFileDialog = $state(false);
-  let showRenameDialog = $state(false);
   let showUploadFileDialog = $state(false);
   let showIndexFileDialog = $state(false);
   let showIndexDirectoryDialog = $state(false);
 
   // Calcola la larghezza dinamica per il campo slug
-  let slugWidth = $derived(Math.max(80, slug.length * 8 + 200));
+  let slugWidth = $derived(Math.max(80, slug.length * 8 + 20));
 
   let interval: ReturnType<typeof setInterval>; // 30 seconds
+  onMount(() => {});
+
+  onDestroy(() => {
+    if (interval) clearInterval(interval);
+  });
 
   $effect(() => {
     interval = setInterval(() => {
@@ -87,131 +81,46 @@
     return () => clearInterval(interval);
   });
 
-  async function handleSave(event?: Event) {
-    if (event) event.preventDefault();
-
-    // Check if slug has changed
-    if (slug !== originalSlug && originalSlug !== "new-document") {
-      showRenameDialog = true;
-      return;
-    }
-
-    await performSave();
-  }
-
-  async function performSave(
-    customSlug?: string,
-    skipRedirect: boolean = false,
-  ) {
-    const targetSlug = customSlug || slug;
+  async function handleSave(event: Event) {
+    event.preventDefault(); // Prevent the default form submission
+    // ?/frontmatter
     autoSaveDialog = false;
+    const frontmatterData = new FormData();
+    frontmatterData.append("title", titleValue);
+    frontmatterData.append("description", descriptionValue);
+    frontmatterData.append("slug", slug);
+    let response = await fetch("?/frontmatter", {
+      method: "POST",
+      body: frontmatterData,
+    });
+    let result = await response.json();
+    if (result.type === "success") {
+      toast.success("Frontmatter saved");
+    }
+    const updatedContent = editorRef?.getMarkdown();
 
     const formData = new FormData();
-    formData.append("slug", targetSlug);
-    formData.append("title", titleValue);
-    formData.append("description", descriptionValue);
-    formData.append("updatedContent", editorRef?.getMarkdown() || "");
-
-    const response = await fetch("?/save", {
+    formData.append("updatedContent", updatedContent);
+    formData.append("slug", slug);
+    response = await fetch("?/save", {
       method: "POST",
       body: formData,
-      headers: { "x-sveltekit-action": "true" },
     });
-
-    const result = deserialize(await response.text());
-
+    result = await response.json();
     if (result.type === "success") {
-      toast.success(`${targetSlug} salvato`);
-      // Non-blocking sync
-      syncWithLetta("updated", {
+      toast.success(`${slug} saved`);
+
+      // Sincronizza con Letta
+      await syncWithLetta("updated", {
         title: titleValue,
-        slug: targetSlug,
+        slug: slug,
         description: descriptionValue,
       });
 
-      if (!skipRedirect) {
-        await goto(`/edit/${targetSlug}`, { invalidateAll: true });
-      }
-      return true;
-    } else {
-      const errorMsg =
-        (result.type === "failure" ? result.data?.error : result.message) ||
-        "Errore sconosciuto";
-      toast.error(`Errore salvataggio: ${errorMsg}`);
-      return false;
-    }
-  }
-
-  async function handleRename() {
-    const updatedContent = editorRef?.getMarkdown();
-    const formData = new FormData();
-    formData.append("oldSlug", originalSlug);
-    formData.append("newSlug", slug);
-    formData.append("title", titleValue);
-    formData.append("description", descriptionValue);
-    formData.append("content", updatedContent);
-
-    const response = await fetch("?/rename", {
-      method: "POST",
-      body: formData,
-      headers: { "x-sveltekit-action": "true" },
-    });
-    const result = await response.json();
-    if (result.type === "success") {
-      toast.success("Document renamed successfully");
-      showRenameDialog = false;
-      originalSlug = slug;
       await goto(`/edit/${slug}`, { invalidateAll: true });
+      // await invalidate('page');
     } else {
-      toast.error(`Error renaming document: ${result.message}`);
-    }
-  }
-
-  async function handleSaveAs() {
-    showRenameDialog = false;
-    await performSave();
-  }
-
-  async function handleCreateConfirm(
-    newTitle: string,
-    newSlug: string,
-    saveCurrent: boolean,
-  ) {
-    const formData = new FormData();
-    formData.append("newTitle", newTitle);
-    formData.append("newSlug", newSlug);
-    formData.append("saveCurrent", saveCurrent.toString());
-
-    if (saveCurrent) {
-      formData.append("currentSlug", originalSlug);
-      formData.append("currentTitle", titleValue);
-      formData.append("currentDescription", descriptionValue);
-      formData.append("currentContent", editorRef?.getMarkdown() || "");
-    }
-
-    const response = await fetch("?/create", {
-      method: "POST",
-      body: formData,
-      headers: { "x-sveltekit-action": "true" },
-    });
-
-    const result = deserialize(await response.text());
-
-    if (result.type === "success") {
-      showCreateFileDialog = false;
-      // We navigate to the NEW slug returned by the server
-      const targetSlug =
-        (result.type === "success" && result.data?.newSlug) || newSlug;
-      await goto(`/edit/${targetSlug}`, { invalidateAll: true });
-      toast.success(`Documento "${newTitle}" creato`);
-
-      // Sync with Letta (non-blocking)
-      syncWithLetta("created", { title: newTitle, slug: targetSlug });
-    } else {
-      const errorMsg =
-        (result.type === "failure" ? result.data?.error : result.message) ||
-        "Errore creazione";
-      toast.error(`Errore creazione: ${errorMsg}`);
+      toast.error(`Error saving document: ${result.message}`);
     }
   }
 
@@ -235,6 +144,24 @@
     } catch (error) {
       console.error("Letta sync failed:", error);
     }
+  }
+
+  function confirmClearFields() {
+    confirmClearDialog = true;
+  }
+
+  function clearFields() {
+    titleValue = "";
+    descriptionValue = "";
+    editorRef?.setMarkdown("");
+    confirmClearDialog = false;
+    toast.success("Campi resettati");
+  }
+
+  async function clearFieldsAndNavigate() {
+    clearFields();
+    // Navigate to a new empty document
+    await goto("/edit/new-document", { invalidateAll: true });
   }
 
   function handleCreateDirectory() {
@@ -277,6 +204,12 @@
   }
 </script>
 
+<!-- <a href="/edit/home" class="hover:underline">go home</a>
+<a href="/home" class="hover:underline">go home</a>
+ -->
+
+<!-- <button onclick={invokeTest}>Invoke Method</button> -->
+
 <Dialog bind:open={autoSaveDialog}>
   {#snippet trigger()}
     <!-- <Save size={15} class="cursor-pointer m-1" 
@@ -288,44 +221,59 @@
   {/snippet}
 
   {#snippet description()}
-    <p class="mb-4">Save the changes?</p>
-    <Button class="w-full" onclick={(e) => handleSave(e)}>
-      <Save size={15} class="mr-2" />
-      Save
-    </Button>
+    <p>Save the changes?</p>
+    <!-- svelte-ignore a11y_interactive_supports_focus -->
+    <div
+      role="button"
+      tabIndex="0"
+      onclick={(e) => handleSave(e)}
+      onkeydown={(e) => e.key === "Enter" && handleSave(e)}
+      class="cursor-pointer m-auto w-full flex justify-center hover:bg-green-500 hover:text-white"
+    >
+      <Save size={15} class="m-1" />
+    </div>
   {/snippet}
 </Dialog>
 
 <!-- Confirmation dialog before clearing fields -->
-<CreateFileDialog
-  bind:open={showCreateFileDialog}
-  onConfirm={handleCreateConfirm}
-/>
+<Dialog bind:open={confirmClearDialog}>
+  {#snippet trigger()}
+    <!-- Trigger is handled externally -->
+  {/snippet}
 
-<!-- Rename vs Save As dialog -->
-<Dialog bind:open={showRenameDialog}>
-  {#snippet trigger()}{/snippet}
   {#snippet title()}
-    Rinominare o Salvare come nuovo?
+    Conferma Reset
   {/snippet}
 
   {#snippet description()}
     <p class="mb-4">
-      Hai cambiato il titolo (e lo slug). Vuoi rinominare il file esistente o
-      crearne uno nuovo (Save As)?
+      Vuoi salvare le modifiche prima di creare un nuovo documento?
     </p>
     <div class="flex justify-end gap-2">
       <Button
         variant="outline"
         onclick={() => {
-          showRenameDialog = false;
+          confirmClearDialog = false;
         }}
       >
         Annulla
       </Button>
-      <Button variant="default" onclick={handleRename}>Rinomina</Button>
-      <Button class="bg-green-600 hover:bg-green-700" onclick={handleSaveAs}>
-        Salva come nuovo
+      <Button
+        variant="destructive"
+        onclick={async () => {
+          await clearFieldsAndNavigate();
+        }}
+      >
+        No, elimina
+      </Button>
+      <Button
+        class="bg-green-600 hover:bg-green-700"
+        onclick={async (e) => {
+          await handleSave(e);
+          await clearFieldsAndNavigate();
+        }}
+      >
+        Sì, salva
       </Button>
     </div>
   {/snippet}
@@ -344,7 +292,11 @@
 <IndexDirectoryDialog bind:open={showIndexDirectoryDialog} />
 
 {#snippet metaForm()}
-  <div class="w-full bg-muted p-2 -mt-2">
+  <form
+    method="POST"
+    action="/edit/{slug}?/frontmatter"
+    class="w-full bg-muted p-2 -mt-2"
+  >
     <div class="flex max-w-full items-center m-4 space-x-3">
       <Label for="title">Title</Label>
       <Input
@@ -353,7 +305,13 @@
         placeholder="Title"
         bind:value={titleValue}
       />
-
+      <Label for="description">Description</Label>
+      <Input
+        type="text"
+        name="description"
+        placeholder="Description"
+        bind:value={descriptionValue}
+      />
       <button
         type="button"
         use:copy={`/${slug}`}
@@ -370,16 +328,10 @@
         value={slug}
         style="width: {slugWidth}px; min-width: 80px; max-width: 400px;"
       />
-      <input name="slug" hidden value={slug} />
-      <Label for="description">Description</Label>
-      <Input
-        type="text"
-        name="description"
-        placeholder="Description"
-        bind:value={descriptionValue}
-      />
+      <input name="slug" hidden value={slug} class="w-20" />
+      <!-- <Button type="submit">Save new</Button> -->
     </div>
-  </div>
+  </form>
 {/snippet}
 
 {#snippet cmdMenu()}
@@ -388,9 +340,12 @@
     class="relative z-10 flex w-full justify-between items-center"
   >
     <div class="flex items-center space-x-3">
-      <Button class="menu" type="button" variant="outline" onclick={handleSave}>
-        <Save />
-      </Button>
+      <form method="POST" action="?/save" onsubmit={handleSave}>
+        <input type="hidden" name="updatedContent" value="" />
+        <Button class="menu" type="submit" variant="outline">
+          <Save />
+        </Button>
+      </form>
       <Button
         href={$page.url.pathname.replace("/edit", "")}
         class="menu"
@@ -414,13 +369,16 @@
         <!-- switch editor-->
       </div>
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-green-600 text-white hover:bg-green-700 h-10 px-4 py-2"
-        >
-          <Plus />
+        <DropdownMenu.Trigger>
+          <button
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-green-600 text-white hover:bg-green-700 h-10 px-4 py-2"
+            type="button"
+          >
+            <Plus />
+          </button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="end">
-          <DropdownMenu.Item onclick={() => (showCreateFileDialog = true)}>
+          <DropdownMenu.Item onclick={confirmClearFields}>
             <FileText class="mr-2 h-4 w-4" />
             Nuovo documento
           </DropdownMenu.Item>
