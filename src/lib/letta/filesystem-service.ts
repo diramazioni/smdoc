@@ -1,4 +1,4 @@
-import { getLettaClient } from './client';
+import { getLettaClient, isSelfHosted } from './client';
 import { readFileSync } from 'fs';
 import { getOrCreateSharedMemory } from './letta-service';
 import type { LettaFileType, LettaSyncAction, LettaSyncMetadata } from './types';
@@ -20,11 +20,13 @@ export async function getOrCreateProjectFolder(projectId: string) {
 
   return await client.folders.create({
     name: `project-${projectId}`,
-    embedding_config: {
-      embedding_model: 'text-embedding-3-small',
-      embedding_endpoint_type: 'openai',
-      embedding_dim: 1536
-    }
+    ...(isSelfHosted() ? {
+      embedding_config: {
+        embedding_model: 'text-embedding-3-small',
+        embedding_endpoint_type: 'openai',
+        embedding_dim: 1536
+      }
+    } : {})
   });
 }
 
@@ -43,12 +45,14 @@ export async function uploadFileToLetta(
     const fileBuffer = readFileSync(filePath);
     const fileName = filePath.split('/').pop() || 'unknown';
 
-    // Wrap buffered data into a File (or Use Blob/Stream depending on SDK expectation)
-    // Usually SDKs like this expect either a stream or a Blob/File
+    // Use File instead of Blob to ensure fileName is passed in multipart form
+    // Letta SDK (and Python backend) requires the 'file' field to be present and properly named
+    const file = new File([fileBuffer], fileName, { type: 'text/markdown' });
+
     const uploadJob = await client.folders.files.upload(
       folder.id,
       {
-        file: new Blob([fileBuffer], { type: 'text/markdown' }) as any
+        file: file as any
       }
     );
 

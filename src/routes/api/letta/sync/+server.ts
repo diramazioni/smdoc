@@ -26,6 +26,10 @@ export async function POST({ request }) {
       metadata
     );
 
+    // Integrazione Fase 4: Aggiornamento automatico statistiche e log
+    const { logChangeAndRefreshStats } = await import('$lib/letta/memory-manager');
+    await logChangeAndRefreshStats(projectId, filePath, action, DOCS_DIR);
+
     return json({
       success: true,
       blockId: sharedBlock.id

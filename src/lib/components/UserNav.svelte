@@ -9,6 +9,7 @@
     CircleUserRound,
     UserRoundCheck,
     User,
+    Settings,
   } from "lucide-svelte";
   import { page } from "$app/stores";
 
@@ -77,6 +78,10 @@
               <KeyRound class="mr-2 h-4 w-4" />
               <a href="/register">Register</a>
               <DropdownMenu.Shortcut>⇧⌘R</DropdownMenu.Shortcut>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+              <Settings class="mr-2 h-4 w-4" />
+              <a href="/admin/letta">Letta Admin</a>
             </DropdownMenu.Item>
           {/if}
           <DropdownMenu.Item>

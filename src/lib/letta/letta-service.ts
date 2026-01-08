@@ -1,10 +1,21 @@
-import { getLettaClient } from './client';
+import { getLettaClient, isSelfHosted } from './client';
+
+export function getLettaProjectId(): string {
+  return process.env.LETTA_PROJECT_ID || import.meta.env.VITE_LETTA_PROJECT_ID || 'smdr-main';
+}
 
 // Configurazione costanti
 export const LETTA_CONFIG = {
-  model: 'openai/gpt-4o', // Aggiornato a gpt-4o che è più standard
+  model: 'openai/gpt-4o',
   embedding: 'openai/text-embedding-3-small',
-  tools: ['archival_memory_insert', 'archival_memory_search']
+  tools: [
+    'archival_memory_insert', 
+    'archival_memory_search', 
+    'semantic_search_files', 
+    'conversation_search',
+    'open_files',
+    'grep_files'
+  ]
 } as const;
 
 /**
@@ -25,7 +36,7 @@ export async function getOrCreateUserAgent(userId: string) {
   // Crea nuovo agente
   const agent = await client.agents.create({
     model: LETTA_CONFIG.model,
-    embedding: LETTA_CONFIG.embedding,
+    ...(isSelfHosted() ? { embedding: LETTA_CONFIG.embedding } : {}),
     memory_blocks: [
       {
         label: 'human',
@@ -54,13 +65,14 @@ export async function getOrCreateUserAgent(userId: string) {
 /**
  * Crea o recupera la memoria condivisa per un progetto
  */
-export async function getOrCreateSharedMemory(projectId: string) {
+export async function getOrCreateSharedMemory(projectId?: string) {
+  const finalProjectId = projectId || getLettaProjectId();
   const client = getLettaClient();
 
   // Cerca blocco condiviso esistente
   const blocksPage = await client.blocks.list();
   const sharedBlock = blocksPage.items.find(b =>
-    b.label === `project:${projectId}` &&
+    b.label === `project:${finalProjectId}` &&
     b.description?.includes('Shared memory for project')
   );
 
@@ -70,9 +82,9 @@ export async function getOrCreateSharedMemory(projectId: string) {
 
   // Crea nuovo blocco condiviso
   const block = await client.blocks.create({
-    label: `project:${projectId}`,
-    description: `Shared memory block for project ${projectId}. Contains project metadata, structure, and context shared across all user agents.`,
-    value: `Project ID: ${projectId}\nCreated: ${new Date().toISOString()}\n\nProject content will be indexed here.`
+    label: `project:${finalProjectId}`,
+    description: `Shared memory block for project ${finalProjectId}. Contains project metadata, structure, and context shared across all user agents.`,
+    value: `Project ID: ${finalProjectId}\nCreated: ${new Date().toISOString()}\n\nProject content will be indexed here.`
   });
 
   return block;
@@ -83,10 +95,11 @@ export async function getOrCreateSharedMemory(projectId: string) {
  */
 export async function attachSharedMemory(
   agentId: string,
-  projectId: string
+  projectId?: string
 ) {
+  const finalProjectId = projectId || getLettaProjectId();
   const client = getLettaClient();
-  const sharedBlock = await getOrCreateSharedMemory(projectId);
+  const sharedBlock = await getOrCreateSharedMemory(finalProjectId);
 
   // Ottieni blocchi attuali dell'agente
   const agent = await client.agents.retrieve(agentId);

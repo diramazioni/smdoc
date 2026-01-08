@@ -24,11 +24,14 @@
     }
   });
 
+  let error = $state<string | null>(null);
+
   async function sendMessage() {
     if (!inputMessage.trim() || isLoading) return;
 
     const userMsg = inputMessage.trim();
     inputMessage = "";
+    error = null;
 
     // Aggiungi messaggio utente
     messages = [...messages, { role: "user", content: userMsg }];
@@ -55,23 +58,30 @@
           },
         ];
       } else {
+        error = data.error || "Errore nella comunicazione con l'assistente";
         messages = [
           ...messages,
           {
             role: "assistant",
-            content: `Error: ${data.error}`,
+            content: `Error: ${error}`,
           },
         ];
       }
-    } catch (error: any) {
+    } catch (err: any) {
+      error = err.message || "Errore di rete";
       messages = [
         ...messages,
         {
           role: "assistant",
-          content: `Network error: ${error.message}`,
+          content: `Network error: ${error}`,
         },
       ];
     }
+  }
+
+  function clearChat() {
+    messages = [];
+    error = null;
   }
 
   function handleKeydown(event: KeyboardEvent) {
@@ -89,11 +99,20 @@
   <div
     class="px-4 py-3 border-b border-gray-200 bg-gray-50 flex items-center justify-between"
   >
-    <h3 class="text-sm font-bold text-gray-700">Letta AI Assistant</h3>
-    <div
-      class="h-2 w-2 rounded-full bg-green-500 animate-pulse"
-      title="Connected"
-    ></div>
+    <div class="flex items-center gap-2">
+      <h3 class="text-sm font-bold text-gray-700">Letta AI Assistant</h3>
+      <div
+        class="h-2 w-2 rounded-full bg-green-500 animate-pulse"
+        title="Connected"
+      ></div>
+    </div>
+    <button
+      onclick={clearChat}
+      class="text-[10px] text-gray-400 hover:text-red-500 transition-colors uppercase font-bold tracking-tighter"
+      title="Cancella conversazione"
+    >
+      Clear Chat
+    </button>
   </div>
 
   <!-- Messages Container -->

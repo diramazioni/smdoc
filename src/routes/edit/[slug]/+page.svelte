@@ -20,6 +20,7 @@
   import Crepe from "$lib/components/Crepe.svelte";
   import Assets from "$lib/components/Assets.svelte";
   import LettaChat from "$lib/components/LettaChat.svelte";
+  import LettaStatus from "$lib/components/LettaStatus.svelte";
   // Svelte
   import { onDestroy, onMount, setContext } from "svelte";
   import { page } from "$app/stores";
@@ -288,8 +289,14 @@
   </Resizable.Pane>
   <Resizable.Handle withHandle />
   <Resizable.Pane defaultSize={20}>
-    <div class="min-w-96 max-w-[600px]" use:scrollFixed>
+    <div class="min-w-96 max-w-[600px] flex flex-col gap-4" use:scrollFixed>
       <Assets bind:editorRef />
+      <div class="px-4">
+        <LettaStatus
+          userId={data.user?.name || "anonymous"}
+          projectId="smdr-main"
+        />
+      </div>
     </div>
   </Resizable.Pane>
 </Resizable.PaneGroup>
