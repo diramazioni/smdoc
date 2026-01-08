@@ -1,17 +1,18 @@
 ---
-title: What Is Markdoc?
----
-# {% $frontmatter.title %} {% #overview %}
+title: Markdoc?
+description: ''
+slug: markdoc
+updatedAt: 2026-01-08T23:27:16.220Z
 
-Markdoc is a Markdown-based syntax and toolchain for creating custom documentation sites. 
+---
+# 
+
+Markdoc is a Markdown-based syntax and toolchain for creating custom documentation sites.
 Stripe created Markdoc to power [our public docs](http://stripe.com/docs).
 
 {% callout type="check" %}
 Markdoc is open-source—check out its [source](http://github.com/markdoc/markdoc) to see how it works.
 {% /callout %}
-
-{% counter %}
-{% /counter %}
 
 ## How is Markdoc different?
 

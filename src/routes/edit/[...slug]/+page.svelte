@@ -44,29 +44,17 @@
 
   let { data }: { data: any } = $props();
 
-  let useTuiEditor = $state(false);
+  let useTuiEditor = $state(true);
   let editorRef = $state<any>(); // Reference to store the editor instance
   let titleValue = $state("");
   let descriptionValue = $state("");
-  let currentDocPath = $state(""); // Track navigated folder in Assets
-  let slug = $derived(
-    currentDocPath
-      ? `${currentDocPath}/${slugify(titleValue)}`
-      : slugify(titleValue),
-  );
+  let slug = $derived(slugify(titleValue));
   let originalSlug = $state("");
 
   $effect(() => {
     titleValue = data.frontmatter?.title ?? "";
     descriptionValue = data.frontmatter?.description ?? "";
     originalSlug = data.slug;
-
-    // Initialize currentDocPath from data.slug
-    if (data.slug) {
-      const parts = data.slug.split("/");
-      parts.pop();
-      currentDocPath = parts.join("/");
-    }
   });
 
   $effect(() => {
@@ -84,8 +72,6 @@
   let showUploadFileDialog = $state(false);
   let showIndexFileDialog = $state(false);
   let showIndexDirectoryDialog = $state(false);
-
-  let currentDocPath = $state(""); // Track navigated folder in Assets
 
   // Calcola la larghezza dinamica per il campo slug
   let slugWidth = $derived(Math.max(80, slug.length * 8 + 200));
@@ -116,7 +102,6 @@
   async function performSave(
     customSlug?: string,
     skipRedirect: boolean = false,
-    action: "created" | "updated" = "updated",
   ) {
     const targetSlug = customSlug || slug;
     autoSaveDialog = false;
@@ -135,10 +120,10 @@
 
     const result = deserialize(await response.text());
 
-    if (result.type === "success" && (result.data as any)?.success) {
+    if (result.type === "success") {
       toast.success(`${targetSlug} salvato`);
       // Non-blocking sync
-      syncWithLetta(action, {
+      syncWithLetta("updated", {
         title: titleValue,
         slug: targetSlug,
         description: descriptionValue,
@@ -151,7 +136,6 @@
     } else {
       const errorMsg =
         (result.type === "failure" ? result.data?.error : result.message) ||
-        (result.type === "success" && (result.data as any)?.error) ||
         "Errore sconosciuto";
       toast.error(`Errore salvataggio: ${errorMsg}`);
       return false;
@@ -172,34 +156,20 @@
       body: formData,
       headers: { "x-sveltekit-action": "true" },
     });
-    const result = deserialize(await response.text());
-    if (result.type === "success" && (result.data as any)?.success) {
+    const result = await response.json();
+    if (result.type === "success") {
       toast.success("Document renamed successfully");
       showRenameDialog = false;
-
-      // Sync rename to Letta (as a created for the new slug)
-      syncWithLetta("created", {
-        title: titleValue,
-        slug: slug,
-        description: descriptionValue,
-      });
-      // Sync a delete for the old slug
-      syncWithLetta("deleted", {}, originalSlug);
-
       originalSlug = slug;
       await goto(`/edit/${slug}`, { invalidateAll: true });
     } else {
-      const errorMsg =
-        (result.type === "failure" ? result.data?.error : result.message) ||
-        (result.type === "success" && (result.data as any)?.error) ||
-        "Errore sconosciuto";
-      toast.error(`Error renaming document: ${errorMsg}`);
+      toast.error(`Error renaming document: ${result.message}`);
     }
   }
 
   async function handleSaveAs() {
     showRenameDialog = false;
-    await performSave(undefined, false, "created");
+    await performSave();
   }
 
   async function handleCreateConfirm(
@@ -248,7 +218,6 @@
   async function syncWithLetta(
     action: "created" | "updated" | "deleted",
     metadata?: any,
-    targetSlug?: string,
   ) {
     try {
       await fetch("/api/letta/sync", {
@@ -256,7 +225,9 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           projectId: "smdr-main",
-          slug: targetSlug || slug,
+          slug: slug, // This is not the actual file path of the doc, but the doc slug is what matters for Letta
+          // Actually, we should probably pass the full path if we want Letta to read it
+          // For now using the slug as the identifier
           action,
           metadata,
         }),
@@ -329,7 +300,6 @@
 <CreateFileDialog
   bind:open={showCreateFileDialog}
   onConfirm={handleCreateConfirm}
-  parentPath={currentDocPath}
 />
 
 <!-- Rename vs Save As dialog -->
@@ -431,16 +401,16 @@
       </Button>
     </div>
     <div class="flex items-center space-x-3">
-      <div >
+      <div>
         <!-- switch editor-->
         <Label for="editor">
           {#if useTuiEditor}
-            Tui Editor
+            TuiEditor
           {:else}
-            Crepe Editor
+            Crepe
           {/if}
         </Label>
-        <Switch class="mt-2" bind:checked={useTuiEditor} />
+        <Switch bind:checked={useTuiEditor} />
         <!-- switch editor-->
       </div>
       <DropdownMenu.Root>
@@ -508,7 +478,7 @@
   <Resizable.Handle withHandle />
   <Resizable.Pane defaultSize={20}>
     <div class="min-w-96 max-w-[600px] flex flex-col gap-4" use:scrollFixed>
-      <Assets bind:editorRef bind:currentDocPath />
+      <Assets bind:editorRef />
       <div class="px-4">
         <LettaStatus
           userId={data.user?.name || "anonymous"}

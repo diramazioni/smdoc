@@ -14,6 +14,7 @@ import {
   getFileDirectory,
   getDirectoryForType 
 } from '$lib/config/files.server';
+export { DOCS_DIR, ASSETS_DIR, getFileDirectory, getDirectoryForType };
 
 // Ensure directories exist on startup
 Promise.all([
@@ -42,35 +43,75 @@ export async function setMD(slug: string, content: string) {
   try {
     const file = path.resolve(`${DOCS_DIR}/${slug}.md`);
     console.debug('Writing to file:', file);
-    // Ensure parent directory exists
-    await fs.mkdir(path.dirname(file), { recursive: true });
     await fs.writeFile(file, content, 'utf-8');
-  } catch (err: any) {
-    if (err.status) throw err;
-    throw error(500, err.message || err);
+  } catch (error: any) {
+    throw error(500, error);
   }
 }
 
-export async function getFileList(type: FileType): Promise<string[]> {
+export async function renameMD(oldSlug: string, newSlug: string) {
   try {
-    const directory = getDirectoryForType(type);
-    const files = await fs.readdir(directory);
+    const oldPath = path.resolve(`${DOCS_DIR}/${oldSlug}.md`);
+    const newPath = path.resolve(`${DOCS_DIR}/${newSlug}.md`);
+    await fs.rename(oldPath, newPath);
+  } catch (error: any) {
+    throw error(500, error);
+  }
+}
+
+
+export interface AssetInfo {
+  name: string;
+  isDir: boolean;
+  path: string;
+}
+
+export async function getFileList(type: FileType, subDir: string = ''): Promise<AssetInfo[]> {
+  try {
+    const baseDirectory = getDirectoryForType(type);
+    const directory = path.join(baseDirectory, subDir);
     
-    return files.filter(file => {
-      const mimeType = getMimeTypeFromFilename(file);
-      if (!mimeType) return false;
-      
-      switch(type) {
-        case 'md':
-          return file.endsWith('.md');
-        case 'pdf':
-          return file.endsWith('.pdf');
-        case 'img':
-          return mimeType.startsWith('image/');
-        default:
-          return false;
+    // Ensure the directory is within the baseDirectory
+    const resolvedPath = path.resolve(directory);
+    if (!resolvedPath.startsWith(path.resolve(baseDirectory))) {
+      throw new Error('Invalid directory path');
+    }
+
+    const entries = await fs.readdir(directory, { withFileTypes: true });
+    
+    const results: AssetInfo[] = [];
+
+    for (const entry of entries) {
+      const name = entry.name;
+      const entryPath = path.join(subDir, name);
+
+      if (entry.isDirectory()) {
+         // Skip hidden directories and _templates
+        if (name.startsWith('.') || name === '_templates') continue;
+        results.push({ name, isDir: true, path: entryPath });
+      } else if (entry.isFile()) {
+        const mimeType = getMimeTypeFromFilename(name);
+        let allowed = false;
+
+        switch(type) {
+          case 'md':
+            allowed = name.endsWith('.md');
+            break;
+          case 'pdf':
+            allowed = name.endsWith('.pdf');
+            break;
+          case 'img':
+            allowed = mimeType?.startsWith('image/') ?? false;
+            break;
+        }
+
+        if (allowed) {
+          results.push({ name, isDir: false, path: entryPath });
+        }
       }
-    });
+    }
+
+    return results;
   } catch (error: any) {
     console.error('Error reading directory:', error);
     return [];
@@ -103,6 +144,51 @@ export async function deleteFile(filename: string): Promise<boolean> {
     console.error('Error deleting file:', error);
     return false;
   }
+}
+
+/**
+ * Creates a new directory in the DOCS_DIR or ASSETS_DIR
+ * @param dirName - Name of the directory to create
+ * @param parentPath - Optional parent path relative to the base directory
+ * @param baseType - The type of directory to create ('md' for docs, 'asset' for assets)
+ * @returns The full path of the created directory
+ */
+export async function createDirectory(
+  dirName: string, 
+  parentPath?: string, 
+  baseType: 'md' | 'asset' = 'md'
+): Promise<string> {
+  // Validate directory name
+  const invalidChars = /[<>:"|?*\x00-\x1F]/;
+  if (invalidChars.test(dirName)) {
+    throw new Error('Directory name contains invalid characters');
+  }
+
+  // Prevent path traversal
+  if (dirName.includes('..') || dirName.includes('/') || dirName.includes('\\')) {
+    throw new Error('Directory name cannot contain path separators or parent references');
+  }
+
+  // Build the full path
+  const baseDirectory = baseType === 'md' ? DOCS_DIR : ASSETS_DIR;
+  const basePath = parentPath 
+    ? path.resolve(baseDirectory, parentPath)
+    : baseDirectory;
+
+  // Ensure the base path is within the target base directory
+  const resolvedBase = path.resolve(basePath);
+  const resolvedTargetBase = path.resolve(baseDirectory);
+  
+  if (!resolvedBase.startsWith(resolvedTargetBase)) {
+    throw new Error('Invalid parent path');
+  }
+
+  const fullPath = path.join(resolvedBase, dirName);
+
+  // Create the directory
+  await fs.mkdir(fullPath, { recursive: true });
+
+  return fullPath;
 }
 
 export function getFrontmatter(frontmatter: string) {
@@ -160,7 +246,10 @@ export async function markdoc(ast: any) {
       frontmatter: getFrontmatter(ast.attributes.frontmatter),
     },
   });
-  return JSON.stringify(content.children);
+  if (!content || typeof content === 'string' || typeof content === 'number' || typeof content === 'boolean') {
+    return JSON.stringify([]);
+  }
+  return JSON.stringify((content as any).children || []);
 }
 
 export async function loadMD(slug: string) {

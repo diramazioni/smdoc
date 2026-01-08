@@ -82,12 +82,15 @@ export const GET: RequestHandler = async ({ params }) => {
         return new Response(JSON.stringify(navItems), {
           headers: { 'Content-Type': 'application/json' }
         });
-    } catch (err) {
-        console.error('Error in nav API:', err);
+    } catch (err: any) {
+        if (err.code !== 'ENOENT') {
+          console.error('Error in nav API:', err);
+        }
         // Return empty array instead of crashing
         return new Response(JSON.stringify([]), {
           headers: { 'Content-Type': 'application/json' },
           status: 200
         });
     }
+
 };
