@@ -6,9 +6,22 @@
   import * as Resizable from "$lib/components/ui/resizable/index.js";
   import { Separator } from "$lib/components/ui/separator/index.js";
   import { Switch } from "$lib/components/ui/switch/index.js";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import Dialog from "$lib/components/Dialog.svelte";
+  import CreateDirectoryDialog from "$lib/components/CreateDirectoryDialog.svelte";
+  import IndexFileDialog from "$lib/components/IndexFileDialog.svelte";
+  import IndexDirectoryDialog from "$lib/components/IndexDirectoryDialog.svelte";
 
-  import { Save, Eye, Copy, FilePlus } from "lucide-svelte";
+  import {
+    Save,
+    Eye,
+    Copy,
+    Plus,
+    FileText,
+    FolderPlus,
+    FileUp,
+    FolderUp,
+  } from "lucide-svelte";
   // Utils
   import slugify from "voca/slugify";
   import { copy } from "svelte-copy";
@@ -42,6 +55,13 @@
   let showChat = $state(false);
 
   let autoSaveDialog = $state(false);
+  let confirmClearDialog = $state(false);
+  let showCreateDirectoryDialog = $state(false);
+  let showIndexFileDialog = $state(false);
+  let showIndexDirectoryDialog = $state(false);
+
+  // Calcola la larghezza dinamica per il campo slug
+  let slugWidth = $derived(Math.max(80, slug.length * 8 + 20));
 
   let interval: ReturnType<typeof setInterval>; // 30 seconds
   onMount(() => {});
@@ -124,9 +144,34 @@
     }
   }
 
+  function confirmClearFields() {
+    confirmClearDialog = true;
+  }
+
   function clearFields() {
-    titleValue = descriptionValue = "";
+    titleValue = "";
+    descriptionValue = "";
     editorRef?.setMarkdown("");
+    confirmClearDialog = false;
+    toast.success("Campi resettati");
+  }
+
+  async function clearFieldsAndNavigate() {
+    clearFields();
+    // Navigate to a new empty document
+    await goto("/edit/new-document", { invalidateAll: true });
+  }
+
+  function handleCreateDirectory() {
+    showCreateDirectoryDialog = true;
+  }
+
+  function handleIndexFile() {
+    showIndexFileDialog = true;
+  }
+
+  function handleIndexDirectory() {
+    showIndexDirectoryDialog = true;
   }
 
   function scrollFixed(node: HTMLElement) {
@@ -188,6 +233,57 @@
   {/snippet}
 </Dialog>
 
+<!-- Confirmation dialog before clearing fields -->
+<Dialog bind:open={confirmClearDialog}>
+  {#snippet trigger()}
+    <!-- Trigger is handled externally -->
+  {/snippet}
+
+  {#snippet title()}
+    Conferma Reset
+  {/snippet}
+
+  {#snippet description()}
+    <p class="mb-4">
+      Vuoi salvare le modifiche prima di creare un nuovo documento?
+    </p>
+    <div class="flex justify-end gap-2">
+      <Button
+        variant="outline"
+        onclick={() => {
+          confirmClearDialog = false;
+        }}
+      >
+        Annulla
+      </Button>
+      <Button
+        variant="destructive"
+        onclick={async () => {
+          await clearFieldsAndNavigate();
+        }}
+      >
+        No, elimina
+      </Button>
+      <Button
+        class="bg-green-600 hover:bg-green-700"
+        onclick={async (e) => {
+          await handleSave(e);
+          await clearFieldsAndNavigate();
+        }}
+      >
+        Sì, salva
+      </Button>
+    </div>
+  {/snippet}
+</Dialog>
+
+<!-- Create Directory Dialog -->
+<CreateDirectoryDialog bind:open={showCreateDirectoryDialog} />
+
+<!-- Index Dialogs -->
+<IndexFileDialog bind:open={showIndexFileDialog} />
+<IndexDirectoryDialog bind:open={showIndexDirectoryDialog} />
+
 {#snippet metaForm()}
   <form
     method="POST"
@@ -218,7 +314,13 @@
       >
         <Copy />
       </button>
-      <Input type="text" name="slug_view" disabled value={slug} class="w-20" />
+      <Input
+        type="text"
+        name="slug_view"
+        disabled
+        value={slug}
+        style="width: {slugWidth}px; min-width: 80px; max-width: 400px;"
+      />
       <input name="slug" hidden value={slug} class="w-20" />
       <!-- <Button type="submit">Save new</Button> -->
     </div>
@@ -226,40 +328,73 @@
 {/snippet}
 
 {#snippet cmdMenu()}
-  <div id="cmdMenu" class="relative z-10 flex max-w-fit items-center space-x-3">
-    <form method="POST" action="?/save" onsubmit={handleSave}>
-      <input type="hidden" name="updatedContent" value="" />
-      <Button class="menu" type="submit" variant="outline">
-        <Save />
+  <div
+    id="cmdMenu"
+    class="relative z-10 flex w-full justify-between items-center"
+  >
+    <div class="flex items-center space-x-3">
+      <form method="POST" action="?/save" onsubmit={handleSave}>
+        <input type="hidden" name="updatedContent" value="" />
+        <Button class="menu" type="submit" variant="outline">
+          <Save />
+        </Button>
+      </form>
+      <Button
+        href={$page.url.pathname.replace("/edit", "")}
+        class="menu"
+        type="button"
+        variant="outline"
+      >
+        <Eye />
       </Button>
-    </form>
-    <Button
-      href={$page.url.pathname.replace("/edit", "")}
-      class="menu"
-      type="button"
-      variant="outline"
-    >
-      <Eye />
-    </Button>
-    <Button onclick={clearFields} class="menu" type="button" variant="outline">
-      <FilePlus />
-    </Button>
-    <div>
-      <!-- switch editor-->
-      <Label for="editor">
-        {#if useTuiEditor}
-          TuiEditor
-        {:else}
-          Crepe
-        {/if}
-      </Label>
-      <Switch bind:checked={useTuiEditor} />
-      <!-- switch editor-->
+    </div>
+    <div class="flex items-center space-x-3">
+      <div>
+        <!-- switch editor-->
+        <Label for="editor">
+          {#if useTuiEditor}
+            TuiEditor
+          {:else}
+            Crepe
+          {/if}
+        </Label>
+        <Switch bind:checked={useTuiEditor} />
+        <!-- switch editor-->
+      </div>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <button
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-green-600 text-white hover:bg-green-700 h-10 px-4 py-2"
+            type="button"
+          >
+            <Plus />
+          </button>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content align="end">
+          <DropdownMenu.Item onclick={confirmClearFields}>
+            <FileText class="mr-2 h-4 w-4" />
+            Nuovo documento
+          </DropdownMenu.Item>
+          <DropdownMenu.Item onclick={handleCreateDirectory}>
+            <FolderPlus class="mr-2 h-4 w-4" />
+            Nuova directory
+          </DropdownMenu.Item>
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item onclick={handleIndexFile}>
+            <FileUp class="mr-2 h-4 w-4" />
+            Index File
+          </DropdownMenu.Item>
+          <DropdownMenu.Item onclick={handleIndexDirectory}>
+            <FolderUp class="mr-2 h-4 w-4" />
+            Index Directory
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </div>
   </div>
 {/snippet}
 {#snippet tuiEditor()}
-  <div class="mt-30">
+  <div class="mt-2">
     <TuiEditor
       bind:this={editorRef}
       initialValue={data.md_only}

@@ -200,3 +200,50 @@ export async function syncAllAgentsFolders(projectId?: string) {
     }
   }
 }
+/**
+ * Elenca tutte le cartelle disponibili
+ */
+export async function listFolders() {
+  const client = getLettaClient();
+  return await client.folders.list();
+}
+
+/**
+ * Collega una specifica cartella a un agente
+ */
+export async function attachFolderToAgent(
+  agentId: string,
+  folderId: string
+) {
+  const client = getLettaClient();
+  await client.agents.folders.attach(folderId, { agent_id: agentId });
+}
+
+/**
+ * Scollega una cartella da un agente
+ */
+export async function detachFolderFromAgent(
+  agentId: string,
+  folderId: string
+) {
+  const client = getLettaClient();
+  await client.agents.folders.detach(folderId, agentId);
+}
+
+/**
+ * Attende il completamento di un job
+ */
+export async function waitForJob(jobId: string) {
+  const client = getLettaClient();
+  
+  while (true) {
+    const job = await client.jobs.retrieve(jobId);
+    if (job.status === 'completed') {
+      return job;
+    } else if (job.status === 'failed') {
+      throw new Error(`Job failed: ${JSON.stringify(job.metadata)}`);
+    }
+    // Wait 1 second before polling again
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+}

@@ -64,7 +64,8 @@ export const actions = {
         const slug = file.replace('.md', '');
 
         try {
-          await uploadFileToLetta(projectId, filePath, 'markdown');
+          // Passa isWebContent: true per contenuti web
+          await uploadFileToLetta(projectId, filePath, 'markdown', true);
           await updateSharedMemoryWithFile(
             projectId,
             filePath,
@@ -90,6 +91,45 @@ export const actions = {
         message: `Sincronizzazione completata: ${results.filter(r => r.status === 'success').length} file sincronizzati.`,
         results 
       };
+    } catch (err: any) {
+      return fail(500, { error: err.message });
+    }
+  },
+
+  indexContent: async ({ request }) => {
+    try {
+      const data = await request.formData();
+      const indexPath = data.get('indexPath') as string;
+      const isDirectory = data.get('isDirectory') === 'on';
+      
+      const fileToUpload = data.get('fileToUpload');
+      const filesToUpload = data.getAll('filesToUpload');
+
+      const projectId = getLettaProjectId();
+      const { uploadIndexedContent, uploadIndexedFiles } = await import('$lib/letta/filesystem-service');
+
+      // 1. Handle single file upload
+      if (fileToUpload instanceof File && fileToUpload.name) {
+          const result = await uploadIndexedFiles(projectId, [fileToUpload]);
+          return { success: true, message: `Successfully indexed file: ${fileToUpload.name}`, results: result.results };
+      }
+      // 2. Handle multiple directory files upload
+      else if (filesToUpload && filesToUpload.length > 0 && filesToUpload[0] instanceof File) {
+          const files = filesToUpload as File[];
+          const result = await uploadIndexedFiles(projectId, files);
+          return { success: true, message: `Successfully indexed ${files.length} files from directory`, results: result.results };
+      }
+      // 3. Handle server-side path (legacy/admin only)
+      else if (indexPath) {
+          const result = await uploadIndexedContent(projectId, indexPath, isDirectory);
+          return { 
+            success: true, 
+            message: `Successfully indexed ${isDirectory ? 'directory' : 'file'}: ${indexPath}`,
+            results: result.results 
+          };
+      }
+
+      return fail(400, { error: 'No file or path provided' });
     } catch (err: any) {
       return fail(500, { error: err.message });
     }

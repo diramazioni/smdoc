@@ -143,6 +143,35 @@ export const actions = {
         errors: { message: 'Failed to delete file' },
       };
     }
+	},
+
+	createDirectory: async ({ request }) => {
+		try {
+			const data = await request.formData();
+			const directoryName = data.get('directoryName') as string;
+			const parentPath = data.get('parentPath') as string | null;
+
+			if (!directoryName || directoryName.trim() === '') {
+				return {
+					success: false,
+					error: 'Directory name is required'
+				};
+			}
+
+			const { createDirectory } = await import('$lib/api');
+			const fullPath = await createDirectory(directoryName.trim(), parentPath || undefined);
+
+			return {
+				success: true,
+				path: fullPath
+			};
+		} catch (error) {
+			console.error('Error creating directory:', error);
+			return {
+				success: false,
+				error: error instanceof Error ? error.message : 'Failed to create directory'
+			};
+		}
 	}
 
 };

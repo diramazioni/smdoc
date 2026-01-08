@@ -202,9 +202,14 @@
         <p class="text-sm text-gray-500 mb-6">
           Sincronizza tutti i documenti presenti nella cartella <code
             class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono"
-            >mdocs/</code
-          > con la memoria di Letta. Questa operazione indicizzerà tutti i file markdown
-          per renderli consultabili dall'AI.
+            >webdocs/</code
+          >
+          con la memoria di Letta. Questa operazione indicizzerà tutti i file
+          markdown per renderli consultabili dall'AI. I file verranno
+          organizzati sotto
+          <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono"
+            >/webdocs/</code
+          > in Letta.
         </p>
 
         <form

@@ -71,10 +71,12 @@ function parseMarkdownToNavItems(markdown: string): NavItem[] {
   return result;
 }
 
+import { DOCS_DIR } from '$lib/config/files.server';
+
 export const GET: RequestHandler = async ({ params }) => {
     try {
         const slugParts = params.slug.split('/');
-        const filePath = join(process.cwd(), 'mdocs', ...slugParts) + '.md';
+        const filePath = join(DOCS_DIR, ...slugParts) + '.md';
 
         const navListData = await readFile(filePath, 'utf8');
         const navItems = parseMarkdownToNavItems(navListData);

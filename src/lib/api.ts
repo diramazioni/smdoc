@@ -103,6 +103,43 @@ export async function deleteFile(filename: string): Promise<boolean> {
   }
 }
 
+/**
+ * Creates a new directory in the DOCS_DIR
+ * @param dirName - Name of the directory to create
+ * @param parentPath - Optional parent path relative to DOCS_DIR
+ * @returns The full path of the created directory
+ */
+export async function createDirectory(dirName: string, parentPath?: string): Promise<string> {
+  // Validate directory name
+  const invalidChars = /[<>:"|?*\x00-\x1F]/;
+  if (invalidChars.test(dirName)) {
+    throw new Error('Directory name contains invalid characters');
+  }
+
+  // Prevent path traversal
+  if (dirName.includes('..') || dirName.includes('/') || dirName.includes('\\')) {
+    throw new Error('Directory name cannot contain path separators or parent references');
+  }
+
+  // Build the full path
+  const basePath = parentPath 
+    ? path.resolve(DOCS_DIR, parentPath)
+    : DOCS_DIR;
+
+  // Ensure the base path is within DOCS_DIR
+  const resolvedBase = path.resolve(basePath);
+  if (!resolvedBase.startsWith(path.resolve(DOCS_DIR))) {
+    throw new Error('Invalid parent path');
+  }
+
+  const fullPath = path.join(resolvedBase, dirName);
+
+  // Create the directory
+  await fs.mkdir(fullPath, { recursive: true });
+
+  return fullPath;
+}
+
 export function getFrontmatter(frontmatter: string) {
   return yaml.load(frontmatter);
 }

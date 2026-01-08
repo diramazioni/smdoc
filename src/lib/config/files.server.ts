@@ -3,7 +3,7 @@ import path from 'node:path';
 import type { FileType } from './files.types';
 
 // Server-side directory configuration
-export const DOCS_DIR = path.resolve(process.cwd(), env.DOCS_DIR ?? 'mdocs');
+export const DOCS_DIR = path.resolve(process.cwd(), env.DOCS_DIR ?? 'webdocs');
 export const ASSETS_DIR = path.resolve(process.cwd(), env.ASSETS_DIR ?? 'assets');
 
 export function getFileDirectory(mimeType: string): string {

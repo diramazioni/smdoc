@@ -15,8 +15,8 @@ export async function POST({ request }) {
     // Risolvi il path del file markdown
     const filePath = path.resolve(DOCS_DIR, `${slug}.md`);
 
-    // Carica file nel filesystem Letta
-    await uploadFileToLetta(projectId, filePath, 'markdown');
+    // Carica file nel filesystem Letta (contenuto web)
+    await uploadFileToLetta(projectId, filePath, 'markdown', true);
 
     // Aggiorna memoria condivisa
     const sharedBlock = await updateSharedMemoryWithFile(
