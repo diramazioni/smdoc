@@ -27,6 +27,9 @@ export async function uploadFileToLetta(
     // Letta SDK (and Python backend) requires the 'file' field to be present and properly named
     const file = new File([fileBuffer], fileName, { type: 'text/markdown' });
 
+    // Robust cleanup before upload
+    await cleanupExistingFiles(client, folder.id, fileName);
+
     const uploadJob = await client.folders.files.upload(
       folder.id,
       {
@@ -194,6 +197,9 @@ export async function uploadIndexedContent(
           type: getMimeType(file) 
         });
 
+        // Robust cleanup
+        await cleanupExistingFiles(client, folder.id, relativePath);
+
         const uploadJob = await client.folders.files.upload(
           folder.id,
           { file: lettaFile as any }
@@ -210,6 +216,9 @@ export async function uploadIndexedContent(
       const lettaFile = new File([fileBuffer], fileName, { 
         type: getMimeType(sourcePath) 
       });
+
+      // Robust cleanup
+      await cleanupExistingFiles(client, folder.id, fileName);
 
       const uploadJob = await client.folders.files.upload(
         folder.id,
@@ -239,6 +248,9 @@ export async function uploadIndexedFiles(
     for (const file of files) {
       if (!file.name) continue;
       
+      // Robust cleanup
+      await cleanupExistingFiles(client, folder.id, file.name);
+
       const uploadJob = await client.folders.files.upload(
         folder.id,
         { file: file as any }
@@ -286,4 +298,55 @@ function getMimeType(filePath: string): string {
   if (filePath.endsWith('.xml')) return 'application/xml';
   if (filePath.endsWith('.html')) return 'text/html';
   return 'application/octet-stream';
+}
+
+/**
+ * Checks if a Letta file name matches a target file name, handles duplicates named filename_(N).ext
+ */
+function isFileMatch(lettaFileName: string, targetName: string): boolean {
+  if (!lettaFileName || !targetName) return false;
+
+  // 1. Exact match
+  if (lettaFileName === targetName) return true;
+
+  // 2. Handle webdocs/ prefix variations
+  const cleanLetta = lettaFileName.startsWith('webdocs/') ? lettaFileName.slice(8) : lettaFileName;
+  const cleanTarget = targetName.startsWith('webdocs/') ? targetName.slice(8) : targetName;
+
+  if (cleanLetta === cleanTarget) return true;
+
+  // 3. Match duplicates like filename_(1).ext
+  // Split into base and extension
+  const lastDotTarget = cleanTarget.lastIndexOf('.');
+  if (lastDotTarget === -1) return cleanLetta.startsWith(cleanTarget + '_(');
+
+  const base = cleanTarget.substring(0, lastDotTarget);
+  const ext = cleanTarget.substring(lastDotTarget + 1);
+
+  // Escaping base for regex
+  const escapedBase = base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escapedExt = ext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  
+  const duplicateRegex = new RegExp(`^${escapedBase}(_\\(\\d+\\))?\\.${escapedExt}$`);
+  return duplicateRegex.test(cleanLetta);
+}
+
+/**
+ * Clean up existing files that match the target name
+ */
+async function cleanupExistingFiles(client: any, folderId: string, targetName: string) {
+  try {
+    const filesPage = await client.folders.files.list(folderId);
+    const matches = filesPage.items.filter((f: any) => 
+      isFileMatch(f.file_name, targetName) || 
+      isFileMatch(f.original_file_name, targetName)
+    );
+
+    for (const file of matches) {
+      console.log(`Found duplicate file: ${file.file_name} (ID: ${file.id}). Deleting...`);
+      await client.folders.files.delete(file.id, { folder_id: folderId });
+    }
+  } catch (err) {
+    console.warn(`Error during cleanup of ${targetName}:`, err);
+  }
 }

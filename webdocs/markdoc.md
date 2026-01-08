@@ -2,10 +2,10 @@
 title: Markdoc?
 description: ''
 slug: markdoc
-updatedAt: 2026-01-08T23:27:16.220Z
+updatedAt: 2026-01-08T23:43:32.650Z
 
 ---
-# 
+# Markdoc
 
 Markdoc is a Markdown-based syntax and toolchain for creating custom documentation sites.
 Stripe created Markdoc to power [our public docs](http://stripe.com/docs).
