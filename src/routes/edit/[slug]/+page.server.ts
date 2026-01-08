@@ -1,11 +1,15 @@
 import { error, redirect } from '@sveltejs/kit';
+import path from 'node:path';
+import fs from 'node:fs/promises';
 import { 
   getMD,
   loadMD,
   copyTemplate,
   setMD, 
   getFileList, 
-  getContent
+  getContent,
+  DOCS_DIR,
+  ASSETS_DIR
 } from '$lib/api'
 import yaml from 'js-yaml';
 
@@ -41,12 +45,12 @@ export const actions = {
 			const data = await request.formData();
 			// Extract new frontmatter data from the form
 			const updatedFrontmatter = {
-				title: data.get('title'),
-				description: data.get('description'),
-				slug:  data.get('slug'),
+				title: data.get('title') as string,
+				description: data.get('description') as string,
+				slug:  data.get('slug') as string,
 				updatedAt: new Date(),
 			};
-      		const slug = data.get('slug')
+      		const slug = data.get('slug') as string
 			// console.log("updatedFrontmatter", updatedFrontmatter)
 			let md = await getMD(slug)
 			if (!md) {
@@ -70,10 +74,13 @@ export const actions = {
 		try {
 			console.debug('save md')
 			const data = await request.formData();
-			const updatedContent = data.get('updatedContent')
-			const slug = data.get('slug')
+			const updatedContent = data.get('updatedContent') as string
+			const slug = data.get('slug') as string
 			console.log('s1')
 			const md = await getMD(slug)
+			if (!md) {
+				return { success: false, error: 'File not found' };
+			}
 			console.log('s2')
 			const { frontmatter } = getContent(md);
 			// console.debug("updatedContent", updatedContent)
@@ -97,11 +104,11 @@ export const actions = {
 				const buffer = Buffer.from(arrayBuffer);
 				let filePath = ''
 				if(file.name.endsWith('.md')) {
-				filePath = path.join(docDir, file.name);
+				filePath = path.join(DOCS_DIR, file.name);
 				} else {
-				filePath = path.join(assetsDir, file.name);
+				filePath = path.join(ASSETS_DIR, file.name);
 				}
-				await fs.writeFile(filePath, buffer);
+				await fs.writeFile(filePath, buffer as any);
 			}
 			return {
 			  success: true,
@@ -117,12 +124,12 @@ export const actions = {
 
 	delete: async ({ request }) => {
     const data = await request.formData();
-    const slug:string = data.get('slug')
+    const slug:string = data.get('slug') as string
     let filePath = ''
     if(slug.endsWith('.md')) {
-      filePath = path.join(docDir, slug);
+      filePath = path.join(DOCS_DIR, slug);
     } else {
-      filePath = path.join(assetsDir, slug);
+      filePath = path.join(ASSETS_DIR, slug);
     }
     try {
       await fs.unlink(filePath);

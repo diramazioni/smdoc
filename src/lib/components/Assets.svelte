@@ -1,25 +1,27 @@
 <script lang="ts">
-  import { copy } from 'svelte-copy';
+  import { copy } from "svelte-copy";
   import { toast } from "svelte-sonner";
-  import { page } from '$app/stores';
-  import { Copy, Link, FilePenLine, ImageUp, Trash2 } from 'lucide-svelte';
+  import { page } from "$app/stores";
+  import { Copy, Link, FilePenLine, ImageUp, Trash2 } from "lucide-svelte";
   import * as Tabs from "$lib/components/ui/tabs/index.js";
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
   import UploadForm from "$lib/components/UploadForm.svelte";
-  import Dialog from '$lib/components/Dialog.svelte';
+  import Dialog from "$lib/components/Dialog.svelte";
 
-  let { editorRef = $bindable() } = $props();
-  
+  let { editorRef = $bindable() }: { editorRef: any } = $props();
+
   // State management with runes
-  let tabState = $state('md');
-  let listAssets = $state($page.data.listAssets['md']);
+  let tabState = $state("md");
+  let listAssets = $state($page.data.listAssets["md"]);
   let searchQuery = $state("");
   let fileToDelete = $state<string | null>(null);
 
   // Derived values
-  let filteredItems = $derived(listAssets.filter(item =>
-    item.toLowerCase().includes(searchQuery.toLowerCase())
-  ));
+  let filteredItems = $derived(
+    listAssets.filter((item: string) =>
+      item.toLowerCase().includes(searchQuery.toLowerCase()),
+    ),
+  );
 
   // Effects
   $effect(() => {
@@ -28,15 +30,15 @@
 
   async function handleDelete(slug: string) {
     const formData = new FormData();
-    formData.append('file_name', slug);
-    
-    let response = await fetch('/api/upload', {
-      method: 'DELETE',
-      body: formData
+    formData.append("file_name", slug);
+
+    let response = await fetch("/api/upload", {
+      method: "DELETE",
+      body: formData,
     });
 
     if (response.ok) {
-      listAssets = listAssets.filter(item => item !== slug);
+      listAssets = listAssets.filter((item: string) => item !== slug);
       fileToDelete = null;
       toast.success(`${slug} deleted`);
     } else {
@@ -45,7 +47,7 @@
   }
 
   function getAssetUrl(asset: string): string {
-    if (asset.endsWith('.md')) {
+    if (asset.endsWith(".md")) {
       return `/${asset.slice(0, -3)}`;
     }
     return `/assets/${asset}`;
@@ -54,7 +56,7 @@
   function insertAsset(asset: string) {
     if (!editorRef) return;
     const assetUrl = getAssetUrl(asset);
-    if (asset.endsWith('.md') || asset.endsWith('.pdf')) {
+    if (asset.endsWith(".md") || asset.endsWith(".pdf")) {
       editorRef.insertMarkdown(`[${asset}](${assetUrl})`);
     } else {
       editorRef.insertMarkdown(`![${asset}](${assetUrl})`);
@@ -62,22 +64,22 @@
   }
 </script>
 
-<Tabs.Root 
+<Tabs.Root
   bind:value={tabState}
   onValueChange={(v) => {
     tabState = v;
     listAssets = $page.data.listAssets[v];
-  }} 
+  }}
 >
   <Tabs.List class="grid grid-cols-3">
     <Tabs.Trigger value="md">
-      <FilePenLine/>
+      <FilePenLine />
     </Tabs.Trigger>
     <Tabs.Trigger value="pdf">
       <img src="/pdf-icon.svg" class="h-6 w-8" alt="pdf" />
     </Tabs.Trigger>
     <Tabs.Trigger value="img">
-      <ImageUp/>
+      <ImageUp />
     </Tabs.Trigger>
   </Tabs.List>
   <Tabs.Content value="md">
@@ -91,7 +93,7 @@
   </Tabs.Content>
 </Tabs.Root>
 
-{#snippet assetItems(assetList)}
+{#snippet assetItems(assetList: string[])}
   <UploadForm />
   <input
     type="text"
@@ -112,62 +114,68 @@
   {/if}
 {/snippet}
 
-{#snippet assetItem(asset)}
+{#snippet assetItem(asset: string)}
   {@const assetUrl = getAssetUrl(asset)}
-  {@const isMarkdown = asset.endsWith('.md')}
-  {@const isPdf = asset.endsWith('.pdf')}
-  {@const isTemplate = (asset === '_templates/new.md')} 
-  
-  {#if !isTemplate }
-  <div class="flex items-center border bg-muted hover:bg-primary-foreground text-muted-foreground my-2">
-    <button 
-      use:copy={assetUrl}
-      onclick={() => insertAsset(asset)}
-    >
-      <Link size={15} class="cursor-pointer m-1" />
-    </button>
-    <button 
-      use:copy={assetUrl}
-      onclick={() => {
-        toast.success(`${assetUrl} Link copied to clipboard`);
-      }}
-    >
-      <Copy size={15} class="cursor-pointer m-1" />
-    </button>
+  {@const isMarkdown = asset.endsWith(".md")}
+  {@const isPdf = asset.endsWith(".pdf")}
+  {@const isTemplate = asset === "_templates/new.md"}
 
-    <button onclick={() => fileToDelete = asset}>
-      <Trash2 size={15} class="cursor-pointer m-1" />
-    </button>
-
-    {#if !isMarkdown && !isPdf}
-      <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
-    {/if}
-    <div class="text-sm ml-2">
-      <a 
-        href={isMarkdown ? '/edit' + assetUrl : assetUrl} 
-        class="hover:underline" 
-        data-sveltekit-reload={isMarkdown}
+  {#if !isTemplate}
+    <div
+      class="flex items-center border bg-muted hover:bg-primary-foreground text-muted-foreground my-2"
+    >
+      <button use:copy={assetUrl} onclick={() => insertAsset(asset)}>
+        <Link size={15} class="cursor-pointer m-1" />
+      </button>
+      <button
+        use:copy={assetUrl}
+        onclick={() => {
+          toast.success(`${assetUrl} Link copied to clipboard`);
+        }}
       >
-        {asset}
-      </a>
-    </div>
-  </div>
-  {/if}
+        <Copy size={15} class="cursor-pointer m-1" />
+      </button>
 
+      <button onclick={() => (fileToDelete = asset)}>
+        <Trash2 size={15} class="cursor-pointer m-1" />
+      </button>
+
+      {#if !isMarkdown && !isPdf}
+        <img src={assetUrl} class="h-16 w-16 object-cover" alt={asset} />
+      {/if}
+      <div class="text-sm ml-2">
+        <a
+          href={isMarkdown ? "/edit" + assetUrl : assetUrl}
+          class="hover:underline"
+          data-sveltekit-reload={isMarkdown}
+        >
+          {asset}
+        </a>
+      </div>
+    </div>
+  {/if}
 {/snippet}
 
 <!-- Delete Confirmation Dialog -->
 {#if fileToDelete}
-  <Dialog open={!!fileToDelete} onOpenChange={() => fileToDelete = null}>
+  <Dialog open={!!fileToDelete} onOpenChange={() => (fileToDelete = null)}>
     {#snippet trigger()}open
     {/snippet}
     {#snippet title()}
       Delete {fileToDelete}?
     {/snippet}
     {#snippet description()}
-      <p>This will permanently delete the asset. Are you sure you want to continue?</p>
-      <div class="m-auto w-full flex justify-center hover:bg-red-500 hover:text-white">
-        <button onclick={() => handleDelete(fileToDelete)} class="cursor-pointer p-2 rounded-md">
+      <p>
+        This will permanently delete the asset. Are you sure you want to
+        continue?
+      </p>
+      <div
+        class="m-auto w-full flex justify-center hover:bg-red-500 hover:text-white"
+      >
+        <button
+          onclick={() => fileToDelete && handleDelete(fileToDelete)}
+          class="cursor-pointer p-2 rounded-md"
+        >
           <Trash2 size={25} class="m-1" />
         </button>
       </div>

@@ -14,6 +14,7 @@ import {
   getFileDirectory,
   getDirectoryForType 
 } from '$lib/config/files.server';
+export { DOCS_DIR, ASSETS_DIR, getFileDirectory, getDirectoryForType };
 
 // Ensure directories exist on startup
 Promise.all([
@@ -157,7 +158,10 @@ export async function markdoc(ast: any) {
       frontmatter: getFrontmatter(ast.attributes.frontmatter),
     },
   });
-  return JSON.stringify(content.children);
+  if (!content || typeof content === 'string' || typeof content === 'number' || typeof content === 'boolean') {
+    return JSON.stringify([]);
+  }
+  return JSON.stringify((content as any).children || []);
 }
 
 export async function loadMD(slug: string) {

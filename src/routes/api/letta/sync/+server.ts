@@ -2,10 +2,11 @@ import { json } from '@sveltejs/kit';
 import { uploadFileToLetta, updateSharedMemoryWithFile } from '$lib/letta/filesystem-service';
 import { DOCS_DIR } from '$lib/config/files.server';
 import path from 'node:path';
+import type { LettaSyncRequest } from '$lib/letta/types';
 
 export async function POST({ request }) {
   try {
-    const { projectId, slug, action, metadata } = await request.json();
+    const { projectId, slug, action, metadata }: LettaSyncRequest = await request.json();
 
     if (!projectId || !slug) {
       return json({ success: false, error: 'Project ID and slug are required' }, { status: 400 });

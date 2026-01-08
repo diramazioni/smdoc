@@ -1,6 +1,7 @@
 import { getLettaClient } from './client';
 import { readFileSync } from 'fs';
 import { getOrCreateSharedMemory } from './letta-service';
+import type { LettaFileType, LettaSyncAction, LettaSyncMetadata } from './types';
 
 /**
  * Crea o recupera una folder per un progetto
@@ -33,7 +34,7 @@ export async function getOrCreateProjectFolder(projectId: string) {
 export async function uploadFileToLetta(
   projectId: string,
   filePath: string,
-  fileType: 'markdown' | 'pdf' | 'image'
+  fileType: LettaFileType
 ) {
   const client = getLettaClient();
   const folder = await getOrCreateProjectFolder(projectId);
@@ -64,8 +65,8 @@ export async function uploadFileToLetta(
 export async function updateSharedMemoryWithFile(
   projectId: string,
   filePath: string,
-  action: 'created' | 'updated' | 'deleted',
-  metadata?: { title?: string; slug?: string; description?: string }
+  action: LettaSyncAction,
+  metadata?: LettaSyncMetadata
 ) {
   const client = getLettaClient();
   const sharedBlock = await getOrCreateSharedMemory(projectId);

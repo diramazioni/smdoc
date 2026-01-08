@@ -1,10 +1,11 @@
 import { json } from '@sveltejs/kit';
 import { getOrCreateUserAgent, attachSharedMemory } from '$lib/letta/letta-service';
 import { getLettaClient } from '$lib/letta/client';
+import type { LettaChatRequest } from '$lib/letta/types';
 
 export async function POST({ request }) {
   try {
-    const { message, projectId, userId } = await request.json();
+    const { message, projectId, userId }: LettaChatRequest = await request.json();
 
     if (!userId) {
       return json({ success: false, error: 'User ID is required' }, { status: 400 });

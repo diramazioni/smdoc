@@ -55,12 +55,12 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 
   const writeStream = fs.createWriteStream(filePath);
-  const readStream = Readable.fromWeb(request.body);
+  const readStream = Readable.fromWeb(request.body as any);
 
   try {
     await pipeline(readStream, writeStream);
-    return json({ 
-      success: true, 
+    return json({
+      success: true,
       message: 'File uploaded successfully',
       path: filePath
     });
@@ -104,7 +104,7 @@ export const DELETE: RequestHandler = async ({ request }) => {
     }
 
     await fs.promises.unlink(filePath);
-    
+
     return json({
       success: true,
       message: 'File deleted successfully'

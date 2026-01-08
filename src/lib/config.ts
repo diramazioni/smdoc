@@ -7,7 +7,7 @@
  *   - all-protected: All routes require authentication except public routes
  */
 
-export const AUTH_MODE = process.env.AUTH_MODE || 'edit-only' as const;
+export const AUTH_MODE = (process.env.AUTH_MODE || 'edit-only') as AuthMode;
 
 export type AuthMode = 'edit-only' | 'all-protected';
 

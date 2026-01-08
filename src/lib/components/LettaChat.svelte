@@ -1,10 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import type { LettaMessage, LettaRole } from "../letta/types";
 
   // Svelte 5 Runes
-  let messages = $state<Array<{ role: "user" | "assistant"; content: string }>>(
-    [],
-  );
+  let messages = $state<LettaMessage[]>([]);
   let inputMessage = $state("");
   let isLoading = $derived.by(
     () => messages.length > 0 && messages[messages.length - 1].role === "user",

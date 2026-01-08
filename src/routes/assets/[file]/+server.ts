@@ -4,16 +4,16 @@ import { Readable } from 'node:stream';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { 
-    type FileType,
-    getMimeTypeFromFilename,
-  } from '$lib/config/files.types';
-  import { 
-    DOCS_DIR, 
-    ASSETS_DIR,
-    getFileDirectory,
-  } from '$lib/config/files.server';
-  
+import {
+  type FileType,
+  getMimeTypeFromFilename,
+} from '$lib/config/files.types';
+import {
+  DOCS_DIR,
+  ASSETS_DIR,
+  getFileDirectory,
+} from '$lib/config/files.server';
+
 
 
 export const GET: RequestHandler = async ({ params, request }) => {
@@ -53,5 +53,5 @@ export const GET: RequestHandler = async ({ params, request }) => {
   const readStream = fs.createReadStream(filePath);
   const webStream = Readable.toWeb(readStream);
 
-  return new Response(webStream, { headers });
+  return new Response(webStream as any, { headers });
 };

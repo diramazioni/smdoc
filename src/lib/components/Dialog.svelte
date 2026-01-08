@@ -1,16 +1,16 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
-	import {  type WithoutChild } from "bits-ui";
-    import * as Dialog from "$lib/components/ui/dialog/index.js";
+	import { Dialog as DialogPrimitive, type WithoutChild } from "bits-ui";
+	import * as Dialog from "$lib/components/ui/dialog/index.js";
 
-	type Props = Dialog.RootProps & {
-		trigger: string;
+	type Props = DialogPrimitive.RootProps & {
+		trigger: Snippet;
 		title: Snippet;
 		description: Snippet;
-		contentProps?: WithoutChild<Dialog.ContentProps>;
-		// ...other component props if you wish to pass them
+		contentProps?: WithoutChild<DialogPrimitive.ContentProps>;
+		children?: Snippet;
 	};
- 
+
 	let {
 		open = $bindable(false),
 		children,
@@ -21,7 +21,7 @@
 		...restProps
 	}: Props = $props();
 </script>
- 
+
 <Dialog.Root bind:open {...restProps}>
 	<Dialog.Trigger>
 		{@render trigger()}

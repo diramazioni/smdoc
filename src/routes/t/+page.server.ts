@@ -9,8 +9,8 @@ import {
 	setMD, 
 	getFileList, 
 	getContent, 
-	docDir,
-	assetsDir 
+	DOCS_DIR,
+	ASSETS_DIR 
   } from '$lib/api'
 
 

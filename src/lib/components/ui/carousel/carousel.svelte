@@ -75,12 +75,6 @@
 	}
 
 	$effect(() => {
-		carouselState.orientation = orientation;
-		carouselState.options = opts;
-		carouselState.plugins = plugins;
-	});
-
-	$effect(() => {
 		return () => {
 			carouselState.api?.off("select", onSelect);
 		};

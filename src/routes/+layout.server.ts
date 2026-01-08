@@ -19,7 +19,7 @@ export const load: LayoutServerLoad = async ({ fetch, locals, url }) => {
   }
   // Don't load sidenav for edit pages or single pages
   if (currentPath.startsWith('edit') || !currentPath.includes('/')) {
-    currentPath = undefined;
+    currentPath = '';
   } 
 
   let sideNav = [];

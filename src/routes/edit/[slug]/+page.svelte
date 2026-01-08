@@ -29,8 +29,8 @@
 
   let useTuiEditor = $state(true);
   let editorRef = $state<any>(); // Reference to store the editor instance
-  let titleValue = $state(data.frontmatter?.title ?? "");
-  let descriptionValue = $state(data.frontmatter?.description ?? "");
+  let titleValue = $state("");
+  let descriptionValue = $state("");
   let slug = $derived(slugify(titleValue));
 
   $effect(() => {
@@ -129,13 +129,14 @@
   }
 
   function scrollFixed(node: HTMLElement) {
-    let originalTop;
-    let originalWidth;
+    let originalTop: number;
+    let originalWidth: number;
 
     function handleScroll() {
       if (!originalTop) {
-        originalTop = node.getBoundingClientRect().top;
-        originalWidth = node.getBoundingClientRect().width;
+        const rect = node.getBoundingClientRect();
+        originalTop = rect.top + window.scrollY;
+        originalWidth = rect.width;
       }
 
       if (window.scrollY > originalTop) {
@@ -177,8 +178,8 @@
     <div
       role="button"
       tabIndex="0"
-      onclick={() => handleSave(event)}
-      onkeydown={(e) => e.key === "Enter" && handleSave(event)}
+      onclick={(e) => handleSave(e)}
+      onkeydown={(e) => e.key === "Enter" && handleSave(e)}
       class="cursor-pointer m-auto w-full flex justify-center hover:bg-green-500 hover:text-white"
     >
       <Save size={15} class="m-1" />
