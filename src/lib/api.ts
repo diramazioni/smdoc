@@ -49,26 +49,58 @@ export async function setMD(slug: string, content: string) {
   }
 }
 
-export async function getFileList(type: FileType): Promise<string[]> {
+export interface AssetInfo {
+  name: string;
+  isDir: boolean;
+  path: string;
+}
+
+export async function getFileList(type: FileType, subDir: string = ''): Promise<AssetInfo[]> {
   try {
-    const directory = getDirectoryForType(type);
-    const files = await fs.readdir(directory);
+    const baseDirectory = getDirectoryForType(type);
+    const directory = path.join(baseDirectory, subDir);
     
-    return files.filter(file => {
-      const mimeType = getMimeTypeFromFilename(file);
-      if (!mimeType) return false;
-      
-      switch(type) {
-        case 'md':
-          return file.endsWith('.md');
-        case 'pdf':
-          return file.endsWith('.pdf');
-        case 'img':
-          return mimeType.startsWith('image/');
-        default:
-          return false;
+    // Ensure the directory is within the baseDirectory
+    const resolvedPath = path.resolve(directory);
+    if (!resolvedPath.startsWith(path.resolve(baseDirectory))) {
+      throw new Error('Invalid directory path');
+    }
+
+    const entries = await fs.readdir(directory, { withFileTypes: true });
+    
+    const results: AssetInfo[] = [];
+
+    for (const entry of entries) {
+      const name = entry.name;
+      const entryPath = path.join(subDir, name);
+
+      if (entry.isDirectory()) {
+         // Skip hidden directories and _templates
+        if (name.startsWith('.') || name === '_templates') continue;
+        results.push({ name, isDir: true, path: entryPath });
+      } else if (entry.isFile()) {
+        const mimeType = getMimeTypeFromFilename(name);
+        let allowed = false;
+
+        switch(type) {
+          case 'md':
+            allowed = name.endsWith('.md');
+            break;
+          case 'pdf':
+            allowed = name.endsWith('.pdf');
+            break;
+          case 'img':
+            allowed = mimeType?.startsWith('image/') ?? false;
+            break;
+        }
+
+        if (allowed) {
+          results.push({ name, isDir: false, path: entryPath });
+        }
       }
-    });
+    }
+
+    return results;
   } catch (error: any) {
     console.error('Error reading directory:', error);
     return [];

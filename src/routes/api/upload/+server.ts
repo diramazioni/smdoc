@@ -49,6 +49,12 @@ export const POST: RequestHandler = async ({ request }) => {
 
   const targetDir = getFileDirectory(mimeType);
   const filePath = path.join(targetDir, fileName);
+  const dirName = path.dirname(filePath);
+
+  // Ensure target directory exists (for subdirectories)
+  if (!fs.existsSync(dirName)) {
+    fs.mkdirSync(dirName, { recursive: true });
+  }
 
   // Check if file already exists
   if (fs.existsSync(filePath)) {

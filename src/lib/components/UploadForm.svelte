@@ -11,6 +11,7 @@
   import { toast } from "svelte-sonner";
   import { invalidateAll } from "$app/navigation";
 
+  let { folder = "" }: { folder: string } = $props();
   const upload = createUploadStore();
   let files = $state<FileList | null>(null);
   let isUploading = $state(false);
@@ -37,8 +38,9 @@
     }
 
     try {
+      const fullFileName = folder ? `${folder}/${file.name}` : file.name;
       const headers = {
-        "x-file-name": file.name,
+        "x-file-name": fullFileName,
       };
 
       await upload.upload({
