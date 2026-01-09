@@ -67,6 +67,7 @@ export interface AssetInfo {
   name: string;
   isDir: boolean;
   path: string;
+  isEmpty?: boolean;
 }
 
 export async function getFileList(type: FileType, subDir: string = ''): Promise<AssetInfo[]> {
@@ -91,7 +92,17 @@ export async function getFileList(type: FileType, subDir: string = ''): Promise<
       if (entry.isDirectory()) {
          // Skip hidden directories and _templates
         if (name.startsWith('.') || name === '_templates') continue;
-        results.push({ name, isDir: true, path: entryPath });
+        
+        // Check if directory is empty
+        let isEmpty = true;
+        try {
+          const subEntries = await fs.readdir(path.join(directory, name));
+          isEmpty = subEntries.length === 0;
+        } catch (e) {
+          console.error(`Error reading sub-directory ${name}:`, e);
+        }
+
+        results.push({ name, isDir: true, path: entryPath, isEmpty });
       } else if (entry.isFile()) {
         const mimeType = getMimeTypeFromFilename(name);
         let allowed = false;
@@ -145,6 +156,82 @@ export async function deleteFile(filename: string): Promise<boolean> {
     return true;
   } catch (error: any) {
     console.error('Error deleting file:', error);
+    return false;
+  }
+}
+
+export async function deletePath(assetPath: string): Promise<boolean> {
+  try {
+    let fullPath = path.join(DOCS_DIR, assetPath);
+    
+    // Check if it exists in DOCS_DIR
+    try {
+      await fs.access(fullPath);
+    } catch {
+      // If not in DOCS_DIR, check ASSETS_DIR
+      fullPath = path.join(ASSETS_DIR, assetPath);
+      try {
+        await fs.access(fullPath);
+      } catch {
+        return false; // Not found in either
+      }
+    }
+
+    const resolvedPath = path.resolve(fullPath);
+    const resolvedDocs = path.resolve(DOCS_DIR);
+    const resolvedAssets = path.resolve(ASSETS_DIR);
+
+    if (!resolvedPath.startsWith(resolvedDocs) && !resolvedPath.startsWith(resolvedAssets)) {
+      throw new Error('Invalid delete path');
+    }
+
+    const stats = await fs.stat(resolvedPath);
+    if (stats.isDirectory()) {
+      await fs.rm(resolvedPath, { recursive: true, force: true });
+    } else {
+      await fs.unlink(resolvedPath);
+    }
+    return true;
+  } catch (error: any) {
+    console.error('Error deleting path:', error);
+    return false;
+  }
+}
+
+export async function renamePath(oldPath: string, newPath: string): Promise<boolean> {
+  try {
+    let oldFullPath = path.join(DOCS_DIR, oldPath);
+    let newFullPath = path.join(DOCS_DIR, newPath);
+
+    // Check where the old path actually is
+    try {
+      await fs.access(oldFullPath);
+    } catch {
+      oldFullPath = path.join(ASSETS_DIR, oldPath);
+      newFullPath = path.join(ASSETS_DIR, newPath);
+      try {
+        await fs.access(oldFullPath);
+      } catch {
+        return false; // Source not found
+      }
+    }
+
+    const resolvedOld = path.resolve(oldFullPath);
+    const resolvedNew = path.resolve(newFullPath);
+    const resolvedDocs = path.resolve(DOCS_DIR);
+    const resolvedAssets = path.resolve(ASSETS_DIR);
+
+    if (!resolvedOld.startsWith(resolvedDocs) && !resolvedOld.startsWith(resolvedAssets)) {
+      throw new Error('Invalid old path');
+    }
+    if (!resolvedNew.startsWith(resolvedDocs) && !resolvedNew.startsWith(resolvedAssets)) {
+      throw new Error('Invalid new path');
+    }
+
+    await fs.rename(resolvedOld, resolvedNew);
+    return true;
+  } catch (error: any) {
+    console.error('Error renaming path:', error);
     return false;
   }
 }

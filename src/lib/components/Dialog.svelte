@@ -4,9 +4,9 @@
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
 
 	type Props = DialogPrimitive.RootProps & {
-		trigger: Snippet;
-		title: Snippet;
-		description: Snippet;
+		trigger?: Snippet;
+		title?: Snippet;
+		description?: Snippet;
 		contentProps?: WithoutChild<DialogPrimitive.ContentProps>;
 		children?: Snippet;
 	};
@@ -23,18 +23,24 @@
 </script>
 
 <Dialog.Root bind:open {...restProps}>
-	<Dialog.Trigger>
-		{@render trigger()}
-	</Dialog.Trigger>
+	{#if trigger}
+		<Dialog.Trigger>
+			{@render trigger()}
+		</Dialog.Trigger>
+	{/if}
 	<Dialog.Portal>
 		<Dialog.Overlay />
 		<Dialog.Content {...contentProps}>
-			<Dialog.Title>
-				{@render title()}
-			</Dialog.Title>
-			<Dialog.Description>
-				{@render description()}
-			</Dialog.Description>
+			{#if title}
+				<Dialog.Title>
+					{@render title()}
+				</Dialog.Title>
+			{/if}
+			{#if description}
+				<Dialog.Description>
+					{@render description()}
+				</Dialog.Description>
+			{/if}
 			{@render children?.()}
 			<Dialog.Close>Cancel</Dialog.Close>
 		</Dialog.Content>

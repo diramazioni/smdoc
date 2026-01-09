@@ -8,6 +8,7 @@
   import UserNav from "$lib/components/UserNav.svelte";
   import { Toaster } from "$lib/components/ui/sonner/index.js";
   import MarkdocRenderer from "$lib/markdoc/renderer.svelte";
+  import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 
   let { children, data } = $props();
 
@@ -26,33 +27,32 @@
 
 <main>
   <Toaster position="top-center" />
-  <MenuNav
-    items={data.navmenu}
-    class="relative bg-white shadow-xs border-b"
-  >
-    {#snippet logo()}
-      <img src="/logo.png" alt="logo" class="w-24" />
-    {/snippet}
-    {#snippet userNav()}
-      <div class="m-3">
-        <UserNav />
-      </div>
-    {/snippet}
-  </MenuNav>
+  <Tooltip.Provider>
+    <MenuNav items={data.navmenu} class="relative bg-white shadow-xs border-b">
+      {#snippet logo()}
+        <img src="/logo.png" alt="logo" class="w-24" />
+      {/snippet}
+      {#snippet userNav()}
+        <div class="m-3">
+          <UserNav />
+        </div>
+      {/snippet}
+    </MenuNav>
 
-  {#if data.sidenav && data.sidenav.length > 0}
-    <div class="lg:hidden mt-5 block">&nbsp;</div>
-    <div class="flex gap-2">
-      <div class="">
-        <SideNav items={data.sidenav} />
+    {#if data.sidenav && data.sidenav.length > 0}
+      <div class="lg:hidden mt-5 block">&nbsp;</div>
+      <div class="flex gap-2">
+        <div class="">
+          <SideNav items={data.sidenav} />
+        </div>
+        <div class="w-full">
+          {@render children()}
+        </div>
       </div>
-      <div class="w-full">
-        {@render children()}
-      </div>
-    </div>
-  {:else}
-    {@render children()}
-  {/if}
+    {:else}
+      {@render children()}
+    {/if}
+  </Tooltip.Provider>
 
   <!-- {#each $page.data.sidenav as item}
         <div class="flex flex-col gap-2">
