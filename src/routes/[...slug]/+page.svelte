@@ -22,7 +22,7 @@
       <div class="cursor-pointer flex justify-center items-center">
         <div
           id="edit"
-          class="fixed top-20 hover:bg-slate-200 p-4 rounded-lg border"
+          class="fixed top-30 hover:bg-blue-200 p-4 rounded-lg border"
         >
           <a
             href="/edit{$page.url.pathname}"
