@@ -10,6 +10,7 @@
 
   interface Props {
     open?: boolean;
+    parentPath?: string;
     onConfirm: (
       title: string,
       slug: string,
@@ -17,13 +18,14 @@
     ) => Promise<void>;
   }
 
-  let { open = $bindable(false), onConfirm }: Props = $props();
+  let { open = $bindable(false), onConfirm, parentPath = "" }: Props = $props();
 
   let titleValue = $state("");
   let saveCurrent = $state(false);
   let isProcessing = $state(false);
 
   let slug = $derived(slugify(titleValue));
+  let fullSlug = $derived(parentPath ? `${parentPath}/${slug}` : slug);
 
   async function handleCreate() {
     console.log("CreateFileDialog: handleCreate called");
@@ -34,11 +36,11 @@
     isProcessing = true;
     console.log("CreateFileDialog: calling onConfirm", {
       titleValue,
-      slug,
+      fullSlug,
       saveCurrent,
     });
     try {
-      await onConfirm(titleValue, slug, saveCurrent);
+      await onConfirm(titleValue, fullSlug, saveCurrent);
       console.log("CreateFileDialog: onConfirm finished successfully");
       open = false;
       titleValue = "";
@@ -85,7 +87,7 @@
         <div
           class="text-sm font-mono bg-muted p-2 rounded border truncate min-h-[40px] flex items-center"
         >
-          {slug || "..."}
+          {parentPath ? `${parentPath}/` : ""}{slug || "..."}
         </div>
       </div>
 

@@ -18,7 +18,10 @@
   import Dialog from "$lib/components/Dialog.svelte";
   import type { AssetInfo } from "$lib/api";
 
-  let { editorRef = $bindable() }: { editorRef: any } = $props();
+  let {
+    editorRef = $bindable(),
+    currentDocPath = $bindable(""),
+  }: { editorRef: any; currentDocPath?: string } = $props();
 
   // State management with runes
   let tabState = $state("md");
@@ -60,6 +63,7 @@
       untrack(() => {
         if (dir !== currentPaths.md) {
           currentPaths.md = dir;
+          currentDocPath = dir;
         }
         lastSyncedSlug = slug;
       });
@@ -119,6 +123,9 @@
 
   function enterDirectory(path: string) {
     currentPaths[tabState] = path;
+    if (tabState === "md") {
+      currentDocPath = path;
+    }
     fetchAssets(tabState, path);
   }
 
@@ -127,6 +134,9 @@
     parts.pop();
     const parentPath = parts.join("/");
     currentPaths[tabState] = parentPath;
+    if (tabState === "md") {
+      currentDocPath = parentPath;
+    }
     fetchAssets(tabState, parentPath);
   }
 </script>

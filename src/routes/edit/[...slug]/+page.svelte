@@ -73,6 +73,8 @@
   let showIndexFileDialog = $state(false);
   let showIndexDirectoryDialog = $state(false);
 
+  let currentDocPath = $state(""); // Track navigated folder in Assets
+
   // Calcola la larghezza dinamica per il campo slug
   let slugWidth = $derived(Math.max(80, slug.length * 8 + 200));
 
@@ -300,6 +302,7 @@
 <CreateFileDialog
   bind:open={showCreateFileDialog}
   onConfirm={handleCreateConfirm}
+  parentPath={currentDocPath}
 />
 
 <!-- Rename vs Save As dialog -->
@@ -401,7 +404,7 @@
       </Button>
     </div>
     <div class="flex items-center space-x-3">
-      <div >
+      <div>
         <!-- switch editor-->
         <Label for="editor">
           {#if useTuiEditor}
@@ -478,7 +481,7 @@
   <Resizable.Handle withHandle />
   <Resizable.Pane defaultSize={20}>
     <div class="min-w-96 max-w-[600px] flex flex-col gap-4" use:scrollFixed>
-      <Assets bind:editorRef />
+      <Assets bind:editorRef bind:currentDocPath />
       <div class="px-4">
         <LettaStatus
           userId={data.user?.name || "anonymous"}

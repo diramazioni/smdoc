@@ -43,9 +43,12 @@ export async function setMD(slug: string, content: string) {
   try {
     const file = path.resolve(`${DOCS_DIR}/${slug}.md`);
     console.debug('Writing to file:', file);
+    // Ensure parent directory exists
+    await fs.mkdir(path.dirname(file), { recursive: true });
     await fs.writeFile(file, content, 'utf-8');
-  } catch (error: any) {
-    throw error(500, error);
+  } catch (err: any) {
+    if (err.status) throw err;
+    throw error(500, err.message || err);
   }
 }
 
