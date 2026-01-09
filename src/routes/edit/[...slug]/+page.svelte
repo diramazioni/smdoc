@@ -431,7 +431,7 @@
       </Button>
     </div>
     <div class="flex items-center space-x-3">
-      <div>
+      <div >
         <!-- switch editor-->
         <Label for="editor">
           {#if useTuiEditor}
