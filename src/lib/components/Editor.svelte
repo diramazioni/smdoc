@@ -162,7 +162,7 @@
     if (editor) {
       const editorEvents = ["load", "change", "focus", "blur-sm"];
       editorEvents.forEach((event) => editor?.off(event));
-      editor.remove();
+      (editor as any).destroy();
     }
   });
 </script>

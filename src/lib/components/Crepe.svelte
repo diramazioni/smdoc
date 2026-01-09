@@ -11,6 +11,7 @@
   let { markdown }: { markdown: string } = $props();
 
   let editor: Crepe | undefined = $state();
+  let isCreated = $state(false);
 
   onMount(() => {
     editor = new Crepe({
@@ -19,6 +20,7 @@
     });
 
     editor.create().then(() => {
+      isCreated = true;
       //console.log('Editor created');
     });
   });
@@ -34,19 +36,19 @@
   }
 
   export function setMarkdown(value: string) {
-    if (editor) {
+    if (editor && isCreated) {
       editor.editor.action(replaceAll(value));
     }
   }
 
   export function insertMarkdown(value: string) {
-    if (editor) {
+    if (editor && isCreated) {
       editor.editor.action(insert(value));
     }
   }
 
   export function callEditorCommand(cmdKey: string, payload: any) {
-    if (editor) {
+    if (editor && isCreated) {
       editor.editor.action(callCommand(cmdKey, payload));
     }
   }

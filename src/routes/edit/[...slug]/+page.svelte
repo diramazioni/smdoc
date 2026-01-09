@@ -44,7 +44,7 @@
 
   let { data }: { data: any } = $props();
 
-  let useTuiEditor = $state(true);
+  let useTuiEditor = $state(false);
   let editorRef = $state<any>(); // Reference to store the editor instance
   let titleValue = $state("");
   let descriptionValue = $state("");
@@ -401,16 +401,16 @@
       </Button>
     </div>
     <div class="flex items-center space-x-3">
-      <div>
+      <div >
         <!-- switch editor-->
         <Label for="editor">
           {#if useTuiEditor}
-            TuiEditor
+            Tui Editor
           {:else}
-            Crepe
+            Crepe Editor
           {/if}
         </Label>
-        <Switch bind:checked={useTuiEditor} />
+        <Switch class="mt-2" bind:checked={useTuiEditor} />
         <!-- switch editor-->
       </div>
       <DropdownMenu.Root>
