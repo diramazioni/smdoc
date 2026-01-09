@@ -16,7 +16,9 @@ export async function POST({ request }) {
     const filePath = path.resolve(DOCS_DIR, `${slug}.md`);
 
     // Carica file nel filesystem Letta (contenuto web)
-    await uploadFileToLetta(projectId, filePath, 'markdown', true);
+    if (action !== 'deleted') {
+      await uploadFileToLetta(projectId, filePath, 'markdown', true);
+    }
 
     // Aggiorna memoria condivisa
     const sharedBlock = await updateSharedMemoryWithFile(

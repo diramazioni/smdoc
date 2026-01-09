@@ -1,4 +1,4 @@
-import { error, redirect } from '@sveltejs/kit';
+import { error, redirect, fail } from '@sveltejs/kit';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { 
@@ -131,40 +131,49 @@ export const actions = {
 			const data = await request.formData();
 			const slug = data.get('slug') as string;
 			const updatedContent = data.get('updatedContent') as string;
-			const title = data.get('title') as string;
-			const description = data.get('description') as string;
+			const titleValue = data.get('title') as string;
+			const descriptionValue = data.get('description') as string;
 
 			const md = await getMD(slug);
-			if (!md) {
-				return { success: false, error: 'File not found' };
-			}
-
-			// If title or description are provided, we update frontmatter
+			
 			let finalMd = '';
-			if (title !== null || description !== null) {
-				const { content } = getContent(md);
+			if (!md) {
+				// Creation case (e.g. Save as New)
+				console.log('Creating new document via save action:', slug);
 				const updatedFrontmatter = {
-					title: title ?? (data.get('title') as string),
-					description: description ?? (data.get('description') as string),
+					title: titleValue || slug,
+					description: descriptionValue || '',
+					slug: slug,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				};
+				const newYaml = yaml.dump(updatedFrontmatter);
+				finalMd = `---\n${newYaml}\n---\n${updatedContent || ''}`;
+			} else {
+				// Update case
+				const { content, frontmatter: oldFrontmatterStr } = getContent(md);
+				const oldFrontmatter = yaml.load(oldFrontmatterStr) as any;
+
+				const updatedFrontmatter = {
+					...oldFrontmatter,
+					title: titleValue !== null ? titleValue : oldFrontmatter.title,
+					description: descriptionValue !== null ? descriptionValue : oldFrontmatter.description,
 					slug: slug,
 					updatedAt: new Date(),
 				};
 				const newYaml = yaml.dump(updatedFrontmatter);
 				finalMd = `---\n${newYaml}\n---\n${updatedContent ?? content}`;
-			} else {
-				const { frontmatter } = getContent(md);
-				finalMd = `---\n${frontmatter}\n---\n${updatedContent}`;
 			}
 
 			console.log('Saving document:', slug, 'Length:', finalMd.length);
 			await setMD(slug, finalMd);
 			return { success: true };
-		} catch (error) {
-			console.error('Save action error:', error);
-			return {
+		} catch (err) {
+			console.error('Save action error:', err);
+			return fail(500, {
 				success: false,
-				error: error instanceof Error ? error.message : 'An unknown error occurred'
-			};
+				error: err instanceof Error ? err.message : 'An unknown error occurred'
+			});
 		}
 	},
 	upload: async ({ request }) => {

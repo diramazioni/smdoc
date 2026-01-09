@@ -66,7 +66,9 @@
     id="footer"
     class="p-2 w-full space-y-0.5 justify-center items-center text-center bg-linear-to-b from-transparent to-white"
   >
-    <MarkdocRenderer children={JSON.parse($page.data.footer)} />
+    <div class="prose prose-sm max-w-none dark:prose-invert mx-auto">
+      <MarkdocRenderer children={JSON.parse($page.data.footer)} />
+    </div>
   </div>
 {/if}
 

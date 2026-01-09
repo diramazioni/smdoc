@@ -37,11 +37,15 @@
       </div>
     {/if}
 
-    <MarkdocRenderer children={JSON.parse(data.children)} />
+    <div class="prose max-w-none dark:prose-invert">
+      <MarkdocRenderer children={JSON.parse(data.children)} />
+    </div>
   </div>
 {:else}
   <div id="content" class="m-4">
-    <MarkdocRenderer children={JSON.parse(data.children)} />
+    <div class="prose max-w-none dark:prose-invert">
+      <MarkdocRenderer children={JSON.parse(data.children)} />
+    </div>
   </div>
 {/if}
 <div id="map" class="m-4">

@@ -114,6 +114,7 @@
   async function performSave(
     customSlug?: string,
     skipRedirect: boolean = false,
+    action: "created" | "updated" = "updated",
   ) {
     const targetSlug = customSlug || slug;
     autoSaveDialog = false;
@@ -132,10 +133,10 @@
 
     const result = deserialize(await response.text());
 
-    if (result.type === "success") {
+    if (result.type === "success" && (result.data as any)?.success) {
       toast.success(`${targetSlug} salvato`);
       // Non-blocking sync
-      syncWithLetta("updated", {
+      syncWithLetta(action, {
         title: titleValue,
         slug: targetSlug,
         description: descriptionValue,
@@ -148,6 +149,7 @@
     } else {
       const errorMsg =
         (result.type === "failure" ? result.data?.error : result.message) ||
+        (result.type === "success" && (result.data as any)?.error) ||
         "Errore sconosciuto";
       toast.error(`Errore salvataggio: ${errorMsg}`);
       return false;
@@ -168,20 +170,34 @@
       body: formData,
       headers: { "x-sveltekit-action": "true" },
     });
-    const result = await response.json();
-    if (result.type === "success") {
+    const result = deserialize(await response.text());
+    if (result.type === "success" && (result.data as any)?.success) {
       toast.success("Document renamed successfully");
       showRenameDialog = false;
+
+      // Sync rename to Letta (as a created for the new slug)
+      syncWithLetta("created", {
+        title: titleValue,
+        slug: slug,
+        description: descriptionValue,
+      });
+      // Sync a delete for the old slug
+      syncWithLetta("deleted", {}, originalSlug);
+
       originalSlug = slug;
       await goto(`/edit/${slug}`, { invalidateAll: true });
     } else {
-      toast.error(`Error renaming document: ${result.message}`);
+      const errorMsg =
+        (result.type === "failure" ? result.data?.error : result.message) ||
+        (result.type === "success" && (result.data as any)?.error) ||
+        "Errore sconosciuto";
+      toast.error(`Error renaming document: ${errorMsg}`);
     }
   }
 
   async function handleSaveAs() {
     showRenameDialog = false;
-    await performSave();
+    await performSave(undefined, false, "created");
   }
 
   async function handleCreateConfirm(
@@ -230,6 +246,7 @@
   async function syncWithLetta(
     action: "created" | "updated" | "deleted",
     metadata?: any,
+    targetSlug?: string,
   ) {
     try {
       await fetch("/api/letta/sync", {
@@ -237,9 +254,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           projectId: "smdr-main",
-          slug: slug, // This is not the actual file path of the doc, but the doc slug is what matters for Letta
-          // Actually, we should probably pass the full path if we want Letta to read it
-          // For now using the slug as the identifier
+          slug: targetSlug || slug,
           action,
           metadata,
         }),
