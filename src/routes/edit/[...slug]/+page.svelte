@@ -85,6 +85,8 @@
   let showIndexFileDialog = $state(false);
   let showIndexDirectoryDialog = $state(false);
 
+  let currentDocPath = $state(""); // Track navigated folder in Assets
+
   // Calcola la larghezza dinamica per il campo slug
   let slugWidth = $derived(Math.max(80, slug.length * 8 + 200));
 

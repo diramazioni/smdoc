@@ -2,11 +2,10 @@
 title: guida
 description: Un riferimento per le operazioni più comuni
 slug: guida
-updatedAt: 2024-12-20T09:56:17.097Z
----
-# {% $frontmatter.title %}
+updatedAt: 2026-01-09T09:49:10.334Z
 
-#### {% $frontmatter.description %}
+---
+# Guida
 
 Prova di testo semplice [con un link](/home)
 
