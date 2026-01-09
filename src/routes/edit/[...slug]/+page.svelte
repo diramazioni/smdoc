@@ -48,13 +48,25 @@
   let editorRef = $state<any>(); // Reference to store the editor instance
   let titleValue = $state("");
   let descriptionValue = $state("");
-  let slug = $derived(slugify(titleValue));
+  let currentDocPath = $state(""); // Track navigated folder in Assets
+  let slug = $derived(
+    currentDocPath
+      ? `${currentDocPath}/${slugify(titleValue)}`
+      : slugify(titleValue),
+  );
   let originalSlug = $state("");
 
   $effect(() => {
     titleValue = data.frontmatter?.title ?? "";
     descriptionValue = data.frontmatter?.description ?? "";
     originalSlug = data.slug;
+
+    // Initialize currentDocPath from data.slug
+    if (data.slug) {
+      const parts = data.slug.split("/");
+      parts.pop();
+      currentDocPath = parts.join("/");
+    }
   });
 
   $effect(() => {
@@ -72,8 +84,6 @@
   let showUploadFileDialog = $state(false);
   let showIndexFileDialog = $state(false);
   let showIndexDirectoryDialog = $state(false);
-
-  let currentDocPath = $state(""); // Track navigated folder in Assets
 
   // Calcola la larghezza dinamica per il campo slug
   let slugWidth = $derived(Math.max(80, slug.length * 8 + 200));
