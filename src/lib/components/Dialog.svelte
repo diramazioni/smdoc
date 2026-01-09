@@ -1,16 +1,16 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
-	import {  type WithoutChild } from "bits-ui";
-    import * as Dialog from "$lib/components/ui/dialog/index.js";
+	import { Dialog as DialogPrimitive, type WithoutChild } from "bits-ui";
+	import * as Dialog from "$lib/components/ui/dialog/index.js";
 
-	type Props = Dialog.RootProps & {
-		trigger: string;
-		title: Snippet;
-		description: Snippet;
-		contentProps?: WithoutChild<Dialog.ContentProps>;
-		// ...other component props if you wish to pass them
+	type Props = DialogPrimitive.RootProps & {
+		trigger?: Snippet;
+		title?: Snippet;
+		description?: Snippet;
+		contentProps?: WithoutChild<DialogPrimitive.ContentProps>;
+		children?: Snippet;
 	};
- 
+
 	let {
 		open = $bindable(false),
 		children,
@@ -21,20 +21,26 @@
 		...restProps
 	}: Props = $props();
 </script>
- 
+
 <Dialog.Root bind:open {...restProps}>
-	<Dialog.Trigger>
-		{@render trigger()}
-	</Dialog.Trigger>
+	{#if trigger}
+		<Dialog.Trigger>
+			{@render trigger()}
+		</Dialog.Trigger>
+	{/if}
 	<Dialog.Portal>
 		<Dialog.Overlay />
 		<Dialog.Content {...contentProps}>
-			<Dialog.Title>
-				{@render title()}
-			</Dialog.Title>
-			<Dialog.Description>
-				{@render description()}
-			</Dialog.Description>
+			{#if title}
+				<Dialog.Title>
+					{@render title()}
+				</Dialog.Title>
+			{/if}
+			{#if description}
+				<Dialog.Description>
+					{@render description()}
+				</Dialog.Description>
+			{/if}
 			{@render children?.()}
 			<Dialog.Close>Cancel</Dialog.Close>
 		</Dialog.Content>
