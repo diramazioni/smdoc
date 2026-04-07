@@ -19,25 +19,12 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  role   Roles @relation(fields: [roleId], references: [id])
+  role   Role @relation(fields: [roleId], references: [id])
   roleId Int
 }
 
-model Roles {
+model Role {
   id   Int    @id @default(autoincrement())
   name String @unique
   User User[]
 }
-
-// Use enums when you change database
-// because SQLite doesn't support it
-// https://www.prisma.io/docs/reference/database-reference/database-features#misc
-
-// model User {
-//   role Role @default(USER)
-// }
-
-// enum Role {
-//   USER
-//   ADMIN
-// }

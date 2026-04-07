@@ -8,11 +8,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// get cookies from browser
 	const session = event.cookies.get('session')
 	let isAuthenticated = false;
-	// find user based on session
-	const user = await db.user.findUnique({
-		where: { userAuthToken: session },
-		select: { username: true, role: true },
-	})
+	// find user based on session (only if session exists)
+	let user = null;
+	if (session) {
+		user = await db.user.findUnique({
+			where: { userAuthToken: session },
+			select: { username: true, role: true },
+		})
+	}
 
 	// if `user` exists set `events.local` and is authenticated
 	if (user) {
