@@ -1,9 +1,8 @@
 ---
-title: Markdoc?
+title: What Is Markdoc?
 description: ''
-slug: markdoc
-updatedAt: 2026-01-08T23:27:16.220Z
-
+slug: what-is-markdoc
+updatedAt: 2026-01-08T17:57:20.389Z
 ---
 # 
 

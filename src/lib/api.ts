@@ -14,6 +14,7 @@ import {
   getFileDirectory,
   getDirectoryForType 
 } from '$lib/config/files.server';
+export { DOCS_DIR, ASSETS_DIR, getFileDirectory, getDirectoryForType };
 
 // Ensure directories exist on startup
 Promise.all([
@@ -48,26 +49,58 @@ export async function setMD(slug: string, content: string) {
   }
 }
 
-export async function getFileList(type: FileType): Promise<string[]> {
+export interface AssetInfo {
+  name: string;
+  isDir: boolean;
+  path: string;
+}
+
+export async function getFileList(type: FileType, subDir: string = ''): Promise<AssetInfo[]> {
   try {
-    const directory = getDirectoryForType(type);
-    const files = await fs.readdir(directory);
+    const baseDirectory = getDirectoryForType(type);
+    const directory = path.join(baseDirectory, subDir);
     
-    return files.filter(file => {
-      const mimeType = getMimeTypeFromFilename(file);
-      if (!mimeType) return false;
-      
-      switch(type) {
-        case 'md':
-          return file.endsWith('.md');
-        case 'pdf':
-          return file.endsWith('.pdf');
-        case 'img':
-          return mimeType.startsWith('image/');
-        default:
-          return false;
+    // Ensure the directory is within the baseDirectory
+    const resolvedPath = path.resolve(directory);
+    if (!resolvedPath.startsWith(path.resolve(baseDirectory))) {
+      throw new Error('Invalid directory path');
+    }
+
+    const entries = await fs.readdir(directory, { withFileTypes: true });
+    
+    const results: AssetInfo[] = [];
+
+    for (const entry of entries) {
+      const name = entry.name;
+      const entryPath = path.join(subDir, name);
+
+      if (entry.isDirectory()) {
+         // Skip hidden directories and _templates
+        if (name.startsWith('.') || name === '_templates') continue;
+        results.push({ name, isDir: true, path: entryPath });
+      } else if (entry.isFile()) {
+        const mimeType = getMimeTypeFromFilename(name);
+        let allowed = false;
+
+        switch(type) {
+          case 'md':
+            allowed = name.endsWith('.md');
+            break;
+          case 'pdf':
+            allowed = name.endsWith('.pdf');
+            break;
+          case 'img':
+            allowed = mimeType?.startsWith('image/') ?? false;
+            break;
+        }
+
+        if (allowed) {
+          results.push({ name, isDir: false, path: entryPath });
+        }
       }
-    });
+    }
+
+    return results;
   } catch (error: any) {
     console.error('Error reading directory:', error);
     return [];
@@ -100,6 +133,43 @@ export async function deleteFile(filename: string): Promise<boolean> {
     console.error('Error deleting file:', error);
     return false;
   }
+}
+
+/**
+ * Creates a new directory in the DOCS_DIR
+ * @param dirName - Name of the directory to create
+ * @param parentPath - Optional parent path relative to DOCS_DIR
+ * @returns The full path of the created directory
+ */
+export async function createDirectory(dirName: string, parentPath?: string): Promise<string> {
+  // Validate directory name
+  const invalidChars = /[<>:"|?*\x00-\x1F]/;
+  if (invalidChars.test(dirName)) {
+    throw new Error('Directory name contains invalid characters');
+  }
+
+  // Prevent path traversal
+  if (dirName.includes('..') || dirName.includes('/') || dirName.includes('\\')) {
+    throw new Error('Directory name cannot contain path separators or parent references');
+  }
+
+  // Build the full path
+  const basePath = parentPath 
+    ? path.resolve(DOCS_DIR, parentPath)
+    : DOCS_DIR;
+
+  // Ensure the base path is within DOCS_DIR
+  const resolvedBase = path.resolve(basePath);
+  if (!resolvedBase.startsWith(path.resolve(DOCS_DIR))) {
+    throw new Error('Invalid parent path');
+  }
+
+  const fullPath = path.join(resolvedBase, dirName);
+
+  // Create the directory
+  await fs.mkdir(fullPath, { recursive: true });
+
+  return fullPath;
 }
 
 export function getFrontmatter(frontmatter: string) {
@@ -157,7 +227,10 @@ export async function markdoc(ast: any) {
       frontmatter: getFrontmatter(ast.attributes.frontmatter),
     },
   });
-  return JSON.stringify(content.children);
+  if (!content || typeof content === 'string' || typeof content === 'number' || typeof content === 'boolean') {
+    return JSON.stringify([]);
+  }
+  return JSON.stringify((content as any).children || []);
 }
 
 export async function loadMD(slug: string) {

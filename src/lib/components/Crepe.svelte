@@ -1,52 +1,57 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import { Crepe } from '@milkdown/crepe';
-  import '@milkdown/crepe/theme/common/style.css';
+  import { onMount, onDestroy } from "svelte";
+  import { Crepe } from "@milkdown/crepe";
+  import "@milkdown/crepe/theme/common/style.css";
   import "@milkdown/crepe/theme/frame.css";
-  import { insert, replaceAll, callCommand  } from '@milkdown/kit/utils';
+  import { insert, replaceAll, callCommand } from "@milkdown/kit/utils";
 
-  import { page } from '$app/stores';
+  import { page } from "$app/stores";
   import { toast } from "svelte-sonner";
 
+  let { markdown }: { markdown: string } = $props();
 
-  let { markdown } = $props(); //
-  
-  let editor: Crepe  = $state();
+  let editor: Crepe | undefined = $state();
+  let isCreated = $state(false);
 
-  onMount( () => {
+  onMount(() => {
     editor = new Crepe({
-      root: document.getElementById('app'),
+      root: document.getElementById("app") as HTMLElement,
       defaultValue: markdown,
-    })
-    
-    editor.create().then(() => {
-        //console.log('Editor created');
     });
-  })
 
-  $effect(() => {  
-    return () => {
+    editor.create().then(() => {
+      isCreated = true;
+      //console.log('Editor created');
+    });
+  });
+
+  onDestroy(() => {
+    if (editor) {
       editor.destroy();
-      //console.log('Editor destroy');
-    };
-  })
+    }
+  });
 
   export function getMarkdown() {
     return editor?.getMarkdown();
   }
 
-  export function setMarkdown(value:string) {
-    editor.editor.action(replaceAll(value))
+  export function setMarkdown(value: string) {
+    if (editor && isCreated) {
+      editor.editor.action(replaceAll(value));
+    }
   }
 
-  export function insertMarkdown(value:string) {
-    editor.editor.action(insert(value))
+  export function insertMarkdown(value: string) {
+    if (editor && isCreated) {
+      editor.editor.action(insert(value));
+    }
   }
 
-  export function callEditorCommand(cmdKey, payload) {
-    editor.editor.action(callCommand(cmdKey, payload))
+  export function callEditorCommand(cmdKey: string, payload: any) {
+    if (editor && isCreated) {
+      editor.editor.action(callCommand(cmdKey, payload));
+    }
   }
-
 </script>
+
 <div id="app"></div>
-<!-- <button class="btn" on:click={handleSave}> Publish</button> -->

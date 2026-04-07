@@ -14,6 +14,8 @@ import {
   ASSETS_DIR,
   getFileDirectory
 } from '$lib/config/files.server';
+import { deleteFileFromLetta } from '$lib/letta/filesystem-service';
+import { getLettaProjectId } from '$lib/letta/letta-service';
 
 // Ensure directories exist
 [DOCS_DIR, ASSETS_DIR].forEach(dir => {
@@ -47,6 +49,12 @@ export const POST: RequestHandler = async ({ request }) => {
 
   const targetDir = getFileDirectory(mimeType);
   const filePath = path.join(targetDir, fileName);
+  const dirName = path.dirname(filePath);
+
+  // Ensure target directory exists (for subdirectories)
+  if (!fs.existsSync(dirName)) {
+    fs.mkdirSync(dirName, { recursive: true });
+  }
 
   // Check if file already exists
   if (fs.existsSync(filePath)) {
@@ -55,12 +63,12 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 
   const writeStream = fs.createWriteStream(filePath);
-  const readStream = Readable.fromWeb(request.body);
+  const readStream = Readable.fromWeb(request.body as any);
 
   try {
     await pipeline(readStream, writeStream);
-    return json({ 
-      success: true, 
+    return json({
+      success: true,
       message: 'File uploaded successfully',
       path: filePath
     });
@@ -103,8 +111,16 @@ export const DELETE: RequestHandler = async ({ request }) => {
       return error(404, 'File not found');
     }
 
+    // Rimuovi da Letta se possibile
+    try {
+      const projectId = getLettaProjectId();
+      await deleteFileFromLetta(projectId, fileName);
+    } catch (err) {
+      console.warn('Failed to delete file from Letta, proceeding with local deletion:', err);
+    }
+
     await fs.promises.unlink(filePath);
-    
+
     return json({
       success: true,
       message: 'File deleted successfully'
