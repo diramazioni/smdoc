@@ -196,13 +196,11 @@
   </div>
 {/snippet}
 {#snippet tuiEditor()}
-<div class="mt-30">
   <TuiEditor
   bind:this={editorRef}
   initialValue={data.md_only}
   pluginsOn={['tableMergedCell','codeSyntaxHighlight', 'chart', 'uml']} 
   />
-</div>
 {/snippet}
 
 {#snippet crepeEditor()}
