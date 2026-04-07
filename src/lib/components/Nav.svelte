@@ -61,7 +61,6 @@
     {/if}
   </button>
 
-          <div id="edit" class="fixed top-30 hover:bg-blue-200 p-4 rounded-lg border">
   {#if isMobileMenuOpen}
     <nav transition:slide class="bg-background shadow-lg lg:hidden">
       <div class="flex flex-col p-4 space-y-2">

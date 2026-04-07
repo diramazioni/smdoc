@@ -1,0 +1,5 @@
+Additional instructions you MUST follow:
+
+- Always use $derived.by(() => {.. for anonymous functions derived values
+- `<svelte:self>` is deprecated — use self-imports (e.g. `import Self from './Self.svelte'`)
+- Always close the </div> tag and respect usability rules
